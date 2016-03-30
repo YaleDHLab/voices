@@ -1,0 +1,270 @@
+/*********
+* navbar *
+*********/
+
+/* override bootstrap defaults to collapse on small screens */
+@media (max-width: 991px) {
+  .navbar-header {
+    float: none;
+  }
+  .navbar-toggle {
+    display: block;
+  }
+  .navbar-collapse {
+    border-top: 1px solid transparent;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .navbar-collapse.collapse {
+    display: none!important;
+  }
+  .navbar-nav {
+    float: none!important;
+    margin: 7.5px -15px;
+  }
+  .navbar-nav>li {
+    float: none;
+  }
+  .navbar-nav>li>a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .navbar-text {
+    float: none;
+    margin: 15px 0;
+  }
+  /* since 3.1.0 */
+  .navbar-collapse.collapse.in { 
+    display: block!important;
+  }
+  .collapsing {
+    overflow: hidden!important;
+  }
+}
+
+
+/* styles for expanded navbar */ 
+@media (min-width: 991px){
+  .navbar-default .navbar-nav > li > a:hover{
+    border: 1px solid red;
+  }
+
+  /* restore the voices brand (centered in list) 
+    and remove the bootstrap brand (on left from bootstrap) */
+  #voices-brand {
+    display: block;
+  }
+
+  #bootstrap-brand {
+    display: none;
+  }
+
+}
+
+/* styles for minified navbar */
+@media (max-width: 991px){
+  .navbar-default .navbar-nav > li > a:hover{
+    background-color: red;
+  }
+
+  /* restore and center the voices brand and remove bootstrap brand*/
+  #voices-brand {
+    display: none;
+  }
+
+  #bootstrap-brand {
+    display: block;
+    position: absolute;
+    width: 52px;
+    left: calc(50% - 26px);
+    margin: 0;
+    padding: 0;
+    padding-top: 14px; 
+  }
+}
+
+/* remove rounded edges from navbar */
+.navbar {
+  border-radius: 0px !important;
+  margin-bottom: 0px !important;
+
+  /* center brand */
+  position: relative;
+}
+
+
+/* center navbar items */
+.navbar .nav li {
+    width: 150px; /* the width of each item */
+    display: inline-block;
+    float: none;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  margin: 0;
+  padding: 0;
+  padding-top: 12px;
+}
+
+.navbar .nav {
+    float: none;
+    text-align: center;
+}
+
+
+/*******
+* text *
+*******/
+
+.text-center {
+  text-align: center;
+}
+
+
+/***************
+* image banner *
+***************/
+
+/* banner image with call to action */
+#banner-image {
+  height: 0;
+  padding: 0; 
+  padding-bottom: 30%; /* this number needs adjustment */
+  background: linear-gradient( rgba(0, 0, 0, 0.5), 
+    rgba(0, 0, 0, 0.5) ), url(/img/YaleProtest.jpg);
+  background-position: center center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+#text-overlay {
+  position: absolute; 
+  top: 35%; 
+  left: 0;
+  text-align: center; 
+  color: #fff;
+  width: 100%; 
+  padding: 4px; 
+}
+
+#button-overlay-container {
+  position: absolute;
+  top: 60%;
+  /* 26px is half the button width */
+  left: calc(50% - 26px); 
+}
+
+
+/****************
+* Media queries *
+****************/
+
+@media only screen and (min-width: 0px) and (max-width: 319px){
+  #text-overlay {
+    font-size: .5em;
+  }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 479px){ 
+  #text-overlay {
+    font-size: .8em;
+  }
+}
+
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px){ 
+  #text-overlay {
+    font-size: 1em;
+  }
+}
+
+
+@media only screen and (min-width: 768px) and (max-width: 991px){ 
+  #text-overlay {
+    font-size: 1.5em;
+  }
+}
+
+
+@media only screen and (min-width: 992px) and (max-width: 1999px){
+  #text-overlay {
+    font-size: 1.7em;
+  }
+
+}
+
+
+/*******************
+* bootstrap colors *
+********************/
+
+/* navbar */
+.navbar-default {
+  background-color: #F8F8F8;
+  border-color: #E7E7E7;
+}
+/* title */
+.navbar-default .navbar-brand {
+  color: #777;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #5E5E5E;
+}
+/* link */
+.navbar-default .navbar-nav > li > a {
+  color: #777;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #333;
+}
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #555;
+  background-color: #E7E7E7;
+}
+.navbar-default .navbar-nav > .open > a, 
+.navbar-default .navbar-nav > .open > a:hover, 
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #555;
+  background-color: #D5D5D5;
+}
+/* caret */
+.navbar-default .navbar-nav > .dropdown > a .caret {
+  border-top-color: #777;
+  border-bottom-color: #777;
+}
+.navbar-default .navbar-nav > .dropdown > a:hover .caret,
+.navbar-default .navbar-nav > .dropdown > a:focus .caret {
+  border-top-color: #333;
+  border-bottom-color: #333;
+}
+.navbar-default .navbar-nav > .open > a .caret, 
+.navbar-default .navbar-nav > .open > a:hover .caret, 
+.navbar-default .navbar-nav > .open > a:focus .caret {
+  border-top-color: #555;
+  border-bottom-color: #555;
+}
+/* mobile version */
+.navbar-default .navbar-toggle {
+  border-color: #DDD;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #DDD;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #CCC;
+}
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #777;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #333;
+  }
+}
