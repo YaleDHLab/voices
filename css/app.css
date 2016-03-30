@@ -80,6 +80,18 @@
     padding: 0;
     padding-top: 14px; 
   }
+
+  /* add styling to make navbar items collapse into column */
+  ul {
+  display: flex;
+  flex-direction: column;
+  }
+
+  /* horizontally center collapsed navbar items */
+  .navbar .nav li {
+  left: calc(50% - 75px);
+  }
+
 }
 
 /* remove rounded edges from navbar */
@@ -91,12 +103,11 @@
   position: relative;
 }
 
-
 /* center navbar items */
 .navbar .nav li {
-    width: 150px; /* the width of each item */
-    display: inline-block;
-    float: none;
+  width: 150px; /* the width of each item */
+  display: inline-block;
+  float: none;
 }
 
 .navbar-inverse .navbar-nav > li > a {
@@ -106,10 +117,9 @@
 }
 
 .navbar .nav {
-    float: none;
-    text-align: center;
+  float: none;
+  text-align: center;
 }
-
 
 /*******
 * text *
@@ -171,14 +181,11 @@
   }
 }
 
-}
-
 @media only screen and (min-width: 480px) and (max-width: 767px){ 
   #text-overlay {
     font-size: 1em;
   }
 }
-
 
 @media only screen and (min-width: 768px) and (max-width: 991px){ 
   #text-overlay {
@@ -191,7 +198,6 @@
   #text-overlay {
     font-size: 1.7em;
   }
-
 }
 
 
