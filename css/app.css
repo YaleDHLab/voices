@@ -164,6 +164,20 @@
   margin-right: 10%;
 }
 
+.flex-container {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
+.column-item {
+  float: left;
+}
+
+.clear-column {
+  clear: both;
+}
 
 /***************************
 * horizontal line dividers *
