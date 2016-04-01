@@ -21,46 +21,50 @@
 </head>
 <body>
 
-  <!-- Bootstrap3 navbar -->
+  <!-- bootstrap3 navbar -->
   <div id="header">
     <div class="navbar navbar-inverse">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" 
+        data-toggle="collapse" 
+        data-target=".navbar-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" id="bootstrap-brand" href="#">Voices</a>
+      </div>
       
-        
-        <!-- Header -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" 
-          data-toggle="collapse" 
-          data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" id="bootstrap-brand" href="#">Voices</a>
-        </div>
-        
-        <!-- Navbar Links -->
-        <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            
-            <li><a href="#submissions">Call for Submissions</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#" id="voices-brand">Voices</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="#">Login | Signup</a></li>
-            
-          </ul>
-
+      <!-- navbar links -->
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">  
+          <li><a href="#submissions">Call for Submissions</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#" id="voices-brand">Voices</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#">Login | Signup</a></li>
+        </ul>
       </div>
     </div>
-  </div>
+  </div> <!-- ./ header -->
 
-
+  <!-- image with text and search overlays -->
   <div id="banner-image">
     <div id="text-overlay">A living document of student protests at Yale</div>
     <div id="button-overlay-container">
       <button id="button-overlay">Submit</button>
     </div>
-  </div> 
+  </div>
+
+  <!-- page content -->
+  <div class="page-content">
+    <div class="horizontal-line">
+      <span class="horizontal-line-text">Title Here</span>
+    </div>
+  </div>
+
+  
+
 
 </body>
 </html>
