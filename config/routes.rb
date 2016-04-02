@@ -1,4 +1,6 @@
 VoicesRails::Application.routes.draw do
+  resources :records
+
   root "static_pages#home"
   get "user/login"
   get "user/submit"
