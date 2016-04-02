@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<!-- Check to see what kind of file we're displaying -->
+<% if @file_type == "image" %>
+  <%= image_tag @record.file_upload.url %>
+<% end %>
+
+
+
+
+
+<p>
+  <strong>Cas user:</strong>
+  <%= @record.cas_user_id %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @record.title %>
+</p>
+
+<p>
+  <strong>Metadata:</strong>
+  <%= @record.metadata %>
+</p>
+
+<%= link_to 'Edit', edit_record_path(@record) %> |
+<%= link_to 'Back', records_path %>

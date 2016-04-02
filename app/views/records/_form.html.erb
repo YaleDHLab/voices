@@ -1,0 +1,31 @@
+<%= form_for(@record, :html => { :multipart => true }) do |f| %>
+  <% if @record.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@record.errors.count, "error") %> prohibited this record from being saved:</h2>
+
+      <ul>
+      <% @record.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.file_field :file_upload %>
+
+  <div class="field">
+    <%= f.label :cas_user_id %><br>
+    <%= f.number_field :cas_user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :metadata %><br>
+    <%= f.text_field :metadata %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
