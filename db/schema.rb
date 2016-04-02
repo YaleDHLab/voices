@@ -11,15 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160402152057) do
+ActiveRecord::Schema.define(version: 20160402214520) do
 
-  create_table "protest_items", force: true do |t|
+  create_table "records", force: true do |t|
     t.integer  "cas_user_id"
     t.string   "title"
-    t.string   "url"
-    t.string   "metadata_tags"
+    t.string   "metadata"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "file_upload_file_name"
+    t.string   "file_upload_content_type"
+    t.integer  "file_upload_file_size"
+    t.datetime "file_upload_updated_at"
   end
 
   create_table "users", force: true do |t|
