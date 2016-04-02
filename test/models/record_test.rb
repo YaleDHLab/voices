@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ProtestItemTest < ActiveSupport::TestCase
+class RecordTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -3,11 +3,9 @@
 one:
   cas_user_id: 1
   title: MyString
-  url: MyString
-  metadata_tags: MyString
+  metadata: MyString
 
 two:
   cas_user_id: 1
   title: MyString
-  url: MyString
-  metadata_tags: MyString
+  metadata: MyString
