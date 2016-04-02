@@ -1,8 +1,19 @@
+/* helpers for sticky footer */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
 /*********
 * navbar *
 *********/
 
-/* override bootstrap defaults to collapse on small screens */
+/* override bootstrap collapse default to collapse on 
+   small (rather than the default extra-small) screens */
 @media (max-width: 991px) {
   .navbar-header {
     float: none;
@@ -52,6 +63,8 @@
     and remove the bootstrap brand (on left from bootstrap) */
   #voices-brand {
     display: block;
+    font-size: 2.4em;
+    font-weight: 800;
   }
 
   #bootstrap-brand {
@@ -90,7 +103,6 @@
   .navbar .nav li {
     left: calc(50% - 75px);
   }
-
 }
 
 /* remove rounded edges from navbar */
@@ -120,82 +132,106 @@
   text-align: center;
 }
 
+/* remove red border from focused nav items */
+#header a {
+  border: none;
+  padding-top: 25px;
+  padding-bottom: 15px;
+} 
+
+#header a:hover {
+  background-color: #f0f0f0;
+}
 
 /***************
-* image banner *
+* banner image *
 ***************/
 
-/* banner image with call to action */
 #banner-image {
   height: 0;
   padding: 0; 
-  padding-bottom: 30%; /* this number needs adjustment */
+  padding-bottom: 40%; /* this number needs adjustment */
   background: linear-gradient( rgba(0, 0, 0, 0.5), 
-    rgba(0, 0, 0, 0.5) ), url(/img/YaleProtest.jpg);
-  background-position: center center;
+    rgba(0, 0, 0, 0.5) ), url(/img/march-of-resilience.jpg);
+  background-position: 0% 85%;
   background-size: 100%;
   background-repeat: no-repeat;
   position: relative;
+  overflow: hidden;
 }
 
 #text-overlay {
-  position: absolute; 
-  top: 35%; 
-  left: 0;
-  text-align: center; 
-  color: #fff;
-  width: 100%; 
-  padding: 4px; 
+  position: absolute;  
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  word-spacing: 3px;
+  transform: scale(1.4);
+  font-family: 'Lato', sans-serif; 
+  text-transform: lowercase;
 }
 
-#button-overlay-container {
-  position: absolute;
-  top: 60%;
-  /* 26px is half the button width */
-  left: calc(50% - 26px); 
+#text-overlay div {
+  float: left;
+  padding-right: 4px;
+  color: #8D8D8D;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+#text-overlay div:hover {
+  color: #fff;
 }
 
 /***************
 * page content *
 ***************/
 
+.center-button {
+  margin-left: calc(50% - 46px);
+  margin-right: calc(50% - 46px)
+}
+
+h3, h4 {
+  text-align: center;
+  font-family: 'Merriweather', serif;
+  margin-bottom: 20px;
+}
+
+
+/*********
+* footer *
+*********/
+
+
 .page-content {
-  margin-left: 10%;
-  margin-right: 10%;
+  margin: 40px 20% 140px 20%;
+  overflow: auto;
+  padding-bottom: 140px;
 }
 
-.flex-container {
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-direction: row;
-  flex-direction: row;
+#wrap {
+  min-height: 100%;
 }
 
-.column-item {
-  float: left;
-}
-
-.clear-column {
+#footer {
+  position: relative;
+  margin-top: -140px;
+  width: 100%;
+  height: 140px;
+  background-color: #666;
+  color: #fff;
+  font-family: 'Lato', sans-serif;
   clear: both;
 }
 
-/***************************
-* horizontal line dividers *
-***************************/
-
-.horizontal-line {
-  width: 100%; 
-  height: 10px; 
-  border-bottom: 1px solid black; 
-  text-align: center;
+#footer-left {
+  float: left;
 }
 
-.horizontal-line-text {
-  background-color: #ffffff; 
-  padding: 0 10px;
+#footer-right {
+  float: right;
 }
-
-
 
 /****************
 * Media queries *
@@ -239,7 +275,7 @@
 
 /* navbar */
 .navbar-default {
-  background-color: #F8F8F8;
+  background-color: #FFFFFF;
   border-color: #E7E7E7;
 }
 /* title */
