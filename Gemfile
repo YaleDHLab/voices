@@ -30,6 +30,10 @@ gem 'jbuilder', '~> 1.2'
 # Add gem to allow users to authenticate with Yale CAS server
 gem 'rubycas-client'
 
+# Add paperclip and aws storage for file upload support
+gem 'paperclip', '~> 4.2'
+gem 'aws-sdk', '~> 1.55.0'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
