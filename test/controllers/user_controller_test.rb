@@ -1,14 +1,17 @@
 require 'test_helper'
 
 class UserControllerTest < ActionController::TestCase
-  test "should get login" do
-    get :login
-    assert_response :success
+  setup do
+
+    # add pseudo authentication so the tests don't break
+    CASClient::Frameworks::Rails::Filter.fake("homer")
   end
 
-  test "should get submit" do
-    get :submit
-    assert_response :success
+  test "should get show" do
+    if session[:cas_user]
+      get :show
+      assert_response :success
+    end
   end
 
 end
