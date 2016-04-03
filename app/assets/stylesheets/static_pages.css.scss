@@ -139,7 +139,6 @@ html, body {
 
 #banner-image {
   height: 0;
-  max-height: 400px;
   padding: 0; 
   padding-bottom: calc(20% + 100px); /* this number needs adjustment */
   background: linear-gradient( rgba(0, 0, 0, 0.5), 
@@ -201,7 +200,7 @@ h3, h4 {
 .page-content {
   margin: 40px 20% 140px 20%;
   overflow: auto;
-  padding-bottom: 140px;
+  padding-bottom: 80px;
 }
 
 #wrap {
