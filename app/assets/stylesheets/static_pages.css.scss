@@ -139,12 +139,16 @@ html, body {
 
 #banner-image {
   height: 0;
+  max-height: 400px;
   padding: 0; 
-  padding-bottom: 40%; /* this number needs adjustment */
+  padding-bottom: calc(20% + 100px); /* this number needs adjustment */
   background: linear-gradient( rgba(0, 0, 0, 0.5), 
     rgba(0, 0, 0, 0.5) ), url(march-of-resilience.jpg);
-  background-position: 0% 85%;
-  background-size: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: 50% 70%;
   background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
