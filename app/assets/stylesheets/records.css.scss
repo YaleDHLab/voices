@@ -1,3 +1,29 @@
 // Place all the styles related to the Records controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+/**************
+* form styles *
+**************/
+
+#file-upload-button .btn {
+  border-radius: 4px;
+  margin-left: 4px;
+}
+
+#file-upload-button .form-control {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+#placeholder-box {
+  display: table-cell;
+  -webkit-appearance: textfield;
+  background-color: white;
+  -webkit-rtl-ordering: logical;
+  -webkit-user-select: text;
+  cursor: auto;
+  padding: 1px;
+  border: 2px inset;
+}
+
