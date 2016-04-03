@@ -11,7 +11,16 @@
     </div>
   <% end %>
 
-  <%= f.file_field :file_upload %>
+  <div id="file-upload-button">
+    <div id="placeholder-box">File name...</div>
+      <div class="input-group">
+        <span class="input-group-btn">
+          <span class="btn btn-small btn-default btn-inverse" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
+          <%= f.file_field :file_upload, :id=> "custom-file-upload", style: "display: none;" %>
+        </span>
+      </div>
+    </div>
+  </div>  
 
   <div class="field">
     <%= f.label :title %><br>
