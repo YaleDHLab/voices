@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  cas_user_id: 1
+  cas_user_name: MyString
   title: MyString
   metadata: MyString
 
 two:
-  cas_user_id: 1
+  cas_user_name: MyString
   title: MyString
   metadata: MyString
