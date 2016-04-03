@@ -42,9 +42,13 @@
       </div>
     </div> <!-- /#header -->
 
-    <!-- page content -->
-    <%= yield %>
+    <div class='
+    <% if controller_name != "static_pages" && action_name != "home" %>container<%end%>' %>
 
+      <!-- page content -->
+      <%= yield %>
+
+    </div>
   </div> <!-- /#wrap -->
   <div id="footer">
     <div id="footer-left">

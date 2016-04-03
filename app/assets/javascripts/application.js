@@ -15,3 +15,4 @@
 //= require turbolinks
 //= require_tree .
 //= require bootstrap
+//= require masonry-4.0.0

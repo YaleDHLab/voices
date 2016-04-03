@@ -1,4 +1,9 @@
 class RecordsController < ApplicationController
+  
+  # before any method in the records controller is called,
+  # ensure the user is authenticated
+  before_filter CASClient::Frameworks::Rails::Filter
+
   before_action :set_record, only: [:show, :edit, :update, :destroy]
 
   # GET /records
@@ -25,6 +30,9 @@ class RecordsController < ApplicationController
   # POST /records.json
   def create
     @record = Record.new(record_params)
+
+    # retrieve the current cas user name from the session hash
+    @record.cas_user_name = session[:cas_user]
 
     respond_to do |format|
       if @record.save
@@ -69,6 +77,6 @@ class RecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      params.require(:record).permit(:cas_user_id, :title, :metadata, :file_upload)
+      params.require(:record).permit(:cas_user_name, :title, :metadata, :file_upload)
     end
 end
