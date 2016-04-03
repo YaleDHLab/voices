@@ -133,6 +133,11 @@ html, body {
   width: 180px;
 }
 
+/* make the currently selected page text a different color */
+#header a.active {
+  color: #35A1E4;
+}
+
 /***************
 * banner image *
 ***************/
