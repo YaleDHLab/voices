@@ -1,2 +1,6 @@
 <h1>User#show</h1>
 <p>Find me in app/views/user/show.html.erb</p>
+ 
+<% @user_uploads.each do |user_upload| %>
+  <%= image_tag user_upload.file_upload.url(:medium) %>
+<% end %>
