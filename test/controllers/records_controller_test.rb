@@ -3,6 +3,9 @@ require 'test_helper'
 class RecordsControllerTest < ActionController::TestCase
   setup do
     @record = records(:one)
+
+    # add pseudo authentication so the tests don't break
+    CASClient::Frameworks::Rails::Filter.fake("homer")
   end
 
   test "should get index" do
@@ -18,7 +21,7 @@ class RecordsControllerTest < ActionController::TestCase
 
   test "should create record" do
     assert_difference('Record.count') do
-      post :create, record: { cas_user_id: @record.cas_user_id, metadata: @record.metadata, title: @record.title }
+      post :create, record: { cas_user_name: @record.cas_user_name, metadata: @record.metadata, title: @record.title }
     end
 
     assert_redirected_to record_path(assigns(:record))
@@ -35,7 +38,7 @@ class RecordsControllerTest < ActionController::TestCase
   end
 
   test "should update record" do
-    patch :update, id: @record, record: { cas_user_id: @record.cas_user_id, metadata: @record.metadata, title: @record.title }
+    patch :update, id: @record, record: { cas_user_name: @record.cas_user_name, metadata: @record.metadata, title: @record.title }
     assert_redirected_to record_path(assigns(:record))
   end
 
