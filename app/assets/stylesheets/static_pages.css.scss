@@ -28,7 +28,7 @@ html, body {
     position: absolute;
     font-size: 2.5em;
     width: 126px;
-    left: calc(50% - 63px);
+    left: calc(50% - 57px);
     margin: 0;
     padding: 0;
     padding-top: 14px;
@@ -201,7 +201,6 @@ h3, h4 {
 * footer *
 *********/
 
-
 .page-content {
   margin: 40px 20% 140px 20%;
   overflow: auto;
@@ -225,10 +224,36 @@ h3, h4 {
 
 #footer-left {
   float: left;
+  padding: 40px;
+}
+
+#footer-left-top-brand,
+#footer-left-top-university {
+  display: inline-block;
+}
+
+#footer-left-top-brand {
+  font-size: 1.5em;
+  padding-right: 4px;
+}
+
+#footer-left-bottom {
+  margin-left: 42px;
+  font-style: italic;
 }
 
 #footer-right {
   float: right;
+  padding: 40px;
+}
+
+#footer-right-top {
+  position: absolute;
+}
+
+#footer-right-bottom {
+  margin-top: 6px;
+  margin-left: 3px;
 }
 
 /****************
