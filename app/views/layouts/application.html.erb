@@ -34,21 +34,54 @@
         <!-- navbar links -->
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">  
-            <li><%= link_to "ABOUT", static_pages_about_path %></li>
-            
-            <li><%= link_to "CONTRIBUTE", new_record_path %></li>
-            
-            <li><%= link_to "VOICES", root_path, :id => "voices-brand" %></li>
-            
-            <li><%= link_to "CONTACT", static_pages_contact_path %></li>
-            
             <li>
-              <% if session[:cas_user] %>
-                <%= link_to session[:cas_user], user_show_path %>
+              <% if controller?("static_pages") && action?("about") %>
+                <%= link_to "ABOUT", static_pages_about_path, :class => "active" %>
               <% else %>
-                <%= link_to "LOG IN", user_show_path %>
+                <%= link_to "ABOUT", static_pages_about_path %>
               <% end %>
             </li>
+
+            <li>
+              <% if controller?("records") && action?("new") %>
+                <%= link_to "CONTRIBUTE", new_record_path, :class => "active" %>
+              <% else %>
+                <%= link_to "CONTRIBUTE", new_record_path %>
+              <% end %>
+            </li>
+
+            <li>
+              <% if controller?("static_pages") && action?("home") %>
+                <%= link_to "VOICS", root_path, :class => "active", :id => "voices-brand" %>
+              <% else %>
+                <%= link_to "VOICES", root_path, :id => "voices-brand" %>
+              <% end %>
+            </li>
+
+            <li>
+              <% if controller?("static_pages") && action?("contact") %>
+                <%= link_to "CONTACT", static_pages_contact_path, :class => "active" %>
+              <% else %>
+                <%= link_to "CONTACT", static_pages_contact_path %>
+              <% end %>
+            </li>
+
+            <li>
+              <% if session[:cas_user] %>
+                <% if controller?("user") && action?("show") %>
+                  <%= link_to session[:cas_user], user_show_path, :class => "active" %>
+                <% else %>
+                  <%= link_to session[:cas_user], user_show_path %>
+                <% end %>
+              <% else %>
+                <% if controller?("user") && action?("show") %>
+                  <% link_to "LOG IN", user_show_path, :class=> "active" %>
+                <% else %>
+                  <%= link_to "LOG IN", user_show_path %>
+                <% end %>
+              <% end %>
+            </li>
+
           </ul>
         </div>
       </div>
