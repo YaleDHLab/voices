@@ -26,17 +26,29 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" id="bootstrap-brand" href="#">VOICES</a>
+          <a>
+            <%= link_to "VOICES", root_path, :id => "bootstrap-brand", :class => "navbar-brand" %>
+          </a>
         </div>
         
         <!-- navbar links -->
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">  
-            <li><a href="#">ABOUT</a></li>
-            <li><a href="#">CONTRIBUTE</a></li>
-            <li><a href="#" id="voices-brand">VOICES</a></li>
-            <li><a href="#contact">CONTACT</a></li>
-            <li><a href="#">LOG IN</a></li>
+            <li><%= link_to "ABOUT", static_pages_about_path %></li>
+            
+            <li><%= link_to "CONTRIBUTE", new_record_path %></li>
+            
+            <li><%= link_to "VOICES", root_path, :id => "voices-brand" %></li>
+            
+            <li><%= link_to "CONTACT", static_pages_contact_path %></li>
+            
+            <li>
+              <% if session[:cas_user] %>
+                <%= link_to session[:cas_user], user_show_path %>
+              <% else %>
+                <%= link_to "LOG IN", user_show_path %>
+              <% end %>
+            </li>
           </ul>
         </div>
       </div>
