@@ -1,12 +1,21 @@
 VoicesRails::Application.routes.draw do
   resources :records
 
+  # the application home page
   root "static_pages#home"
-  get "user/login"
-  get "user/submit"
+  
+  # the user's home page
+  get "user/show"
+
+  # the application home page
   get "static_pages/home"
+
+  # static about page
   get "static_pages/about"
+
+  # static contact page
   get "static_pages/contact"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
