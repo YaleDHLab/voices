@@ -50,12 +50,9 @@
               <% end %>
             </li>
 
+            <!-- Don't render an active class on the voices page -->
             <li>
-              <% if controller?("static_pages") && action?("home") %>
-                <%= link_to "VOICS", root_path, :class => "active", :id => "voices-brand" %>
-              <% else %>
-                <%= link_to "VOICES", root_path, :id => "voices-brand" %>
-              <% end %>
+              <%= link_to "VOICES", root_path, :id => "voices-brand" %>
             </li>
 
             <li>
@@ -97,7 +94,8 @@
   </div> <!-- /#wrap -->
   <div id="footer">
     <div id="footer-left">
-      <div id="footer-left-top">Yale UNIVERSITY LIBRARY</div>
+      <div id="footer-left-top-brand">Yale</div>
+      <div id="footer-left-top-university">UNIVERSITY LIBRARY</div>
       <div id="footer-left-bottom">Digital Humanities Laboratory</div>
     </div>
     <div id="footer-right">
