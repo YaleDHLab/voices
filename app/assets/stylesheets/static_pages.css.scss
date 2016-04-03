@@ -15,7 +15,7 @@ html, body {
 * minified navbar *
 ******************/
 
-/* override bootstrap collapse default to collapse on small rather than the default extra-small screens */
+/* override bootstrap collapse styles */
 @media (max-width: 767px) {
   /* restore and center the voices brand and remove bootstrap brand */
   #voices-brand {
@@ -87,7 +87,7 @@ html, body {
 * expanded navbar *
 ******************/
 
-@media (min-width: 767px){
+@media (min-width: 768px){
 
   /* restore the voices brand (centered in list) 
     and remove the bootstrap brand (on left from bootstrap) */
@@ -112,11 +112,7 @@ html, body {
     float: none;
     text-align: center;
   }
-
 }
-
-
-
 
 
 /* remove rounded edges from navbar */
