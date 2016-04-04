@@ -190,8 +190,11 @@ html, body {
 ***************/
 
 .center-button {
-  margin-left: calc(50% - 46px);
-  margin-right: calc(50% - 46px)
+  margin-left: calc(50% - 50px);
+}
+
+a.btn.btn-primary.center-button {
+  width: 100px;
 }
 
 h3, h4 {
