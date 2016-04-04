@@ -13,6 +13,5 @@
 //= require jquery-2.2.2.js
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
 //= require bootstrap
 //= require masonry-4.0.0
