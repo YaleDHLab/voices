@@ -6,24 +6,80 @@
 * form styles *
 **************/
 
+.center-text {
+  text-align: center;
+}
+
+.clear-floats, .field {
+  clear: both;
+}
+
+.preface-text {
+  padding-bottom: 30px;
+}
+
+.field {
+  padding-top: 20px;
+}
+
+field {
+  width: 100%;
+}
+
+field * {
+  display: inline-block;
+}
+
+label {
+  font-weight: 400;
+  width: 240px;
+  float: left;
+}
+
+.long-label {
+  width: 400px;
+}
+
+input, button, select, textarea {
+  float: left;
+  background-color: #f8f8f8;
+  border: 1px solid lightgray;
+  border-radius: 0px;
+}
+
+/*********************
+* file upload styles *
+*********************/
+
+span.btn.btn-small.btn-default.btn-inverse {
+  border-radius: 0px;
+  padding: 0px;
+  float: left;
+}
+
 #file-upload-button .btn {
   border-radius: 4px;
   margin-left: 4px;
 }
 
 #file-upload-button .form-control {
-  border-radius: 0;
   box-shadow: none;
 }
 
 #placeholder-box {
-  display: table-cell;
-  -webkit-appearance: textfield;
-  background-color: white;
+  float: left;
   -webkit-rtl-ordering: logical;
   -webkit-user-select: text;
+  background-color: #f8f8f8;
   cursor: auto;
   padding: 1px;
-  border: 2px inset;
+  border: 1px solid lightgray;
 }
 
+/****************
+* submit button *
+****************/
+
+#submit-button {
+  margin-left: calc( 50% - 38px );
+}
