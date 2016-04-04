@@ -23,5 +23,9 @@
     Future curation will be community-based and, give the sweeping nature of the digital archive, will be encouraged as part of a broader curriculur program to listen, understand, and reimagine Yale.
   </div>
   <br>
-  <button class="btn btn-primary center-button">Contribute</button>
+  
+  <%= link_to "Contribute", 
+   {:controller => :records, :action => :new},
+   :class => "btn btn-primary center-button" %>
+
 </div> <!-- .page-content -->
