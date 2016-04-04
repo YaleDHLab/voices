@@ -174,9 +174,11 @@ html, body {
 #text-overlay div {
   float: left;
   padding-right: 4px;
-  color: #8D8D8D;
+  color: #6f6f6f;
   cursor: pointer;
   font-size: 15px;
+  -webkit-transition: color 2s;
+          transition: color 2s;
 }
 
 #text-overlay div:hover {
