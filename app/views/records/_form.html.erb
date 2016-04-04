@@ -11,26 +11,56 @@
     </div>
   <% end %>
 
-  <div id="file-upload-button">
-    <div id="placeholder-box">File name...</div>
-      <div class="input-group">
-        <span class="input-group-btn">
-          <span class="btn btn-small btn-default btn-inverse" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
-          <%= f.file_field :file_upload, :id=> "custom-file-upload", style: "display: none;" %>
-        </span>
-      </div>
-    </div>
-  </div>  
-
   <div class="field">
-    <%= f.label :title %><br>
+    <%= f.label :include_name, "Would you like your name included in the archive?<sup>*</sup>".html_safe, :class => "long-label" %>
+    <%= f.check_box :include_name, :class => "custom-checkbox" %>
+  </div>
+
+  <div class="starred-field">
+    <%= f.label :title, "Title of Material<sup>*</sup>".html_safe %>
     <%= f.text_field :title %>
   </div>
+
   <div class="field">
-    <%= f.label :metadata %><br>
+    <%= f.label :content_type, "Content Type" %>
+    <%= f.select :content_type, options_for_content_type, :prompt => "Image" %>
+  </div>
+
+  <div id="file-upload-container" class="field">
+    <%= f.label :file_upload, "Upload File<sup>*</sup>".html_safe %>
+    <div id="placeholder-box">File name...</div>
+    <%= f.file_field :file_upload, :id=> "custom-file-upload", style: "display: none;" %>
+    <span class="btn btn-small btn-default btn-inverse" id="file-upload-button" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
+  </div>
+
+  <div class="field">
+    <%= f.label :description, "Description of material" %>
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= f.label :location, "Location" %>
+    <%= f.text_field :location %>
+  </div>
+
+  <div class="field">
+    <%= f.label :source_url, "Source URL" %>
+    <%= f.text_field :source_url %>
+  </div>
+
+  <div class="field">
+    <%= f.label :metadata, "Metadata / Hashtags" %>
     <%= f.text_field :metadata %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+
+  <div class="field">
+    <%= f.label :release_checked, "Terms & Conditions<sup>*</sup>".html_safe %>
+    <%= f.check_box :release_checked, :class => "custom-checkbox" %>
   </div>
+
+  <div class="clear-floats"></div>
+
+  <%= button_tag(type: 'submit', class: "btn btn-primary", id: "submit-button") do %>
+    <i class="icon-ok icon-white"></i> Submit
+  <% end %>
 <% end %>
