@@ -32,7 +32,7 @@ field * {
 
 label {
   font-weight: 400;
-  width: 240px;
+  width: 180px;
   float: left;
 }
 
@@ -42,9 +42,32 @@ label {
 
 input, button, select, textarea {
   float: left;
+  height: 30px;
   background-color: #f8f8f8;
   border: 1px solid lightgray;
   border-radius: 0px;
+}
+
+input[type="radio"], input[type="checkbox"] {
+  height: 10px;
+}
+
+input {
+  width: calc(100% - 180px);
+}
+
+input#record_description {
+  height: 150px;
+}
+
+select#record_content_type {
+  width: 120px;
+}
+
+.terms-and-conditions {
+  float: left;
+  margin-left: 200px;
+  margin-top: -22px;
 }
 
 /*********************
@@ -52,9 +75,9 @@ input, button, select, textarea {
 *********************/
 
 span.btn.btn-small.btn-default.btn-inverse {
-  border-radius: 0px;
-  padding: 0px;
+  padding: 4px 14px;
   float: left;
+  margin-left: 10px;
 }
 
 #file-upload-button .btn {
@@ -68,12 +91,15 @@ span.btn.btn-small.btn-default.btn-inverse {
 
 #placeholder-box {
   float: left;
+  height: 30px;
   -webkit-rtl-ordering: logical;
   -webkit-user-select: text;
   background-color: #f8f8f8;
   cursor: auto;
-  padding: 1px;
+  padding: 5px 20px;
   border: 1px solid lightgray;
+  font-style: italic;
+  width: 200px;
 }
 
 /****************
@@ -81,5 +107,7 @@ span.btn.btn-small.btn-default.btn-inverse {
 ****************/
 
 #submit-button {
-  margin-left: calc( 50% - 38px );
+  margin-top: 40px;
+  width: 140px;
+  margin-left: calc( 50% - 70px );
 }
