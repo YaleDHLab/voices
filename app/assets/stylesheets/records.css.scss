@@ -2,9 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-/**************
-* form styles *
-**************/
+/*************
+* record#new *
+*************/
 
 .form-container {
   margin: 40px 10% 140px 10%;
@@ -100,6 +100,7 @@ span.btn.btn-small.btn-default.btn-inverse {
 }
 
 #placeholder-box {
+  overflow: hidden;
   float: left;
   height: 30px;
   -webkit-rtl-ordering: logical;
@@ -121,3 +122,80 @@ span.btn.btn-small.btn-default.btn-inverse {
   width: 140px;
   margin-left: calc( 50% - 70px );
 }
+
+/**************
+* record#show *
+**************/
+
+.record-details-top {
+  margin: 40px 20% 40px;
+}
+
+.gray-background {
+  background-color: #e6e6e6;
+  width: 100%;
+  height: 100%;
+}
+
+.record-details {
+  margin: 40px 20% 140px 20%;
+  overflow: auto;
+  padding-bottom: 80px;
+}
+
+.metadata-spacer {
+  display: block;
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+.record-title {
+  display: inline-block;
+  margin-top: 37px;
+}
+
+a.btn.btn-primary {
+  color: #fff;
+}
+
+#edit-record-button {
+  display: inline-block;
+  float: right;
+  margin-top: 30px;
+  width: 80px;
+}
+
+.record-details .image-container {
+  width: 100%;
+  background: #fff;
+  border: 1px solid darkgray;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.record-details img {
+  margin-bottom: 20px;
+  display: block;
+  margin: auto;
+  border: 1px solid darkgray;
+}
+
+.record-display-left {
+  float: left;
+  width: 60%;
+}
+
+.record-display-right {
+  float: right;
+  width: 40%;
+}
+
+.record-display-label {
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.record-display-text {
+  margin-bottom: 20px;
+}
+
