@@ -119,8 +119,8 @@ span.btn.btn-small.btn-default.btn-inverse {
 
 #submit-button {
   margin-top: 40px;
-  width: 140px;
-  margin-left: calc( 50% - 70px );
+  width: 100px;
+  margin-left: calc( 50% - 50px );
 }
 
 /**************
@@ -156,13 +156,13 @@ span.btn.btn-small.btn-default.btn-inverse {
 
 a.btn.btn-primary {
   color: #fff;
+  width: 80px;
 }
 
 #edit-record-button {
   display: inline-block;
   float: right;
   margin-top: 30px;
-  width: 80px;
 }
 
 .record-details .image-container {
