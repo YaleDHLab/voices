@@ -60,11 +60,14 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 input {
-  width: calc(100% - 180px);
+  width: calc(100% - 185px);
+  padding-right: 2px;
 }
 
-input#record_description {
+textarea#record-description {
   height: 150px;
+  width: calc(100% - 185px);
+  max-width: calc(100% - 185px);
 }
 
 select#record_content_type {
