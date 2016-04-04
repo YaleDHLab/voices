@@ -84,9 +84,16 @@
         </div>
       </div>
     </div> <!-- /#header -->
-
-    <div class='
-    <% if controller_name != "static_pages" && action_name != "home" %>container<%end%>' %>
+ 
+    <% if controller_name != "static_pages" && action_name != "home" %>
+      <% if controller_name != "records" && action_name != "show" %>
+        <div class="container">
+      <% else %>
+      <div>
+      <% end %>
+    <%else%>
+      <div>
+    <% end %>
 
       <!-- page content -->
       <%= yield %>
