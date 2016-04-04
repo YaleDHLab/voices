@@ -23,22 +23,23 @@ $(document).ready(function() {
   };
 
   var updateWordColors = function() {
-    var idToTarget = "word-number-" + Math.round( generateRandomNumber(0, 500) );
+    var idToTarget = "word-number-" + Math.round( generateRandomNumber(0, 900) );
     var currentTarget = document.getElementById( idToTarget );
     var currentColor = rgb2hex( window.getComputedStyle(currentTarget, null).getPropertyValue('color') );
     var currentColorIndex = colorRange.indexOf(currentColor);
 
-    if (currentColorIndex == colorRange[colorRange.length] - 2) {
-      currentTarget.style.color = colorRange[colorRange.length - 3];
+    if (currentColorIndex == colorRange[colorRange.length] - 1) {
+      currentTarget.style.color = colorRange[colorRange.length - 2];
     }
 
     else if (currentColorIndex == 0) {
-      currentTarget.style.color = colorRange[0];
+      currentTarget.style.color = colorRange[1];
     }
 
     else {
       var randomVariable = generateRandomNumber(0, 1);
-      if (randomVariable > .5 ) {
+      // specify the probability the word will increase in color
+      if (randomVariable > .005 ) {
         currentTarget.style.color = colorRange[currentColorIndex + 1];
       }
       else {
