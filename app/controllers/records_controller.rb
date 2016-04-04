@@ -77,6 +77,6 @@ class RecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      params.require(:record).permit(:cas_user_name, :title, :metadata, :file_upload)
+      params.require(:record).permit(:title, :metadata, :file_upload, :cas_user_name, :include_name, :content_type, :description, :location, :source_url, :release_checked)
     end
 end
