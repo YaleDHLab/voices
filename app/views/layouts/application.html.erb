@@ -85,20 +85,9 @@
       </div>
     </div> <!-- /#header -->
  
-    <% if controller_name != "static_pages" && action_name != "home" %>
-      <% if controller_name != "records" && action_name != "show" %>
-        <div class="container">
-      <% else %>
-      <div>
-      <% end %>
-    <%else%>
-      <div>
-    <% end %>
-
       <!-- page content -->
       <%= yield %>
 
-    </div>
   </div> <!-- /#wrap -->
   <div id="footer">
     <div id="footer-left">
