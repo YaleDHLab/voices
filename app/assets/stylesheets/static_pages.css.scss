@@ -28,10 +28,11 @@ html, body {
     position: absolute;
     font-size: 2.5em;
     width: 126px;
-    left: calc(50% - 57px);
+    left: calc((100%/2) - (126px/2));
     margin: 0;
     padding: 0;
     padding-top: 14px;
+    font-family: merriweather;
   }
 
   .navbar-header {
@@ -93,6 +94,7 @@ html, body {
     and remove the bootstrap brand (on left from bootstrap) */
   #voices-brand {
     display: block;
+    font-family: merriweather;
     font-size: 2.4em;
     font-weight: 800;
   }
@@ -102,8 +104,8 @@ html, body {
   }
 
   #header a {
-    padding-top: 25px;
-    padding-bottom: 15px;
+    padding: 25px 10px 10px 10px;
+    width: 106px;
     border: none;
   }
 
