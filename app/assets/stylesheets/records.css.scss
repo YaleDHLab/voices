@@ -6,6 +6,12 @@
 * form styles *
 **************/
 
+.form-container {
+  margin: 40px 10% 140px 10%;
+  overflow: auto;
+  padding-bottom: 80px;
+}
+
 .center-text {
   text-align: center;
 }
@@ -37,7 +43,7 @@ label {
 }
 
 .long-label {
-  width: 400px;
+  width: 350px;
 }
 
 input, button, select, textarea {
@@ -50,6 +56,7 @@ input, button, select, textarea {
 
 input[type="radio"], input[type="checkbox"] {
   height: 10px;
+  width: 10px;
 }
 
 input {
