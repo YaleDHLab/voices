@@ -1,11 +1,15 @@
 <% content_for :head do %>
   <%= stylesheet_link_tag 'static_pages' %>
   <%= stylesheet_link_tag 'records' %>
+  <%= javascript_include_tag 'records' %>
 <% end %>
 
-<h1>Editing record</h1>
+<div class="form-container">
+  <h1 class="center">Editing record</h1>
 
-<%= render 'form' %>
+  <%= render 'form' %>
 
-<%= link_to 'Show', @record %> |
-<%= link_to 'Back', records_path %>
+  <%= link_to 'Show', @record %> |
+  <%= link_to 'Back', records_path %>
+
+</div>
