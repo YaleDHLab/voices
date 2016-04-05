@@ -4,22 +4,21 @@
   
 <% end %>
 
-<div class="gray-background">
-
+<div class="gray-background masonry-spacer">
   <div class="container">
-
-    <div class="masonry">
-      <% @user_records.each do |record| %>
-        <div class="masonry-item">
-          <%= link_to record_path(record.id), :class => "section" do %>
-            <%= image_tag record.file_upload.url(:original) %>
-          <% end %>
-          <div class="masonry-item-title">
-            <%= record.title %>
+    <div class="masonry-container">
+      <div class="masonry">
+        <% @user_records.each do |record| %>
+          <div class="masonry-item">
+            <%= link_to record_path(record.id), :class => "section" do %>
+              <%= image_tag record.file_upload.url(:original) %>
+            <% end %>
+            <div class="masonry-item-title">
+              <%= record.title %>
+            </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
-
   </div>
 </div>
