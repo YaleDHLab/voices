@@ -79,11 +79,17 @@ class RecordsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_record
-      @record = Record.find(params[:id])
+      begin
+        found_record = Record.find(params[:id])
+        @record = found_record
+      rescue
+        raise ActionController::RoutingError.new('Not Found')
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
       params.require(:record).permit(:title, :metadata, :file_upload, :cas_user_name, :include_name, :content_type, :description, :location, :source_url, :release_checked)
     end
+
 end
