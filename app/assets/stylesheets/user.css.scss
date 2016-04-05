@@ -2,6 +2,31 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.container a { 
-  margin: 7px 7px;
+*, *:before, *:after {box-sizing:  border-box !important;}
+
+.masonry {
+ -moz-column-width: 13em;
+ -webkit-column-width: 13em;
+ -moz-column-gap: 1em;
+ -webkit-column-gap: 1em; 
+  
+}
+
+.masonry-item {
+ display: inline-block;
+ margin: 0 0 1em;
+ width:  100%; 
+ background:  #efefef;
+ box-shadow: 2px 2px 4px 0 #7b7b7b;
+}
+
+.masonry-item img {
+  width: 100%;
+  height: auto;
+}
+
+.masonry-item-title {
+  background-color: #fff;
+  padding: 10px 14px;
+  font-family: lato;
 }

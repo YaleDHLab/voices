@@ -1,17 +1,25 @@
 <% content_for :head do %>
   <%= stylesheet_link_tag 'static_pages' %>
   <%= stylesheet_link_tag 'user' %>
-  <%= javascript_include_tag 'user' %>
+  
 <% end %>
 
-<div class="container">
+<div class="gray-background">
 
-  <div class="grid">
-    <% @user_records.each do |record| %>
-      <%= link_to record_path(record.id) do %>
-        <%= image_tag record.file_upload.url(:original), :class => "grid-item" %>
+  <div class="container">
+
+    <div class="masonry">
+      <% @user_records.each do |record| %>
+        <div class="masonry-item">
+          <%= link_to record_path(record.id), :class => "section" do %>
+            <%= image_tag record.file_upload.url(:original) %>
+          <% end %>
+          <div class="masonry-item-title">
+            <%= record.title %>
+          </div>
+        </div>
       <% end %>
-    <% end %>
-  </div>
+    </div>
 
+  </div>
 </div>
