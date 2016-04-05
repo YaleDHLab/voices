@@ -3,7 +3,7 @@ class UserController < ApplicationController
 
   def show
     # retrieve all records that belong to this user
-    @user_uploads = Record.where(cas_user_name: session[:cas_user])
+    @user_records = Record.where(cas_user_name: session[:cas_user])
   end
 
 end
