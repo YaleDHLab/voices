@@ -1,11 +1,17 @@
 <% content_for :head do %>
   <%= stylesheet_link_tag 'static_pages' %>
   <%= stylesheet_link_tag 'user' %>
+  <%= javascript_include_tag 'user' %>
 <% end %>
 
-<h1>User#show</h1>
-<p>Find me in app/views/user/show.html.erb</p>
- 
-<% @user_uploads.each do |user_upload| %>
-  <%= image_tag user_upload.file_upload.url(:medium) %>
-<% end %>
+<div class="container">
+
+  <div class="grid">
+    <% @user_records.each do |record| %>
+      <%= link_to record_path(record.id) do %>
+        <%= image_tag record.file_upload.url(:original), :class => "grid-item" %>
+      <% end %>
+    <% end %>
+  </div>
+
+</div>
