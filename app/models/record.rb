@@ -1,6 +1,8 @@
 class Record < ActiveRecord::Base
   belongs_to :user
 
+  validates :title, presence: true
+
   has_attached_file :file_upload, 
   :styles => { 
       :large => "600x600>",
