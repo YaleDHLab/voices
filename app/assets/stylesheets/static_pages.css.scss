@@ -143,26 +143,28 @@ html, body {
   color: #35A1E4;
 }
 
+.dropdown-menu {
+  min-width: 0px;
+  padding-bottom: 15px;
+}
+
 .dropdown-menu .glyphicon {
   display: inline-block;
   float: left;
   margin: 12px 0px 0px 14px;
 }
 
-.dropdown-menu a {
-  color: #000;
-  font-size: 11px;
-  text-decoration: none;
-}
-
-.dropdown-menu-row-text {
+#profile-dropdown .dropdown-menu-row-text {
   margin: 0px 0px 0px 30px;
   padding: 9px 0px 0px 0px;
 }
 
-.dropdown-menu {
-  min-width: 0px;
-  padding-bottom: 15px;
+#profile-dropdown a {
+  color: #000;
+  font-size: 11px;
+  text-decoration: none;
+  padding: 0;
+  margin: 25px 10px 10px 10px;
 }
 
 /***************
