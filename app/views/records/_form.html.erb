@@ -1,15 +1,19 @@
 <%= form_for(@record, :html => { :multipart => true }) do |f| %>
   <% if @record.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@record.errors.count, "error") %> prohibited this record from being saved:</h2>
-
+   <div class="alert alert-danger">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
       <ul>
-      <% @record.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+         <% @record.errors.full_messages.each do |msg| %>
+         <li><%= msg %></li>
+         <% end %>
       </ul>
     </div>
   <% end %>
+
+
+
+
+
 
   <div class="field">
     <%= f.label :include_name, "Would you like your name included in the archive?<sup>*</sup>".html_safe, :class => "long-label" %>
