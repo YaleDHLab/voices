@@ -6,7 +6,8 @@ class RecordsController < ApplicationController
 
   before_action :set_record, only: [:show, :edit, :update, :destroy]
   before_action only: [:show, :edit, :update, :destroy] do
-    check_privileges( Record.find_by(id: params[:id]) )
+    requested_record = Record.find_by(id: params[:id])
+    check_privileges(requested_record)
   end
 
   # GET /records
