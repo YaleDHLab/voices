@@ -5,6 +5,9 @@ class RecordsController < ApplicationController
   before_filter CASClient::Frameworks::Rails::Filter
 
   before_action :set_record, only: [:show, :edit, :update, :destroy]
+  before_action only: [:show, :edit, :update, :destroy] do
+    check_privileges( Record.find_by(id: params[:id]) )
+  end
 
   # GET /records
   # GET /records.json
