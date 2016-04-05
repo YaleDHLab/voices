@@ -116,6 +116,9 @@ html, body {
   }
 }
 
+/****************
+* navbar global *
+****************/
 
 /* remove rounded edges from navbar */
 .navbar {
@@ -138,6 +141,28 @@ html, body {
 /* make the currently selected page text a different color */
 #header a.active {
   color: #35A1E4;
+}
+
+.dropdown-menu .glyphicon {
+  display: inline-block;
+  float: left;
+  margin: 12px 0px 0px 14px;
+}
+
+.dropdown-menu a {
+  color: #000;
+  font-size: 11px;
+  text-decoration: none;
+}
+
+.dropdown-menu-row-text {
+  margin: 0px 0px 0px 30px;
+  padding: 9px 0px 0px 0px;
+}
+
+.dropdown-menu {
+  min-width: 0px;
+  padding-bottom: 15px;
 }
 
 /***************
@@ -347,6 +372,7 @@ h3, h4 {
 .navbar-default .navbar-nav > .open > a:hover, 
 .navbar-default .navbar-nav > .open > a:focus {
   color: #555;
+  background-color: #fff;
 }
 /* caret */
 .navbar-default .navbar-nav > .dropdown > a .caret {
