@@ -6,7 +6,7 @@ class Record < ActiveRecord::Base
       :medium => "300x300>", 
       :thumb => "100x100>"
     }, 
-  :default_url => "/images/:style/missing.png"
+  :default_url => ":placeholder"
   
   validates_attachment_content_type :file_upload, :content_type => /\Aimage\/.*\Z/
 end
