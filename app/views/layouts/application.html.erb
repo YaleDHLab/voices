@@ -6,7 +6,6 @@
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 
-  <!-- Quick and dirty fonts -->
   <link href='https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Merriweather:400,700' rel='stylesheet' type='text/css'>
 
@@ -51,7 +50,6 @@
               <% end %>
             </li>
 
-            <!-- Don't render an active class on the voices page -->
             <li>
               <%= link_to "VOICES", root_path, :id => "voices-brand" %>
             </li>
