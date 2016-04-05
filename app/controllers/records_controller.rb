@@ -5,6 +5,9 @@ class RecordsController < ApplicationController
   before_filter CASClient::Frameworks::Rails::Filter
 
   before_action :set_record, only: [:show, :edit, :update, :destroy]
+  
+  # before serving user with a record, validate that they have permission
+  # to access that record
   before_action only: [:show, :edit, :update, :destroy] do
     requested_record = Record.find_by(id: params[:id])
     check_privileges(requested_record)
