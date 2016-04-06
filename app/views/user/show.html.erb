@@ -15,7 +15,7 @@
       <div class="masonry">
         <% @user_records.each do |record| %>
           
-          <% if record.content_type == "Video" %>  
+          <% if record.is_video? %>  
             <div class="masonry-item">
               <%= link_to record_path(record.id), :class => "section" do %>
                 <%= image_tag record.file_upload.url(:medium) %>
@@ -25,7 +25,7 @@
               </div>
             </div>
             
-          <% elsif record.content_type == "Image" %>  
+          <% elsif record.is_image? %>  
             <div class="masonry-item">
               <%= link_to record_path(record.id), :class => "section" do %>
                 <%= image_tag record.file_upload.url(:original) %>
@@ -35,7 +35,7 @@
               </div>
             </div>
 
-          <% elsif record.content_type == "Audio" %>  
+          <% elsif record.is_audio? %>  
             <div class="masonry-item">
               <%= link_to record_path(record.id), :class => "section audio-section" do %>
                 <%= image_tag("audio-icon.jpg") %>
