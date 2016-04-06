@@ -92,11 +92,11 @@
             <% else %>
               <% if controller?("user") && action?("show") %>
                 <li>
-                  <% link_to "LOG IN", user_show_path, :class=> "active" %>
+                  <% link_to "LOG IN", :controller => "user", :action => "login", :class => "active" %>
                 </li>
               <% else %>
                 <li>
-                  <%= link_to "LOG IN", user_show_path %>
+                  <%= link_to "LOG IN", :controller => "user", :action => "login" %>
                 </li>
               <% end %>
             <% end %>
