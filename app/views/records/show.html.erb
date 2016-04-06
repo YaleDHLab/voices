@@ -27,9 +27,17 @@
       </div>
     </div>
 
-    <div class="image-container">
-      <%= image_tag @record.file_upload.url(:medium) %>
-    </div>
+    <% if @record.content_type == "Image" %>
+      <div class="image-container">
+        <%= image_tag @record.file_upload.url(:medium) %>
+      </div>
+    <% else %>
+      <% if @record.content_type == "Video" %>
+        <div class="image-container">
+          <%= video_tag( @record.file_upload.url, poster: @record.file_upload.url(:medium), size: "300x300", id: "loaded-video", controls: true ) %>
+        </div>
+      <% end %>
+    <% end %>
 
     <div class="metadata-spacer"></div>
 
