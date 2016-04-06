@@ -1,10 +1,11 @@
 <% content_for :head do %>
   <%= stylesheet_link_tag 'static_pages' %>
   <%= stylesheet_link_tag 'user' %>
-  
+  <%= stylesheet_link_tag 'records' %>
+  <%= javascript_include_tag 'user' %>
 <% end %>
 
-<div class="gray-background masonry-spacer">
+<div class="gray-background">
   <div class="container">
     <div class="masonry-container">
       <div class="masonry">
@@ -20,19 +21,16 @@
               </div>
             </div>
             
-          <% else %>
-
-            <% if record.content_type == "Image" %>  
-              <div class="masonry-item">
-                <%= link_to record_path(record.id), :class => "section" do %>
-                  <%= image_tag record.file_upload.url(:original) %>
-                <% end %>
-                <div class="masonry-item-title">
-                  <%= record.title %>
-                </div>
+          <% elsif record.content_type == "Image" %>  
+            <div class="masonry-item">
+              <%= link_to record_path(record.id), :class => "section" do %>
+                <%= image_tag record.file_upload.url(:original) %>
+              <% end %>
+              <div class="masonry-item-title">
+                <%= record.title %>
               </div>
+            </div>
 
-            <% end %>
           <% end %>
         <% end %>
       </div>
