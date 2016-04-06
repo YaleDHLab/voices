@@ -31,6 +31,17 @@
               </div>
             </div>
 
+          <% elsif record.content_type == "Audio" %>  
+            <div class="masonry-item">
+              <%= link_to record_path(record.id), :class => "section audio-section" do %>
+                <%= image_tag("audio-icon.jpg") %>
+              <% end %>
+              <div class="masonry-item-title">
+                <%= record.title %>
+              </div>
+            </div>
+
+
           <% end %>
         <% end %>
       </div>
