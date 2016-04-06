@@ -34,6 +34,9 @@ gem 'rubycas-client'
 gem 'paperclip', '~> 4.2'
 gem 'aws-sdk', '~> 1.55.0'
 
+# add video preprocessor to create video still image
+gem "paperclip-ffmpeg", "~> 1.0.1"
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

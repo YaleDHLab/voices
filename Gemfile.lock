@@ -70,6 +70,8 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (= 0.3.0)
+    paperclip-ffmpeg (1.0.1)
+      paperclip (>= 2.5.2)
     polyglot (0.3.5)
     rack (1.5.5)
     rack-test (0.6.3)
@@ -132,6 +134,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   paperclip (~> 4.2)
+  paperclip-ffmpeg (~> 1.0.1)
   rails (= 4.0.0)
   rubycas-client
   sass-rails (~> 4.0.0)
