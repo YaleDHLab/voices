@@ -9,14 +9,31 @@
     <div class="masonry-container">
       <div class="masonry">
         <% @user_records.each do |record| %>
-          <div class="masonry-item">
-            <%= link_to record_path(record.id), :class => "section" do %>
-              <%= image_tag record.file_upload.url(:original) %>
-            <% end %>
-            <div class="masonry-item-title">
-              <%= record.title %>
+          
+          <% if record.content_type == "Video" %>  
+            <div class="masonry-item">
+              <%= link_to record_path(record.id), :class => "section" do %>
+                <%= image_tag record.file_upload.url(:medium) %>
+              <% end %>
+              <div class="masonry-item-title">
+                <%= record.title %>
+              </div>
             </div>
-          </div>
+            
+          <% else %>
+
+            <% if record.content_type == "Image" %>  
+              <div class="masonry-item">
+                <%= link_to record_path(record.id), :class => "section" do %>
+                  <%= image_tag record.file_upload.url(:original) %>
+                <% end %>
+                <div class="masonry-item-title">
+                  <%= record.title %>
+                </div>
+              </div>
+
+            <% end %>
+          <% end %>
         <% end %>
       </div>
     </div>
