@@ -18,5 +18,13 @@ $(window).load(function() {
     tags[i].style.border = '1px solid darkgray';
     tags[i].style.boxShadow = "1px 1px 5px #888888";
   };
+})
 
+// use jquery to ensure the gray-background div height fills the remaining page height
+$(document).ready(function() {
+  $(".gray-background").height( $(document).height() - $("#header").height() - $("#footer").height() );
+
+  $(window).resize(function() {
+    $(".gray-background").height( $(document).height() - $("#header").height() - $("#footer").height() );
+  });
 });
