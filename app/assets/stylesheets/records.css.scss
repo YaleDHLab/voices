@@ -178,8 +178,12 @@ a.btn.btn-primary {
   padding-bottom: 20px;
 }
 
-#loaded-video {
+.loaded-video {
   width: 100%;
+}
+
+.loaded-audio {
+  margin-left: calc(50% - 150px);
 }
 
 .record-details img {
