@@ -220,10 +220,35 @@ html, body {
   margin-left: calc(50% - 50px);
 }
 
+.center-text {
+  text-align: center;
+}
+
 .gray-background {
   background-color: #e6e6e6;
   width: 100%;
   height: 100%;
+}
+
+.preface-text {
+  padding-bottom: 30px;
+}
+
+.form-container {
+  margin: 40px 10% 140px 10%;
+  overflow: auto;
+  padding-bottom: 80px;
+}
+
+.small-banner-image-container {
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+}
+
+.small-banner-image-container.students-image img {
+  width: 100%;
+  margin-top: calc(-9% + 20px);
 }
 
 a.btn.btn-primary.center-button {
