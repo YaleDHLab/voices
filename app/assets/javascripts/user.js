@@ -22,9 +22,14 @@ $(window).load(function() {
 
 // use jquery to ensure the gray-background div height fills the remaining page height
 $(document).ready(function() {
-  $(".gray-background").height( $(document).height() - $("#header").height() - $("#footer").height() );
+  
+  var calculateBackgroundHeight = function() {
+    return $(document).height() - $("#header").height() - $("#footer").height() - $(".small-banner-image-container").height();
+  };
+
+  $(".gray-background").height( calculateBackgroundHeight() );
 
   $(window).resize(function() {
-    $(".gray-background").height( $(document).height() - $("#header").height() - $("#footer").height() );
+    $(".gray-background").height( calculateBackgroundHeight() );
   });
 });
