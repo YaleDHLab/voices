@@ -78,6 +78,25 @@ VoicesRails::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
+  ################
+  # Email Config #
+  ################
+
+  config.action_mailer.delivery_method = :smtp
+  # SMTP settings for gmail
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :user_name            => ENV['GMAIL_USERNAME'],
+    :password             => ENV['GMAIL_PASSWORD'],
+    :authentication       => "plain",
+    :enable_starttls_auto => true
+  }
+
+  ####################
+  # Paperclip Config #
+  ####################
+
   Paperclip.options[:command_path] = "/usr/local/bin/"
 
   config.paperclip_defaults = {
