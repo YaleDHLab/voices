@@ -1,19 +1,23 @@
 class Record < ActiveRecord::Base
   belongs_to :user
 
-  # ensure user has provided a title for their record
+  # Ensure user has provided a title for their record
   validates :title, presence: true
 
-  # paperclip processing: store a small, medium, and large copy of images
-  # and store a thumb and medium size still of videos
+  # Use the has_attached_file method to add a file_upload property to the Record
+  # class. 
   has_attached_file :file_upload,
+    # In order to determine the styles of the image we want to save
+    # e.g. a small style copy of the image, plus a large style copy
+    # of the image, call the check_file_type method
     styles: lambda { |a| a.instance.check_file_type },
 
     processors: lambda { 
       |a| a.is_video? ? [ :ffmpeg ] : [ :thumbnail ] 
     }
 
-  # validate that we accept the type of file the user is uploading
+  # Validate that we accept the type of file the user is uploading
+  # by explicitly listing the mimetypes we are willing to accept
   validates_attachment_content_type :file_upload,
     :content_type => [
       "video/mp4", 
@@ -33,42 +37,46 @@ class Record < ActiveRecord::Base
       ],
     :message => "Please make sure you've attached a jpg, png, gif, or mp4 file"
 
-    before_post_process :skip_for_audio
+    # Before applying the Imagemagick post processing to this record
+    # check to see if we indeed wish to process the file. In the case
+    # of audio files, we don't want to apply post processing
+    before_post_process :apply_post_processing?
 
-  # helper method that uses the =~ regex helper to see if 
+  # Helper method that uses the =~ regex method to see if 
   # the current file_upload has a content_type 
   # attribute that contains the string "image" / "video", or "audio"
   def is_image?
-    file_upload.content_type =~ %r(image)
+    self.file_upload.content_type =~ %r(image)
   end
 
   def is_video?
-    file_upload.content_type =~ %r(video)
+    self.file_upload.content_type =~ %r(video)
   end
 
   def is_audio?
-    file_upload.content_type =~ /\Aaudio\/.*\Z/
+    self.file_upload.content_type =~ /\Aaudio\/.*\Z/
   end
 
-
-  # if the uploaded content type is found in the explicit array of audio types, 
+  # If the uploaded content type is an audio file,
   # return false so that we'll skip audio post processing
-  def skip_for_audio
-    if is_audio? 
+  def apply_post_processing?
+    if self.is_audio? 
       return false
     else
       return true
     end
   end
 
+  # Method to be called in order to determine what styles we should
+  # save of a file.
   def check_file_type
-    if is_image?
+    if self.is_image?
       {
         :small => "200x200>", 
         :medium => "300x300>", 
         :large => "600x600>"
       }
-    elsif is_video?
+    elsif self.is_video?
       {
         :thumb => { 
           :geometry => "100x100#", 
@@ -81,7 +89,7 @@ class Record < ActiveRecord::Base
           :time => 10
         }
       }
-    elsif is_audio?
+    elsif self.is_audio?
       {
         :audio => {
           :format => "mp3"
