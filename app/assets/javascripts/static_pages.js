@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('ready', function() {
   // on document load, add listener for click of any 
   // child element in #text-overlay
   $("#text-overlay").children().on("click", function(el) {
@@ -23,34 +23,40 @@ $(document).ready(function() {
   };
 
   var updateWordColors = function() {
-    var idToTarget = "word-number-" + Math.round( generateRandomNumber(0, 900) );
-    var currentTarget = document.getElementById( idToTarget );
-    var currentColor = rgb2hex( window.getComputedStyle(currentTarget, null).getPropertyValue('color') );
-    var currentColorIndex = colorRange.indexOf(currentColor);
+    try {
+      var idToTarget = "word-number-" + Math.round( generateRandomNumber(0, 900) );
+      var currentTarget = document.getElementById( idToTarget );
+      var currentTargetRgbColor = getComputedStyle( currentTarget, "").getPropertyValue('color');
+      var currentColor = rgb2hex( currentTargetRgbColor );
+      var currentColorIndex = colorRange.indexOf(currentColor);
 
-    if (currentColorIndex == colorRange[colorRange.length] - 1) {
-      currentTarget.style.color = colorRange[colorRange.length - 2];
-    }
-
-    else if (currentColorIndex == 0) {
-      currentTarget.style.color = colorRange[1];
-    }
-
-    else {
-      var randomVariable = generateRandomNumber(0, 1);
-      // specify the probability the word will increase in color
-      if (randomVariable > .005 ) {
-        currentTarget.style.color = colorRange[currentColorIndex + 1];
+      if (currentColorIndex == colorRange[colorRange.length] - 1) {
+        currentTarget.style.color = colorRange[colorRange.length - 2];
       }
+
+      else if (currentColorIndex == 0) {
+        currentTarget.style.color = colorRange[1];
+      }
+
       else {
-        currentTarget.style.color = colorRange[currentColorIndex - 1];
-      }
+        var randomVariable = generateRandomNumber(0, 1);
+        // specify the probability the word will increase in color
+        console.log(randomVariable);
+        if (randomVariable < .2 ) {
+          currentTarget.style.color = colorRange[currentColorIndex + 1];
+        }
+        else {
+          currentTarget.style.color = colorRange[currentColorIndex - 1];
+        }
+      };
+    
+    } catch (TypeError) {}
+
     };
-  };
 
   // additionally, update the colors of words dynamically
   window.setInterval(function(){
     updateWordColors();
-  }, 100);
+  }, 20);
 
 });
