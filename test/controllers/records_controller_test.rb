@@ -30,15 +30,6 @@ class RecordsControllerTest < ActionController::TestCase
   test "should show record" do
     get :show, id: @record  
 
-    def record_exists(record_id)
-      begin
-        found_record = Record.find(record_id)
-        return true
-      rescue
-        return false
-      end
-    end
-
     if record_exists(@record.id)  
       # we only allow individuals to access records 
       # if they created those records,
@@ -59,15 +50,6 @@ class RecordsControllerTest < ActionController::TestCase
   test "should get edit" do
     get :edit, id: @record
 
-    def record_exists(record_id)
-      begin
-        found_record = Record.find(record_id)
-        return true
-      rescue
-        return false
-      end
-    end
-
     if record_exists(@record.id)  
       # we only allow individuals to access records 
       # if they created those records,
@@ -85,17 +67,7 @@ class RecordsControllerTest < ActionController::TestCase
   end
 
   test "should update record" do
-    def record_exists(record_id)
-      begin
-        found_record = Record.find(record_id)
-        return true
-      rescue
-        return false
-      end
-    end
-
     if record_exists(@record.id)
-
       patch :update, id: @record, record: { cas_user_name: @record.cas_user_name, metadata: @record.metadata, title: @record.title }
       
       # we only allow individuals to access records 
@@ -112,17 +84,6 @@ class RecordsControllerTest < ActionController::TestCase
   end
 
   test "should destroy record" do
-    
-
-    def record_exists(record_id)
-      begin
-        found_record = Record.find(record_id)
-        return true
-      rescue
-        return false
-      end
-    end
-
     if @record.cas_user_name == session[:cas_username]
       assert_difference('Record.count', -1) do
         delete :destroy, id: @record
