@@ -12,4 +12,13 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  def record_exists(record_id)
+    begin
+      found_record = Record.find(record_id)
+      return true
+    rescue
+      return false
+    end
+  end
+  
 end
