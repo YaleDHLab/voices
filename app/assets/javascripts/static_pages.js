@@ -41,7 +41,7 @@ $(document).on('ready', function() {
       else {
         var randomVariable = generateRandomNumber(0, 1);
         // specify the probability the word will increase in color
-        if (randomVariable > .0000001 ) {
+        if (randomVariable > .01 ) {
           currentTarget.style.color = colorRange[currentColorIndex + 1];
         }
         else {
