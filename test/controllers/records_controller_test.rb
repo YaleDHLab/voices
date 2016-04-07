@@ -28,25 +28,106 @@ class RecordsControllerTest < ActionController::TestCase
   end
 
   test "should show record" do
-    get :show, id: @record
-    assert_response :success
+    get :show, id: @record  
+
+    def record_exists(record_id)
+      begin
+        found_record = Record.find(record_id)
+        return true
+      rescue
+        return false
+      end
+    end
+
+    if record_exists(@record.id)  
+      # we only allow individuals to access records 
+      # if they created those records,
+      # and if the requested record exists
+      # otherwise we redirect them to the home page,
+      # so verify the user created this record
+      if @record.cas_user_name == session[:cas_username]
+        assert_response :success
+      else
+        assert_redirected_to root_path
+      end
+
+    else
+      assert_redirected_to root_path
+    end
   end
 
   test "should get edit" do
     get :edit, id: @record
-    assert_response :success
+
+    def record_exists(record_id)
+      begin
+        found_record = Record.find(record_id)
+        return true
+      rescue
+        return false
+      end
+    end
+
+    if record_exists(@record.id)  
+      # we only allow individuals to access records 
+      # if they created those records,
+      # and if the requested record exists
+      # otherwise we redirect them to the home page,
+      # so verify the user created this record
+      if @record.cas_user_name == session[:cas_username]
+        assert_response :success
+      else 
+        assert_redirected_to root_path
+      end
+    else
+      assert_redirected_to root_path
+    end
   end
 
   test "should update record" do
-    patch :update, id: @record, record: { cas_user_name: @record.cas_user_name, metadata: @record.metadata, title: @record.title }
-    assert_redirected_to record_path(assigns(:record))
+    def record_exists(record_id)
+      begin
+        found_record = Record.find(record_id)
+        return true
+      rescue
+        return false
+      end
+    end
+
+    if record_exists(@record.id)
+
+      patch :update, id: @record, record: { cas_user_name: @record.cas_user_name, metadata: @record.metadata, title: @record.title }
+      
+      # we only allow individuals to access records 
+      # if they created those records,
+      # and if the requested record exists
+      # otherwise we redirect them to the home page,
+      # so verify the user created this record
+      if @record.cas_user_name == session[:cas_username]
+        assert_redirected_to record_path(assigns(:record))
+      else
+        assert_redirected_to root_path
+      end
+    end
   end
 
   test "should destroy record" do
-    assert_difference('Record.count', -1) do
-      delete :destroy, id: @record
+    
+
+    def record_exists(record_id)
+      begin
+        found_record = Record.find(record_id)
+        return true
+      rescue
+        return false
+      end
     end
 
-    assert_redirected_to records_path
+    if @record.cas_user_name == session[:cas_username]
+      assert_difference('Record.count', -1) do
+        delete :destroy, id: @record
+      end
+    end
+
   end
 end
