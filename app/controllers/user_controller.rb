@@ -18,15 +18,15 @@ class UserController < ApplicationController
   end
 
   # helper methods for the view
-  def is_image?
+  def is_image?(file_upload)
     file_upload.content_type =~ %r(image)
   end
 
-  def is_video?
+  def is_video?(file_upload)
     file_upload.content_type =~ %r(video)
   end
 
-  def is_audio?
+  def is_audio?(file_upload)
     file_upload.content_type =~ /\Aaudio\/.*\Z/
   end
 
