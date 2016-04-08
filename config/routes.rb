@@ -11,7 +11,7 @@ VoicesRails::Application.routes.draw do
   get "static_pages/home"
 
   # static about page
-  get "static_pages/about"
+  get "about" => "static_pages#about"
 
   # static contact page
   get "static_pages/contact"
@@ -23,7 +23,7 @@ VoicesRails::Application.routes.draw do
   # support get request for email form fetch
   # and post for email form sbmission
   # and get for the confirmation
-  get "contact_forms/new" => "contact_forms#new", as: :contact
+  get "contact" => "contact_forms#new", as: :contact_forms
   post "contact" => "contact_forms#create"
 
   # explicitly don't support get requests for contact_forms#show, 
