@@ -1,7 +1,6 @@
 VoicesRails::Application.routes.draw do
-  resources :contact_forms
-
   resources :records
+  resources :contact_forms
 
   # the application home page
   root "static_pages#home"
@@ -21,6 +20,17 @@ VoicesRails::Application.routes.draw do
   get "user/logout"
 
   get "user/login"
+
+  # support get request for email form fetch
+  # and post for email form sbmission
+  # and get for the confirmation
+  get "contact_forms/new"
+
+  post "contact_forms/create"
+
+  get "contact_forms/:id" => "contact_forms#show"
+
+  #get "contact_forms" => "contact_forms#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
