@@ -272,8 +272,12 @@ h3, h4 {
 * alerts *
 *********/
 
-.alert button.close {
-  padding-bottom: 40px;
+#email-notice {
+  margin-bottom: 0px;
+}
+
+#email-notice .alert button.close {
+  padding-bottom: 0px;
 }
 
 .alert li {
