@@ -1,6 +1,5 @@
 VoicesRails::Application.routes.draw do
   resources :records
-  resources :contact_forms
 
   # the application home page
   root "static_pages#home"
@@ -24,13 +23,14 @@ VoicesRails::Application.routes.draw do
   # support get request for email form fetch
   # and post for email form sbmission
   # and get for the confirmation
-  get "contact_forms/new"
+  get "contact_forms/new" => "contact_forms#new"
+  post "contact_forms" => "contact_forms#create"
 
-  post "contact_forms/create"
+  # explicitly don't support get requests for contact_forms#show, 
+  # as this view will be retired
+  #get "contact_forms/:id" => "contact_forms#show"
 
-  get "contact_forms/:id" => "contact_forms#show"
 
-  #get "contact_forms" => "contact_forms#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
