@@ -38,9 +38,9 @@
           <ul class="nav navbar-nav">  
             <li>
               <% if controller?("static_pages") && action?("about") %>
-                <%= link_to "ABOUT", static_pages_about_path, :class => "active" %>
+                <%= link_to "ABOUT", about_path, :class => "active" %>
               <% else %>
-                <%= link_to "ABOUT", static_pages_about_path %>
+                <%= link_to "ABOUT", about_path %>
               <% end %>
             </li>
 
@@ -58,9 +58,9 @@
 
             <li>
               <% if controller?("static_pages") && action?("contact") %>
-                <%= link_to "CONTACT", static_pages_contact_path, :class => "active" %>
+                <%= link_to "CONTACT", contact_path, :class => "active" %>
               <% else %>
-                <%= link_to "CONTACT", static_pages_contact_path %>
+                <%= link_to "CONTACT", contact_path %>
               <% end %>
             </li>
 
