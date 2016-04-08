@@ -23,8 +23,8 @@ VoicesRails::Application.routes.draw do
   # support get request for email form fetch
   # and post for email form sbmission
   # and get for the confirmation
-  get "contact_forms/new" => "contact_forms#new"
-  post "contact_forms" => "contact_forms#create"
+  get "contact_forms/new" => "contact_forms#new", as: :contact
+  post "contact" => "contact_forms#create"
 
   # explicitly don't support get requests for contact_forms#show, 
   # as this view will be retired
