@@ -1,0 +1,12 @@
+// Place all the styles related to the contact_forms controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+textarea#contact_form_message {
+  height: 150px;
+  width: 100%;
+}
+
+#email-submit-button {
+  margin-top: 10px;
+}    

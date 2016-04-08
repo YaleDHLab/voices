@@ -1,4 +1,6 @@
 VoicesRails::Application.routes.draw do
+  resources :contact_forms
+
   resources :records
 
   # the application home page
