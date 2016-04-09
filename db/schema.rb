@@ -11,10 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160402214520) do
+ActiveRecord::Schema.define(version: 20160407172018) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "contact_forms", force: true do |t|
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "records", force: true do |t|
-    t.integer  "cas_user_id"
     t.string   "title"
     t.string   "metadata"
     t.datetime "created_at"
@@ -23,6 +31,13 @@ ActiveRecord::Schema.define(version: 20160402214520) do
     t.string   "file_upload_content_type"
     t.integer  "file_upload_file_size"
     t.datetime "file_upload_updated_at"
+    t.string   "cas_user_name"
+    t.boolean  "include_name"
+    t.string   "content_type"
+    t.text     "description"
+    t.string   "location"
+    t.string   "source_url"
+    t.boolean  "release_checked"
   end
 
   create_table "users", force: true do |t|
