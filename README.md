@@ -1,3 +1,17 @@
+### Local development  
+  
+<pre><code># start postgres db  
+postgres -D /usr/local/var/postgres  
+  
+# run the rails server   
+rails s {-e production} # to serve in production environment  
+  
+# run the rails console  
+rails c {production} # to run console in production context
+
+# drop the database and repopulate afresh
+rake db:drop db:create db:migrate</code></pre>
+
 ### Deploy to Heroku
 
 <pre><code># create heroku instance  
