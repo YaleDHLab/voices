@@ -98,6 +98,7 @@ GEM
     rake (11.1.2)
     rdoc (4.2.2)
       json (~> 1.4)
+    rmagick (2.15.4)
     rubycas-client (2.3.9)
       activesupport
     sass (3.2.19)
@@ -143,6 +144,7 @@ DEPENDENCIES
   pg
   rails (= 4.0.0)
   rails_12factor
+  rmagick
   rubycas-client
   sass-rails (~> 4.0.0)
   sdoc

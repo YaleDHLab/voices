@@ -45,6 +45,9 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+# add rmagick gem to call the imagemagick assets on heroku
+gem 'rmagick'
+
 # add the version of ruby used locally
 ruby "2.0.0"
 
