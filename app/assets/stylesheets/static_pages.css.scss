@@ -246,9 +246,13 @@ html, body {
   overflow: hidden;
 }
 
-.small-banner-image-container.students-image img {
-  width: 100%;
-  margin-top: calc(-9% + 20px);
+.students-image {
+  background: url(students-mackbook-pro.jpg);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: 50% 57%;
 }
 
 a.btn.btn-primary.center-button {
