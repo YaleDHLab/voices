@@ -1,24 +1,9 @@
 class ContactFormsController < ApplicationController
   before_action :set_contact_form, only: [:show, :edit, :update, :destroy]
 
-  # GET /contact_forms
-  # GET /contact_forms.json
-  def index
-    @contact_forms = ContactForm.all
-  end
-
-  # GET /contact_forms/1
-  # GET /contact_forms/1.json
-  def show
-  end
-
   # GET /contact_forms/new
   def new
     @contact_form = ContactForm.new
-  end
-
-  # GET /contact_forms/1/edit
-  def edit
   end
 
   # POST /contact_forms
@@ -36,20 +21,6 @@ class ContactFormsController < ApplicationController
         format.json { render action: 'show', status: :created, location: @contact_form }
       else
         format.html { render action: 'new' }
-        format.json { render json: @contact_form.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /contact_forms/1
-  # PATCH/PUT /contact_forms/1.json
-  def update
-    respond_to do |format|
-      if @contact_form.update(contact_form_params)
-        format.html { redirect_to @contact_form, notice: 'Contact form was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
         format.json { render json: @contact_form.errors, status: :unprocessable_entity }
       end
     end
