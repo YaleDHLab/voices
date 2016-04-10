@@ -17,10 +17,10 @@ rake db:drop db:create db:migrate</code></pre>
 <pre><code># create heroku instance  
 heroku create voices-dev  
   
-# add support for multiple build packs  
+# add support for multiple buildpacks  
 heroku buildpacks:set https://github.com/ddollar/heroku-buildpack-multi.git  
   
-# push local master branch to remote / heroku host  
+# push local master branch to remote heroku host  
 git push heroku master  
 
 # set environment variables  
@@ -40,4 +40,17 @@ heroku run rake db:migrate
 heroku restart  
   
 # open the application in a browser  
-heroku open</code></pre>
+heroku open</code></pre>  
+
+### Debugging on Heroku   
+<pre><code># to debug on heroku, you can open a terminal with the following command:  
+heroku run bash  
+  
+# to populate a list of all heroku instances:  
+heroku apps  
+
+# to show all remote branches for a heroku instance:  
+git config --list | grep heroku  
+
+# to destroy a heroku app:  
+heroku apps:destroy --app {{ app_name }}</code></pre>
