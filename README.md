@@ -10,7 +10,9 @@ rails s {-e production} # to serve in production environment
 rails c {production} # to run console in production context
 
 # drop the database and repopulate afresh
-rake db:drop db:create db:migrate</code></pre>
+rake db:drop db:create db:migrate  
+
+# the application will now be available at localhost:3000</code></pre>
 
 ### Deploy to Heroku
 
