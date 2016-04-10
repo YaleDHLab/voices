@@ -10,43 +10,57 @@
 
 <div class="gray-background">
   <div class="container">
-    <div class="masonry-container">
-      <div class="masonry">
-        <% @user_records.each do |record| %>
-          
-          <% if record.is_video? %>  
-            <div class="masonry-item">
-              <%= link_to record_path(record.id), :class => "section" do %>
-                <%= image_tag record.file_upload.url(:medium) %>
-              <% end %>
-              <div class="masonry-item-title">
-                <%= record.title %>
-              </div>
-            </div>
-            
-          <% elsif record.is_image? %>  
-            <div class="masonry-item">
-              <%= link_to record_path(record.id), :class => "section" do %>
-                <%= image_tag record.file_upload.url(:original) %>
-              <% end %>
-              <div class="masonry-item-title">
-                <%= record.title %>
-              </div>
-            </div>
+    <% if @user_records.length == 0 %>
+      <div class="invite-submissions-container">
+        <div class="center-text">Materials you contribute to the Voices archive will be available here.</div>
+        <br>
 
-          <% elsif record.is_audio? %>  
-            <div class="masonry-item">
-              <%= link_to record_path(record.id), :class => "section audio-section" do %>
-                <%= image_tag("audio-icon.jpg") %>
-              <% end %>
-              <div class="masonry-item-title">
-                <%= record.title %>
-              </div>
-            </div>
-
-          <% end %>
-        <% end %>
+        <%= link_to "Contribute", 
+         {:controller => :records, :action => :new},
+         :class => "btn btn-primary center-button" %>
       </div>
-    </div>
+
+    <% else %>
+
+      <div class="masonry-container">
+        <div class="masonry">
+          <% @user_records.each do |record| %>
+            
+            <% if record.is_video? %>  
+              <div class="masonry-item">
+                <%= link_to record_path(record.id), :class => "section" do %>
+                  <%= image_tag record.file_upload.url(:medium) %>
+                <% end %>
+                <div class="masonry-item-title">
+                  <%= record.title %>
+                </div>
+              </div>
+              
+            <% elsif record.is_image? %>  
+              <div class="masonry-item">
+                <%= link_to record_path(record.id), :class => "section" do %>
+                  <%= image_tag record.file_upload.url(:original) %>
+                <% end %>
+                <div class="masonry-item-title">
+                  <%= record.title %>
+                </div>
+              </div>
+
+            <% elsif record.is_audio? %>  
+              <div class="masonry-item">
+                <%= link_to record_path(record.id), :class => "section audio-section" do %>
+                  <%= image_tag("audio-icon.jpg") %>
+                <% end %>
+                <div class="masonry-item-title">
+                  <%= record.title %>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+    <% end %>
+
   </div>
 </div>
