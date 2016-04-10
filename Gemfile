@@ -30,15 +30,20 @@ gem 'jbuilder', '~> 1.2'
 # Add gem to allow users to authenticate with Yale CAS server
 gem 'rubycas-client'
 
-# Add paperclip and aws storage for file upload support
+# Add paperclip to allow users to upload content 
 gem 'paperclip', '~> 4.2'
+
+# Add aws-sdk for S3 storage of user-uploaded content
 gem 'aws-sdk', '~> 1.55.0'
 
 # add video preprocessor to create video still image
-gem "paperclip-ffmpeg", "~> 1.0.1"
+gem 'paperclip-ffmpeg', '~> 1.0.1'
 
 # add heroku requirement
 gem 'rails_12factor', group: :production
+
+# use puma server in production
+gem 'puma', '2.11.1'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -49,7 +54,7 @@ end
 gem 'rmagick'
 
 # add the version of ruby used locally
-ruby "2.0.0"
+ruby '2.0.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
