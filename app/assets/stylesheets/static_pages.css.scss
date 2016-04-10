@@ -27,13 +27,15 @@ html, body {
   #bootstrap-brand {
     display: block;
     position: absolute;
-    font-size: 2.5em;
-    width: 126px;
-    left: calc(50% - 63px);
+    width: 100px;
+    left: calc(50% - 50px);
     margin: 0;
     padding: 0;
-    padding-top: 14px;
-    font-family: merriweather;
+  }
+
+  #bootstrap-brand img {
+    width: 100%;
+    padding-top: 5px;
   }
 
   .navbar-header {
@@ -101,9 +103,6 @@ html, body {
     and remove the bootstrap brand (on left from bootstrap) */
   #voices-brand {
     display: block;
-    font-family: merriweather;
-    font-size: 2.4em;
-    font-weight: 800;
   }
 
   #bootstrap-brand {
@@ -143,6 +142,11 @@ html, body {
 
 .navbar #voices-brand {
   width: 180px;
+  padding-top: 14px;
+}
+
+.navbar #voices-brand img {
+  width: 70%;
 }
 
 /* make the currently selected page text a different color */
