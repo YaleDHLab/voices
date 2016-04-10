@@ -167,9 +167,88 @@ html, body {
   margin: 25px 10px 10px 10px;
 }
 
-/***************
-* banner image *
-***************/
+
+/****************
+* navbar colors *
+****************/
+
+/* navbar */
+.navbar-default {
+  background-color: #FFFFFF;
+  border-color: #E7E7E7;
+}
+
+/* title */
+.navbar-default .navbar-brand {
+  color: #3F3F3F;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #5E5E5E;
+}
+
+/* link */
+.navbar-default .navbar-nav > li > a {
+  color: #3F3F3F;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #5E5E5E;
+}
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #555;
+}
+.navbar-default .navbar-nav > .open > a, 
+.navbar-default .navbar-nav > .open > a:hover, 
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #555;
+  background-color: #fff;
+}
+/* caret */
+.navbar-default .navbar-nav > .dropdown > a .caret {
+  border-top-color: #777;
+  border-bottom-color: #777;
+}
+.navbar-default .navbar-nav > .dropdown > a:hover .caret,
+.navbar-default .navbar-nav > .dropdown > a:focus .caret {
+  border-top-color: #333;
+  border-bottom-color: #333;
+}
+.navbar-default .navbar-nav > .open > a .caret, 
+.navbar-default .navbar-nav > .open > a:hover .caret, 
+.navbar-default .navbar-nav > .open > a:focus .caret {
+  border-top-color: #555;
+  border-bottom-color: #555;
+}
+/* mobile version */
+.navbar-default .navbar-toggle,
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  border-color: #fff;
+  background-color: #fff;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #000;
+}
+.navbar-default .navbar-toggle:focus .icon-bar {
+  background-color: #35A1E4;
+}
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #777;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #333;
+  }
+}
+
+
+/**************************
+* image with text overlay *
+**************************/
 
 #banner-image {
   height: 0;
@@ -379,83 +458,5 @@ h3, h4 {
 @media only screen and (min-width: 992px) and (max-width: 1999px){
   #text-overlay {
     font-size: 1.7em;
-  }
-}
-
-
-/****************
-* navbar colors *
-****************/
-
-/* navbar */
-.navbar-default {
-  background-color: #FFFFFF;
-  border-color: #E7E7E7;
-}
-
-/* title */
-.navbar-default .navbar-brand {
-  color: #3F3F3F;
-}
-.navbar-default .navbar-brand:hover,
-.navbar-default .navbar-brand:focus {
-  color: #5E5E5E;
-}
-
-/* link */
-.navbar-default .navbar-nav > li > a {
-  color: #3F3F3F;
-}
-.navbar-default .navbar-nav > li > a:hover,
-.navbar-default .navbar-nav > li > a:focus {
-  color: #5E5E5E;
-}
-.navbar-default .navbar-nav > .active > a, 
-.navbar-default .navbar-nav > .active > a:hover, 
-.navbar-default .navbar-nav > .active > a:focus {
-  color: #555;
-}
-.navbar-default .navbar-nav > .open > a, 
-.navbar-default .navbar-nav > .open > a:hover, 
-.navbar-default .navbar-nav > .open > a:focus {
-  color: #555;
-  background-color: #fff;
-}
-/* caret */
-.navbar-default .navbar-nav > .dropdown > a .caret {
-  border-top-color: #777;
-  border-bottom-color: #777;
-}
-.navbar-default .navbar-nav > .dropdown > a:hover .caret,
-.navbar-default .navbar-nav > .dropdown > a:focus .caret {
-  border-top-color: #333;
-  border-bottom-color: #333;
-}
-.navbar-default .navbar-nav > .open > a .caret, 
-.navbar-default .navbar-nav > .open > a:hover .caret, 
-.navbar-default .navbar-nav > .open > a:focus .caret {
-  border-top-color: #555;
-  border-bottom-color: #555;
-}
-/* mobile version */
-.navbar-default .navbar-toggle,
-.navbar-default .navbar-toggle:hover,
-.navbar-default .navbar-toggle:focus {
-  border-color: #fff;
-  background-color: #fff;
-}
-.navbar-default .navbar-toggle .icon-bar {
-  background-color: #000;
-}
-.navbar-default .navbar-toggle:focus .icon-bar {
-  background-color: #35A1E4;
-}
-@media (max-width: 767px) {
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: #777;
-  }
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #333;
   }
 }
