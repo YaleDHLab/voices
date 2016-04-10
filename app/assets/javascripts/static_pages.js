@@ -56,6 +56,6 @@ $(document).on('ready', function() {
   // additionally, update the colors of words dynamically
   window.setInterval(function(){
     updateWordColors();
-  }, 20);
+  }, 100);
 
 });
