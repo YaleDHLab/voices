@@ -1,6 +1,7 @@
 <% content_for :head do %>
   <%= stylesheet_link_tag 'static_pages' %>
   <%= stylesheet_link_tag 'records' %>
+  <%= stylesheet_link_tag 'gray_wrap' %>
   <%= javascript_include_tag 'records' %>
 <% end %>
 
@@ -10,57 +11,63 @@
 
 <div class="small-banner-image-container students-image"></div>
 
-<div class="record-details-top">
-  <h4 class="text-center">Confirmation</h4>
+<div class="white-background">
+  <div class="container">
+    <div class="padding-sides">
+      <h4 class="text-center">Confirmation</h4>
 
-  <div class="preface-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eusimod accumsan est. Nonnec at bibendum tortor, vel elementum arcu. Duis quis nisi ac sem tempus elementum.</div>
+      <div class="preface-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eusimod accumsan est. Nonnec at bibendum tortor, vel elementum arcu. Duis quis nisi ac sem tempus elementum.</div>
+    </div>
+  </div>
 </div>
 
 <div class="gray-background">
-  <div class="form-container record-details"> 
-    <div class="over-image-row">
-      <h3 class="record-title"> <%= @record.title %></h3> 
-      <div class="btn-group" id="edit-record-button">
-        <%= link_to "Edit", 
-           {:controller => :records, :action => :edit,
-            :record => @record.id},
-           :class => "btn btn-primary" %>
-      </div>
-    </div>
-
-    <% if @record.content_type == "Image" %>
-      <div class="record-display-container">
-        <%= image_tag @record.file_upload.url(:medium) %>
-      </div>
-
-    <% elsif @record.content_type == "Video" %>
-      <div class="record-display-container">
-        <%= video_tag( @record.file_upload.url, poster: @record.file_upload.url(:medium), size: "300x300", class: "loaded-video", controls: true ) %>
-      </div>
-
-
-    <% elsif @record.content_type == "Audio" %>
-      <div class="record-display-container">
-        <%= audio_tag( @record.file_upload.url, controls: true,  class: "loaded-audio", autoplay: true ) %>
-      </div>
-    <% end %>
-
-    <div class="metadata-spacer"></div>
-
-    <div class="record-display-left">
-      <div class="record-display-label">Description</div>
-      <div class="record-display-text"><%= @record.description %></div>
-    </div>
-
-    <div class="record-display-right">
-      <div class="record-display-label">Location</div>
-      <div class="record-display-text"><%= @record.location %></div>
+  <div class="container">
+    <div class="padding-sides padding-bottom"> 
       
-      <div class="record-display-label">URL</div>
-      <div class="record-display-text"><%= @record.source_url %></div>
-      
-      <div class="record-display-label">Tags</div>
-      <div class="record-display-text"><%= @record.metadata %></div>
+      <div class="over-image-row">
+        <h3 class="record-title"> <%= @record.title %></h3> 
+        <div class="btn-group" id="edit-record-button">
+          <%= link_to "Edit", 
+             {:controller => :records, :action => :edit,
+              :record => @record.id},
+             :class => "btn btn-primary blue-button" %>
+        </div>
+      </div>
+
+      <% if @record.content_type == "Image" %>
+        <div class="record-display-container">
+          <%= image_tag @record.file_upload.url(:medium) %>
+        </div>
+
+      <% elsif @record.content_type == "Video" %>
+        <div class="record-display-container">
+          <%= video_tag( @record.file_upload.url, poster: @record.file_upload.url(:medium), size: "300x300", class: "loaded-video", controls: true ) %>
+        </div>
+
+
+      <% elsif @record.content_type == "Audio" %>
+        <div class="record-display-container">
+          <%= audio_tag( @record.file_upload.url, controls: true,  class: "loaded-audio", autoplay: true ) %>
+        </div>
+      <% end %>
+
+      <div class="metadata-spacer"></div>
+
+      <div class="record-display-left">
+        <div class="record-display-label">Description</div>
+        <div class="record-display-text"><%= @record.description %></div>
+      </div>
+
+      <div class="record-display-right">
+        <div class="record-display-label">Location</div>
+        <div class="record-display-text"><%= @record.location %></div>
+        
+        <div class="record-display-label">URL</div>
+        <div class="record-display-text"><%= @record.source_url %></div>
+        
+        <div class="record-display-label">Tags</div>
+        <div class="record-display-text"><%= @record.metadata %></div>
       </div>
     </div>
   </div>
