@@ -26,10 +26,10 @@ html, body {
   /* increase the size of the brand and center */
   #bootstrap-brand {
     display: block;
-    position: absolute;
+    position: relative;
     width: 80px;
-    left: calc(50% - 40px);
-    margin: 0;
+    margin-left: -40px;
+    left: 50%;
     padding: 0;
   }
 
@@ -78,8 +78,26 @@ html, body {
     margin: 15px 0;
   }
   .dropdown.open .glyphicon {
-    margin-left: calc(50% - 45px);
+    position: relative;
+    width: 14px;
+    margin-left: -45px;
+    left: 50%;
   }
+
+  #profile-dropdown a {
+    margin: 12px 10px 0px -24px;
+    display: inline-block;
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+  }
+
+
+  #profile-dropdown .dropdown-menu-row-text {
+    position: relative;
+    left: 50%;
+  }
+
   .dropdown.open .dropdown-menu {
     background-color: #f5f5f5;
   }
@@ -128,6 +146,14 @@ html, body {
     margin-top: 8px;
   }
 
+  #profile-dropdown a {
+    color: #000;
+    font-size: 11px;
+    text-decoration: none;
+    padding: 0;
+    margin: 25px 10px 10px 10px;
+  }
+
   /* push the line items down in navbar */
   .dropdown-toggle {
     margin-top: 5px;
@@ -136,6 +162,11 @@ html, body {
   /* remove the downward push from the header image */
   #voices-brand img {
     margin-top: -5px;
+  }
+
+  #profile-dropdown .dropdown-menu-row-text {
+    margin: 0px 0px 0px 30px;
+    padding: 9px 0px 0px 0px;
   }
 }
 
@@ -181,19 +212,6 @@ html, body {
   display: inline-block;
   float: left;
   margin: 12px 0px 0px 14px;
-}
-
-#profile-dropdown .dropdown-menu-row-text {
-  margin: 0px 0px 0px 30px;
-  padding: 9px 0px 0px 0px;
-}
-
-#profile-dropdown a {
-  color: #000;
-  font-size: 11px;
-  text-decoration: none;
-  padding: 0;
-  margin: 25px 10px 10px 10px;
 }
 
 
@@ -281,16 +299,17 @@ html, body {
 **************************/
 
 #banner-image {
-  height: 0;
-  padding: 0; 
-  padding-bottom: calc(20% + 100px); /* this number needs adjustment */
+  height: 300px;
+  /* provide fallback background for devices that only support
+     one background url or don't support linear-gradient */
+  background: url(march-of-resilience-dark.jpg);
   background: linear-gradient( rgba(0, 0, 0, 0.3), 
     rgba(0, 0, 0, 0.3) ), url(march-of-resilience.jpg);
+  background-position: 50% 90%;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  background-position: 50% 70%;
   background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
@@ -322,6 +341,84 @@ html, body {
   color: #fff;
 }
 
+@media (min-width: 0px) and (max-width: 359px) {
+  #banner-image {
+    height: 150px;
+  }
+}
+
+@media (min-width: 360px) and (max-width: 479px) {
+  #banner-image {
+    height: 200px;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 619px) {
+  #banner-image {
+    height: 250px;
+  }
+}
+
+@media (min-width: 620px) and (max-width: 768px) {
+  #banner-image {
+    height: 300px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 899px) {
+  #banner-image {
+    height: 350px;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1024px) {
+  #banner-image {
+    height: 400px;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1189px) {
+  #banner-image {
+    height: 450px;
+  }
+}
+
+@media (min-width: 1190px) and (max-width: 1369px) {
+  #banner-image {
+    height: 500px;
+  }
+}
+
+@media (min-width: 1370px) and (max-width: 1479px) {
+  #banner-image {
+    height: 550px;
+  }
+}
+
+@media (min-width: 1480px) and (max-width: 1599px) {
+  #banner-image {
+    height: 550px;
+    background-position: 50% 70%;
+  }
+}
+
+@media (min-width: 1600px) and (max-width: 1999px) {
+  #banner-image {
+    height: 600px;
+    background-position: 50% 70%;
+  }
+}
+
+@media (min-width: 2000px) {
+  #banner-image {
+    height: 700px;
+    background-position: 50% 70%;
+  }
+}
+
+
+
+
 /***************
 * page content *
 ***************/
@@ -333,15 +430,23 @@ html, body {
 
 .wide-button {
   width: 140px;
-  margin-left: calc(50% - 70px);
+  margin-left: -70px;
+  left: 50%;
+  position: relative;
 }
 
 .center-text {
   text-align: center;
 }
 
+.white-background {
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+}
+
 .gray-background {
-  background-color: #e6e6e6;
+  background-color: #eee;
   width: 100%;
   height: 100%;
 }
@@ -355,7 +460,7 @@ html, body {
 }
 
 .padding-sides {
-  padding: 10px calc(50% - 313px) 0px calc(50% - 313px);
+  padding: 10px 15% 0px 15%;
   overflow: auto;
 }
 
@@ -409,8 +514,16 @@ h4 {
   padding-bottom: 0px;
 }
 
+.alert {
+  margin-top: 10px;
+}
+
 .alert li {
   list-style: none;
+}
+
+.alert button.close {
+  margin-top: -8px;
 }
 
 /*********
@@ -510,6 +623,19 @@ h4 {
     font-size: 13px;
   }
 
+  /*********************
+  * small banner image *
+  *********************/
+
+  .students-image {
+    background: url(students-mobile.jpg);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: 50% 57%;
+  }
+
   /****************
   * footer styles *
   ****************/
@@ -530,11 +656,14 @@ h4 {
     padding: 0px; /* remove extant padding */
     padding-top: 20px;
     padding-left: 20px;
-    margin-left: calc(50% - 118px);
+    position: relative;
+    width: 250px;
+    margin-left: -125px;
+    left: 50%;
   }
 
   #footer-left-bottom {
-    margin-left: 35px;
+    margin-left: 40px;
   }
 
   /************
@@ -545,29 +674,12 @@ h4 {
     font-size: 11px;
   }
 
-  /******************
-  * contribute page *
-  ******************/
-
-  .form-container {
-    padding: 10px calc(50% - 313px) 0px calc(50% - 313px)
-  }
-
-  .mobile-background-gray {
-    background-color: #eee;
-  }
-
   /**************
   * records#new *
   **************/
 
-  .students-image {
-    background: url(students-mobile.jpg);
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    background-position: 50% 57%;
+  .mobile-background-gray {
+    background-color: #eee;
   }
 
   label {
@@ -638,6 +750,8 @@ h4 {
   }
 
   input {
+    /* fallback for browsers without calc support */
+    width: 64%;
     width: calc(100% - 185px);
   }
 
@@ -658,16 +772,18 @@ h4 {
   }
 
   #record-description {
+    /* fallback for browsers without calc support */
+    width: 64%;
+    max-width: 64%;
+
     width: calc(100% - 185px);
     max-width: calc(100% - 185px);
   }
 
   .terms-and-conditions {
     float: left;
-    margin-left: 200px;
-    margin-top: -22px;
+    margin-left: 197px;
+    margin-top: -26px;
   }
 
-
 }
-
