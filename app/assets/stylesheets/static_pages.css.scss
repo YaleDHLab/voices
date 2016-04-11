@@ -360,13 +360,7 @@ html, body {
 }
 
 .padding-bottom {
-  padding-bottom: 80px;
-}
-
-.page-content {
-  margin: 40px 20% 0px 20%;
-  overflow: auto;
-  padding-bottom: 50px;
+  padding-bottom: 60px;
 }
 
 .small-banner-image-container {
@@ -390,6 +384,10 @@ h4 {
   font-family: 'Merriweather', serif;
   margin-bottom: 27px;
   text-align: center;
+}
+
+#contact_form_message {
+  margin-bottom: 10px;
 }
 
 /* override the bootstrap path to the glyphicons */
@@ -456,9 +454,9 @@ h4 {
 }
 
 #footer-left-bottom {
-  margin-left: 34px;
   font-style: italic;
   font-weight: 100;
+  margin-top: -2px;
 }
 
 #footer-right {
@@ -475,13 +473,16 @@ h4 {
   margin-left: 3px;
 }
 
-/****************
-* Mobile styles *
-****************/
+/*************************************
+*           Mobile styles            *
+**************************************/
 
 @media (max-width: 767px) {
   
-  /* containers */
+  /*************
+  * containers *
+  *************/
+
   .page-content {
     margin: 8px 10% 0px 10%;
   }
@@ -490,7 +491,10 @@ h4 {
     padding: 0px 6% 0px 6%;
   }
 
-  /* fonts and text */
+  /*****************
+  * fonts and text *
+  *****************/
+  
   * {
     font-size: 12px;
   }
@@ -506,7 +510,10 @@ h4 {
     font-size: 13px;
   }
 
-  /* footer styles */
+  /****************
+  * footer styles *
+  ****************/
+  
   #wrap {
     margin: 0 auto -93px;
   }
@@ -526,12 +533,22 @@ h4 {
     margin-left: calc(50% - 118px);
   }
 
-  /* home page */
+  #footer-left-bottom {
+    margin-left: 35px;
+  }
+
+  /************
+  * home page *
+  ************/
+
   #text-overlay div {
     font-size: 11px;
   }
 
-  /* contribute page */
+  /******************
+  * contribute page *
+  ******************/
+
   .form-container {
     padding: 10px calc(50% - 313px) 0px calc(50% - 313px)
   }
@@ -540,7 +557,10 @@ h4 {
     background-color: #eee;
   }
 
-  /* records#new */ 
+  /**************
+  * records#new *
+  **************/
+
   .students-image {
     background: url(students-mobile.jpg);
     -webkit-background-size: cover;
@@ -590,16 +610,29 @@ h4 {
   .postscript-text {
     display: none;
   }
+
 }
 
 
-/*****************
-* desktop styles *
-*****************/
+
+/*************************************
+*           Desktop styles           *
+*************************************/
 
 @media (min-width: 768px) {
   
-  /* records#new */
+  /*********
+  * footer *
+  *********/
+
+  #footer-left-bottom {
+    margin-left: 41px;
+  }
+
+  /**************
+  * records#new *
+  **************/
+
   input, #placeholder-box, button, select, textarea {
     background-color: #f4f4f4;
   }
