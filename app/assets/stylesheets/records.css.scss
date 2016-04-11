@@ -86,7 +86,9 @@ span.btn.btn-small.btn-default.btn-inverse {
 .submit-button {
   margin-top: 30px;
   width: 120px;
-  margin-left: calc( 50% - 60px );
+  position: relative;
+  margin-left: -60px;
+  left: 50%;
   margin-bottom: 30px;
 }
 
@@ -141,7 +143,9 @@ span.btn.btn-small.btn-default.btn-inverse {
 }
 
 .loaded-audio {
-  margin-left: calc(50% - 150px);
+  position: relative;
+  margin-left: -150px;
+  left: 50%;
 }
 
 .record-details img {
