@@ -1,6 +1,7 @@
 <% content_for :head do %>
   <%= stylesheet_link_tag 'static_pages' %>
   <%= stylesheet_link_tag 'records' %>
+  <%= stylesheet_link_tag 'gray_wrap' %>
   <%= javascript_include_tag 'records' %>
 <% end %>
 
@@ -9,7 +10,7 @@
 <div class="small-banner-image-container students-image"></div>
 
 <div class="container">
-  <div class="form-container">
+  <div class="padding-sides padding-bottom">
     <h1 class="center-text">Editing record</h1>
     <%= render 'form' %>
   </div>
