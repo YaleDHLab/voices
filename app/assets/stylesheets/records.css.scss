@@ -45,6 +45,7 @@ input {
 
 textarea#record-description {
   height: 150px;
+  padding: 6px;
 }
 
 /*********************
@@ -125,7 +126,7 @@ span.btn.btn-small.btn-default.btn-inverse {
   margin-top: 30px;
 }
 
-.record-details .record-display-container {
+.record-display-container {
   width: 100%;
   background: #fff;
   border: 1px solid darkgray;
@@ -134,7 +135,9 @@ span.btn.btn-small.btn-default.btn-inverse {
 }
 
 .loaded-video {
-  width: 100%;
+  position: relative;
+  margin-left: -150px;
+  left: 50%;
 }
 
 .loaded-audio {
