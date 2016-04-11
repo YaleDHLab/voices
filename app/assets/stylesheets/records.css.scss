@@ -183,3 +183,28 @@ span.btn.btn-small.btn-default.btn-inverse {
 #notice {
   display: none;
 }
+
+
+/****************
+* mobile styles *
+****************/
+
+@media (max-width: 458px) {
+  .loaded-media {
+    width: 200px;
+    max-height: 240px;
+    margin-left: -100px;
+  }
+
+  .record-display-left {
+    width: 100%;
+    padding-right: 0px;
+    float: none;
+  }
+
+  .record-display-right {
+    width: 100%;
+    float: none;
+  }
+
+}
