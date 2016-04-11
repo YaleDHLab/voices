@@ -27,15 +27,15 @@ html, body {
   #bootstrap-brand {
     display: block;
     position: absolute;
-    width: 100px;
-    left: calc(50% - 50px);
+    width: 80px;
+    left: calc(50% - 40px);
     margin: 0;
     padding: 0;
   }
 
   #bootstrap-brand img {
     width: 100%;
-    padding-top: 5px;
+    padding-top: 8px;
   }
 
   .navbar-header {
@@ -87,6 +87,9 @@ html, body {
   /* since 3.1.0 */
   .navbar-collapse.collapse.in { 
     display: block!important;
+    margin-right: -1px;
+    margin-bottom: -1px;
+    margin-left: -1px;
   }
   .collapsing {
     overflow: hidden!important;
@@ -257,7 +260,7 @@ html, body {
   background-color: #fff;
 }
 .navbar-default .navbar-toggle .icon-bar {
-  background-color: #000;
+  background-color: #767676;
 }
 .navbar-default .navbar-toggle:focus .icon-bar {
   background-color: #35A1E4;
@@ -323,8 +326,14 @@ html, body {
 * page content *
 ***************/
 
-.center-button {
-  margin-left: calc(50% - 50px);
+.blue-button {
+  background-color: #399ACA;
+  border-color: #4EA4D0;
+}
+
+.wide-button {
+  width: 140px;
+  margin-left: calc(50% - 70px);
 }
 
 .center-text {
@@ -338,12 +347,19 @@ html, body {
 }
 
 .preface-text {
-  padding-bottom: 30px;
+  padding-bottom: 20px;
 }
 
-.form-container {
-  margin: 40px 10% 0px 10%;
+.clear-floats, .field {
+  clear: both;
+}
+
+.padding-sides {
+  padding: 10px calc(50% - 313px) 0px calc(50% - 313px);
   overflow: auto;
+}
+
+.padding-bottom {
   padding-bottom: 80px;
 }
 
@@ -368,14 +384,12 @@ html, body {
   background-position: 50% 57%;
 }
 
-a.btn.btn-primary.center-button {
-  width: 100px;
-}
-
-h3, h4 {
-  text-align: center;
+h4 {
+  font-size: 20px;
+  font-weight: 300;
   font-family: 'Merriweather', serif;
-  margin-bottom: 20px;
+  margin-bottom: 27px;
+  text-align: center;
 }
 
 /* override the bootstrap path to the glyphicons */
@@ -420,9 +434,10 @@ h3, h4 {
   width: 100%;
   height: 140px;
   background-color: #666;
-  color: #fff;
+  color: #E6E4E4;
   font-family: 'Lato', sans-serif;
   clear: both;
+  font-weight: 300;
 }
 
 #footer-left {
@@ -438,11 +453,10 @@ h3, h4 {
 
 #footer-left-top-brand {
   font-size: 1.5em;
-  padding-right: 4px;
 }
 
 #footer-left-bottom {
-  margin-left: 42px;
+  margin-left: 34px;
   font-style: italic;
   font-weight: 100;
 }
@@ -462,36 +476,165 @@ h3, h4 {
 }
 
 /****************
-* Media queries *
+* Mobile styles *
 ****************/
 
-@media only screen and (min-width: 0px) and (max-width: 319px){
-  #text-overlay {
-    font-size: .5em;
+@media (max-width: 767px) {
+  
+  /* containers */
+  .page-content {
+    margin: 8px 10% 0px 10%;
+  }
+
+  .padding-sides {
+    padding: 0px 6% 0px 6%;
+  }
+
+  /* fonts and text */
+  * {
+    font-size: 12px;
+  }
+
+  h4 {
+    font-size: 19px;
+    font-weight: 300;
+    margin-top: 18px;
+    margin-bottom: 14px;
+  }
+
+  .body-text {
+    font-size: 13px;
+  }
+
+  /* footer styles */
+  #wrap {
+    margin: 0 auto -93px;
+  }
+
+  #footer, .push {
+    height: 93px;
+  }
+
+  #footer-right {
+    display: none;
+  }
+
+  #footer-left {
+    padding: 0px; /* remove extant padding */
+    padding-top: 20px;
+    padding-left: 20px;
+    margin-left: calc(50% - 118px);
+  }
+
+  /* home page */
+  #text-overlay div {
+    font-size: 11px;
+  }
+
+  /* contribute page */
+  .form-container {
+    padding: 10px calc(50% - 313px) 0px calc(50% - 313px)
+  }
+
+  .mobile-background-gray {
+    background-color: #eee;
+  }
+
+  /* records#new */ 
+  .students-image {
+    background: url(students-mobile.jpg);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: 50% 57%;
+  }
+
+  label {
+    float: none;
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  input, #placeholder-box {
+    background-color: #fff;
+    width: 100%;
+  }
+
+  select#record_content_type {
+    width: 100%;
+  }
+
+  div#placeholder-box {
+    display: none;
+  }
+
+  #file-upload-button {
+    width: 100%;
+  }
+
+  span.btn.btn-small.btn-default.btn-inverse {
+    margin-left: 0px;
+  }
+
+  #record-description {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .terms-and-conditions {
+    margin-left: 14px;
+    margin-top: 4px;
+  }
+
+  .postscript-text {
+    display: none;
   }
 }
 
-@media only screen and (min-width: 320px) and (max-width: 479px){ 
-  #text-overlay {
-    font-size: .8em;
+
+/*****************
+* desktop styles *
+*****************/
+
+@media (min-width: 768px) {
+  
+  /* records#new */
+  input, #placeholder-box, button, select, textarea {
+    background-color: #f4f4f4;
   }
+
+  input {
+    width: calc(100% - 185px);
+  }
+
+  #placeholder-box {
+    width: 200px;
+  }
+
+  select#record_content_type {
+    width: 120px;
+  }
+
+  span.btn.btn-small.btn-default.btn-inverse {
+    margin-left: 10px;
+  }
+
+  label {
+    float: left;
+  }
+
+  #record-description {
+    width: calc(100% - 185px);
+    max-width: calc(100% - 185px);
+  }
+
+  .terms-and-conditions {
+    float: left;
+    margin-left: 200px;
+    margin-top: -22px;
+  }
+
+
 }
 
-@media only screen and (min-width: 480px) and (max-width: 767px){ 
-  #text-overlay {
-    font-size: 1em;
-  }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 991px){ 
-  #text-overlay {
-    font-size: 1.5em;
-  }
-}
-
-
-@media only screen and (min-width: 992px) and (max-width: 1999px){
-  #text-overlay {
-    font-size: 1.7em;
-  }
-}
