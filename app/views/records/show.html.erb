@@ -42,13 +42,13 @@
 
       <% elsif @record.content_type == "Video" %>
         <div class="record-display-container">
-          <%= video_tag( @record.file_upload.url, poster: @record.file_upload.url(:medium), size: "300x300", class: "loaded-video", controls: true ) %>
+          <%= video_tag( @record.file_upload.url, poster: @record.file_upload.url(:medium), size: "300x300", class: "loaded-media loaded-video", controls: true ) %>
         </div>
 
 
       <% elsif @record.content_type == "Audio" %>
         <div class="record-display-container">
-          <%= audio_tag( @record.file_upload.url, controls: true,  class: "loaded-audio", autoplay: true ) %>
+          <%= audio_tag( @record.file_upload.url, controls: true,  class: "loaded-media loaded-audio", autoplay: true ) %>
         </div>
       <% end %>
 
