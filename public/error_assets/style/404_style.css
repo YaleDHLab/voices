@@ -1,0 +1,182 @@
+/* data visualization */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  background-color: #eee;
+}
+
+.logo-and-greeing-container {
+  width: 100%;
+  height: auto;
+}
+
+.logo {
+  height: 100px;
+  width: 140px;
+  display: inline-block;
+  float: left;
+  margin-top: 60px;
+  margin-left: 60px;
+}
+
+.greeting {
+  width: 425px;
+  color: #000;
+  font-family: 'Lato', sans-serif;
+  display: inline-block;
+  float: left;
+  margin-top: 73px;
+  margin-left: 45px;
+}
+
+.greeting a {
+  text-decoration: none;
+  color: #000;
+}
+
+.you-are-here {
+  height: 50px;
+  position: absolute;
+  margin-top: 270px;
+  left: 206px;
+}
+
+.vector-container {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.vector-container img {
+  width: 146%;
+  margin-left: -29%;
+  position: fixed;
+  overflow: hidden;
+}
+
+#footer {
+  max-width: 100%;
+  overflow: hidden;
+  position: absolute;
+  background-color: rgba(102, 102, 102, .9) !important;
+}
+
+/******** import from static_pages.css *********/
+
+/*********
+* footer *
+*********/
+
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -140px;
+}
+
+.push {
+  height: 140px;
+}
+
+#footer {
+  width: 100%;
+  height: 140px;
+  color: #E6E4E4;
+  font-family: 'Lato', sans-serif;
+  clear: both;
+  font-weight: 300;
+}
+
+#footer-left {
+  float: left;
+  padding: 40px;
+  font-family: 'Merriweather', serif;
+}
+
+#footer-left-top-brand,
+#footer-left-top-university {
+  display: inline-block;
+}
+
+#footer-left-top-brand {
+  font-size: 1.5em;
+}
+
+#footer-left-bottom {
+  font-style: italic;
+  font-weight: 100;
+  margin-top: -2px;
+}
+
+/*************************************
+*           Mobile styles            *
+**************************************/
+
+@media (max-width: 767px) {
+
+  /*****************
+  * fonts and text *
+  *****************/
+  
+  * {
+    font-size: 12px;
+  }
+
+  h4 {
+    font-size: 19px;
+    font-weight: 300;
+    margin-top: 18px;
+    margin-bottom: 14px;
+  }
+
+  * {
+    font-size: 13px;
+  }
+
+  /****************
+  * footer styles *
+  ****************/
+  
+  #wrap {
+    margin: 0 auto -93px;
+  }
+
+  #footer, .push {
+    height: 93px;
+  }
+
+  #footer-left {
+    padding: 0px; /* remove extant padding */
+    padding-top: 20px;
+    padding-left: 20px;
+    position: relative;
+    width: 250px;
+    margin-left: -125px;
+    left: 50%;
+  }
+
+  #footer-left-bottom {
+    margin-left: 40px;
+  }
+}
+
+/*************************************
+*           Desktop styles           *
+*************************************/
+
+@media (min-width: 768px) {
+  
+  /*********
+  * footer *
+  *********/
+
+  #footer-left-bottom {
+    margin-left: 41px;
+  }
+
+}
