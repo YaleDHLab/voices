@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Voices | 
-    <%= yield :page_title %>
-  </title>
+  <title>Voices | <%= yield :page_title %></title>
 
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
@@ -14,6 +12,8 @@
   <link href='https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Merriweather:300,400,700' rel='stylesheet' type='text/css'>
 
+  <%= render 'layouts/shim' %>
+
   <%= yield :head %>
 </head>
 <body>
@@ -21,112 +21,20 @@
   <!-- pagewrap for footer -->
   <div id="wrap">
 
-    <!-- bootstrap3 navbar -->
-    <div id="header">
-      <div class="navbar navbar-default">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" 
-          data-toggle="collapse" 
-          data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-
-          <%= link_to(image_tag("voices-logo.png"), root_path, :id => "bootstrap-brand", :class => "navbar-brand") %>
-        </div>
-        
-        <!-- navbar links -->
-        <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">  
-            <li>
-              <% if controller?("static_pages") && action?("about") %>
-                <%= link_to "ABOUT", about_path, :class => "active" %>
-              <% else %>
-                <%= link_to "ABOUT", about_path %>
-              <% end %>
-            </li>
-
-            <li>
-              <% if controller?("records") && action?("new") %>
-                <%= link_to "CONTRIBUTE", new_record_path, :class => "active" %>
-              <% else %>
-                <%= link_to "CONTRIBUTE", new_record_path %>
-              <% end %>
-            </li>
-
-            <li>
-              <%= link_to(image_tag("voices-logo.png"), root_path, :id => "voices-brand") %>
-            </li>
-
-            <li>
-              <% if controller?("static_pages") && action?("contact") %>
-                <%= link_to "CONTACT", contact_path, :class => "active" %>
-              <% else %>
-                <%= link_to "CONTACT", contact_path %>
-              <% end %>
-            </li>
-
-            <% if session[:cas_user] %>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                  <%= session[:cas_user].upcase %>
-                  <span class="caret">
-                  </span>
-                </a>
-                <ul class="dropdown-menu" id="profile-dropdown">
-                  <li>
-                    <div class="dropdown-menu-row-container">
-                      <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
-                      <div class="dropdown-menu-row-text">
-                        <%= link_to "Submissions", user_show_path %>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="dropdown-menu-row-container">
-                      <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-                      <div class="dropdown-menu-row-text">
-                        <%= link_to "Log Out", user_logout_path %>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </li>
-
-            <% else %>
-              <% if controller?("user") && action?("show") %>
-                <li>
-                  <% link_to "LOG IN", :controller => "user", :action => "login", :class => "active" %>
-                </li>
-              <% else %>
-                <li>
-                  <%= link_to "LOG IN", :controller => "user", :action => "login" %>
-                </li>
-              <% end %>
-            <% end %>
-          
-          </ul>
-        </div>
-      </div>
-    </div> <!-- /#header -->
+    <!-- bootstrap3 header -->
+    <%= render 'layouts/header' %>
  
-      <!-- page content -->
-      <%= yield %>
+    <!-- flash for messaging user -->
+    <%= render 'layouts/flash' %>
 
+    <!-- page content -->
+    <%= yield %>
+
+    <!-- push for footer spacing -->
     <div class="push"></div>
 
   </div> <!-- /#wrap -->
-  <div id="footer">
-    <div id="footer-left">
-      <div id="footer-left-top-brand">Yale</div>
-      <div id="footer-left-top-university">UNIVERSITY LIBRARY</div>
-      <div id="footer-left-bottom">Digital Humanities Laboratory</div>
-    </div>
-    <div id="footer-right">
-      <div id="footer-right-top">DH</div>
-      <div id="footer-right-bottom">Lab</div>
-    </div>
-  </div>
+  
+  <%= render 'layouts/footer' %>
 </body>
 </html>
