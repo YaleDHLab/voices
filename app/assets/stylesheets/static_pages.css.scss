@@ -417,8 +417,6 @@ html, body {
 }
 
 
-
-
 /***************
 * page content *
 ***************/
@@ -502,9 +500,9 @@ h4 {
   src: url(asset_path('glyphicons-halflings-regular.eot?#iefix')) format('embedded-opentype'), url(asset_path('glyphicons-halflings-regular.woff')) format('woff'), url(asset_path('glyphicons-halflings-regular.ttf')) format('truetype'), url(asset_path('glyphicons-halflings-regular.svg#glyphicons_halflingsregular')) format('svg');
 }
 
-/*********
-* alerts *
-*********/
+/***************
+* flash alerts *
+***************/
 
 #email-notice {
   margin-bottom: 0px;
@@ -512,6 +510,16 @@ h4 {
 
 #email-notice .alert button.close {
   padding-bottom: 0px;
+}
+
+#flash-container {
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+}
+
+#flash-container button.close {
+  margin-top: -1px;
 }
 
 .alert {
