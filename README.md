@@ -22,6 +22,13 @@ heroku create voices-dev
 # add support for multiple buildpacks  
 heroku buildpacks:set https://github.com/ddollar/heroku-buildpack-multi.git  
   
+# compile assets if necessary
+bundle exec rake assets:precompile
+
+# update master branch if necessary
+git add .
+git commit -m "updated master branch before heroku deploy"
+
 # push local master branch to remote heroku host  
 git push heroku master  
 
