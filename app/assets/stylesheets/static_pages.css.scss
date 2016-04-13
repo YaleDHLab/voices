@@ -11,6 +11,10 @@ html, body {
   height: 100%;
 }
 
+/************************************************
+*                    navbar                     *
+************************************************/
+
 /******************
 * minified navbar *
 ******************/
@@ -91,7 +95,6 @@ html, body {
     text-decoration: none;
     color: black;
   }
-
 
   #profile-dropdown .dropdown-menu-row-text {
     position: relative;
@@ -214,7 +217,6 @@ html, body {
   margin: 12px 0px 0px 14px;
 }
 
-
 /****************
 * navbar colors *
 ****************/
@@ -293,6 +295,10 @@ html, body {
   }
 }
 
+
+/************************************************
+*                   home page                   *
+************************************************/
 
 /**************************
 * image with text overlay *
@@ -416,6 +422,43 @@ html, body {
   }
 }
 
+/************************************************
+*                global content                 *
+************************************************/
+
+/*****************
+* text and fonts *
+*****************/
+
+.center-text {
+  text-align: center;
+}
+
+h4 {
+  font-size: 20px;
+  font-weight: 300;
+  font-family: 'Merriweather', serif;
+  margin-bottom: 27px;
+  text-align: center;
+}
+
+/* override the bootstrap path to the glyphicons */
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url(asset_path('Glyphicons/glyphicons-halflings-regular.eot'));
+  src: url(asset_path('Glyphicons/glyphicons-halflings-regular.eot?#iefix')) format('embedded-opentype'), 
+       url(asset_path('Glyphicons/glyphicons-halflings-regular.woff')) format('woff'), 
+       url(asset_path('Glyphicons/glyphicons-halflings-regular.ttf')) format('truetype'), 
+       url(asset_path('Glyphicons/glyphicons-halflings-regular.svg#glyphicons_halflingsregular')) format('svg');
+}
+
+/* define yale typeface */
+@font-face {
+  font-family: YaleNew;
+  font-style: normal;
+  font-weight: normal;
+  src: url(asset_path('YaleNew/yaledesign-medium-webfont.ttf')) format('truetype');
+}
 
 /***************
 * page content *
@@ -431,10 +474,6 @@ html, body {
   margin-left: -70px;
   left: 50%;
   position: relative;
-}
-
-.center-text {
-  text-align: center;
 }
 
 .white-background {
@@ -481,23 +520,8 @@ html, body {
   background-position: 50% 57%;
 }
 
-h4 {
-  font-size: 20px;
-  font-weight: 300;
-  font-family: 'Merriweather', serif;
-  margin-bottom: 27px;
-  text-align: center;
-}
-
 #contact_form_message {
   margin-bottom: 10px;
-}
-
-/* override the bootstrap path to the glyphicons */
-@font-face {
-  font-family: 'Glyphicons Halflings';
-  src: url(asset_path('glyphicons-halflings-regular.eot'));
-  src: url(asset_path('glyphicons-halflings-regular.eot?#iefix')) format('embedded-opentype'), url(asset_path('glyphicons-halflings-regular.woff')) format('woff'), url(asset_path('glyphicons-halflings-regular.ttf')) format('truetype'), url(asset_path('glyphicons-halflings-regular.svg#glyphicons_halflingsregular')) format('svg');
 }
 
 /***************
