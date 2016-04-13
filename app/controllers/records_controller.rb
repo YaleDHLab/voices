@@ -43,6 +43,7 @@ class RecordsController < ApplicationController
 
     respond_to do |format|
       if @record.save
+        flash[:success] = "<strong>Success</strong>".html_safe + ": Record successfully saved."
         format.html { redirect_to @record, notice: 'Record was successfully created.' }
         format.json { render action: 'show', status: :created, location: @record }
       else

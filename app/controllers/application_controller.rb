@@ -4,6 +4,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def check_privileges(requested_record)
-    redirect_to "/", notice: 'You dont have enough permissions to be here' unless requested_record.cas_user_name == session[:cas_user]
+    if requested_record.cas_user_name != session[:cas_user]
+      flash[:info] = "<strong>ACCESS RESTRICTED</strong>".html_safe + ": You do not have access to this page. Please contact your administrator about your permissions."
+      redirect_to user_show_path
+    end
   end
 end

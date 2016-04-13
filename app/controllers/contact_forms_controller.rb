@@ -16,7 +16,7 @@ class ContactFormsController < ApplicationController
 
         # send an email to our inbox on save of a contact form
         ContactMailer.contact_email(@contact_form).deliver
-        flash[:success] = "<strong>Success!</strong>".html_safe + " Thanks for contacting us."
+        flash[:success] = "<strong>Success</strong>".html_safe + ": Thank you for contacting us."
         format.html { redirect_to root_path }
         format.json { render action: 'show', status: :created, location: @contact_form }
       else

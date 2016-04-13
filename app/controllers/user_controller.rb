@@ -7,7 +7,7 @@ class UserController < ApplicationController
   end
 
   def login
-    flash[:success] = "<strong>Success!</strong>".html_safe + " You are logged in as " + session[:cas_user]
+    flash[:success] = "<strong>Success</strong>".html_safe + ": You are logged in as " + session[:cas_user]
     redirect_to static_pages_home_path
   end
 
