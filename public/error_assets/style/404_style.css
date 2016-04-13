@@ -10,28 +10,27 @@ html, body {
   background-color: #eee;
 }
 
-.logo-and-greeing-container {
-  width: 100%;
-  height: auto;
+.logo-and-greeting {
+  margin-top: 50px;
+  margin-left: 50px;
+  overflow: hidden;
 }
 
 .logo {
-  height: 100px;
+  position: relative;
   width: 140px;
-  display: inline-block;
   float: left;
-  margin-top: 60px;
-  margin-left: 60px;
 }
 
 .greeting {
-  width: 425px;
+  position: relative;
+  float: none;
+  overflow: hidden;
+  word-wrap: normal;
   color: #000;
   font-family: 'Lato', sans-serif;
-  display: inline-block;
-  float: left;
-  margin-top: 73px;
-  margin-left: 45px;
+  padding-left: 50px;
+  padding-top: 15px;
 }
 
 .greeting a {
@@ -39,11 +38,18 @@ html, body {
   color: #000;
 }
 
+.optional-br {
+  display: inline;
+}
+
+.you-are-here-container {
+  position: absolute;
+  margin-top: 7%;
+  left: 195px;
+}
+
 .you-are-here {
   height: 50px;
-  position: absolute;
-  margin-top: 270px;
-  left: 206px;
 }
 
 .vector-container {
@@ -55,6 +61,7 @@ html, body {
 .vector-container img {
   width: 146%;
   margin-left: -29%;
+  margin-top: 3%;
   position: fixed;
   overflow: hidden;
 }
@@ -64,6 +71,61 @@ html, body {
   overflow: hidden;
   position: absolute;
   background-color: rgba(102, 102, 102, .9) !important;
+}
+
+/* styles for small viewports */
+@media (max-width: 767px) {
+  .logo-and-greeting {
+    margin-top: 20px;
+    margin-left: 25px;
+  }
+
+  .logo {
+    width: 70px;
+  }
+
+  .greeting {
+    padding-left: 25px;
+  }
+
+  .vector-container img {
+    margin-top: 22%;
+  }
+
+  .you-are-here-container {
+    left: 77px;
+    margin-top: 20%;
+  }
+}
+
+@media (max-width: 460px) {
+  .vector-container img {
+    margin-top: 45%;
+  }
+
+  .optional-br {
+    display: none;
+  }
+
+  .greeting {
+    padding-right: 15px;
+  }
+
+  .you-are-here-container {
+    margin-top: 55px;
+  }
+}
+
+@media (max-width: 373px) {
+  .greeting {
+    float: left;
+    padding-left: 13px;
+  }
+
+  .you-are-here-container {
+    left: 10%;
+  }
+
 }
 
 /******** import from static_pages.css *********/
