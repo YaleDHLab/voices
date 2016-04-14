@@ -9,5 +9,11 @@ module ApplicationHelper
   def action?(*action)
     action.include?(params[:action])
   end
+
+  def inline_svg(path)
+    File.open("app/assets/images/#{path}", "rb") do |file|
+      raw file.read
+    end
+  end
   
 end
