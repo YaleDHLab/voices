@@ -117,15 +117,32 @@ html, body {
 }
 
 @media (max-width: 373px) {
+  .logo-and-greeting {
+    margin-left: 12px;
+    margin-top: 15px;
+  }
+
+  .logo {
+    width: 50px;
+  }
+
   .greeting {
-    float: left;
-    padding-left: 13px;
+    padding-left: 14px;
+    padding-right: 5px;
   }
 
   .you-are-here-container {
+    margin-top: 45px;
     left: 10%;
   }
 
+  .you-are-here {
+    height: 40px;
+  }
+
+  .vector-container img {
+    margin-top: 25%;
+  }
 }
 
 /******** import from static_pages.css *********/
