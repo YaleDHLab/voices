@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
       </button>
 
-      <%= link_to( image_tag("voices-mark-outlines.svg"), root_path, :id => "bootstrap-brand", :class => "navbar-brand", "data-svg-fallback" => image_url('voicesLogo.png') ) %>
+      <%= link_to( image_tag("voices-mark-outlines.svg", {:"data-svg-fallback" => "#{image_path('voicesLogo.png')}" }), root_path, :id => "bootstrap-brand", :class => "navbar-brand" ) %>
     </div>
     
     <!-- navbar links -->
@@ -32,7 +32,7 @@
         </li>
 
         <li>
-          <%= link_to( image_tag("voices-mark-outlines.svg"), root_path, :id => "voices-brand", :class => "navbar-brand", "data-svg-fallback" => image_url('voicesLogo.png') ) %>
+          <%= link_to( image_tag("voices-mark-outlines.svg", {:"data-svg-fallback" => "#{image_path('voicesLogo.png')}" }), root_path, :id => "voices-brand", :class => "navbar-brand" ) %>
         </li>
 
         <li>
