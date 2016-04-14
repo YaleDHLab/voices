@@ -35,6 +35,7 @@ html, body {
     margin-left: -40px;
     left: 50%;
     padding: 0;
+    padding-top: 13px;
   }
 
   #bootstrap-brand img {
@@ -135,7 +136,7 @@ html, body {
 
   #header a {
     padding: 25px 10px 10px 10px;
-    width: 106px;
+    width: 135px;
     border: none;
   }
 
@@ -192,13 +193,13 @@ html, body {
 }
 
 .navbar #voices-brand {
-  width: 180px;
-  padding-top: 8px;
-  padding-bottom: 2px;
+  width: 140px;
+  padding-top: 24px;
+  padding-bottom: 24px;
 }
 
 .navbar #voices-brand img {
-  width: 70%;
+  width: 100%;
 }
 
 /* make the currently selected page text a different color */
@@ -434,6 +435,11 @@ html, body {
   text-align: center;
 }
 
+/* default body text to acumin-pro */
+.container {
+  font-family: "acumin-pro", sans-serif;
+}
+
 h4 {
   font-size: 20px;
   font-weight: 300;
@@ -458,6 +464,14 @@ h4 {
   font-style: normal;
   font-weight: normal;
   src: url(asset_path('YaleNew/yaledesign-medium-webfont.ttf')) format('truetype');
+}
+
+/* define veneer typeface */
+@font-face {
+  font-family: Veneer;
+  font-style: normal;
+  font-weight: normal;
+  src: url(asset_path('Veneer/Veneer.otf')) format('opentype');
 }
 
 /***************
