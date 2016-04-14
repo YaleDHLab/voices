@@ -163,9 +163,10 @@ html, body {
     margin-top: 5px;
   }
 
-  /* remove the downward push from the header image */
+  /* remove the downward push from the header image 
+     and provide additional upward push */
   #voices-brand img {
-    margin-top: -5px;
+    margin-top: -10px;
   }
 
   #profile-dropdown .dropdown-menu-row-text {
