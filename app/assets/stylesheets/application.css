@@ -13,4 +13,5 @@
  *
  *= require bootstrap
  *= require_self
+ *= require static_pages
  */

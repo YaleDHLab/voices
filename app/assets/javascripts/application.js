@@ -14,3 +14,4 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require masonry-4.0.0
+//= require static_pages
