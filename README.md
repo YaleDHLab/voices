@@ -29,8 +29,8 @@ heroku create voices-dev
 # add support for multiple buildpacks  
 heroku buildpacks:set https://github.com/ddollar/heroku-buildpack-multi.git  
   
-# compile assets if necessary
-bundle exec rake assets:precompile
+# compile and minify assets if necessary
+bundle exec rake assets:precompile RAILS_ENV=production
 
 # update master branch if necessary
 git add .
