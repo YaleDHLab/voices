@@ -56,20 +56,14 @@ html, body {
     display: none !important;
   }
   .navbar-nav {
-    float: none!important;
+    float: none !important;
     margin: 0;
     padding: 0;
     border-top: 1px solid #a6a6a6;
     border-right: 1px solid #a6a6a6;
     border-left: 1px solid #a6a6a6;
   }
-  .navbar-nav>li {
-    float: none;
-    display: block;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
+
   .navbar-nav>li>a {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -78,7 +72,6 @@ html, body {
     font-weight: 700;
   }
   .navbar-text {
-    float: none;
     margin: 15px 0;
   }
   .dropdown.open .glyphicon {
@@ -133,19 +126,22 @@ html, body {
     display: none;
   }
 
-  #header a {
+  .navbar .nav li {
+    display: inline-block;
+    float: none;
+    text-align: center;
+  }
+
+  .navbar .nav li > a {
     width: 135px;
+    padding-top: 30px;
+    padding-bottom: 18px;
+    border: none;
   }
 
   a#voices-brand {
     width: 140px;
     padding-top: 22px;
-  }
-
-  .navbar .nav li {
-    display: inline-block;
-    float: none;
-    text-align: center;
   }
 
   #profile-dropdown a {
@@ -185,12 +181,6 @@ html, body {
   text-align: center;
 }
 
-#voices-brand {
-  width: 140px;
-  padding-top: 24px;
-  padding-bottom: 24px;
-}
-
 #voices-brand img {
   width: 100%;
 }
@@ -199,9 +189,6 @@ html, body {
   font-family: "acumin-pro", sans-serif;
   font-size: 1em;
   color: #333;
-  padding-top: 30px;
-  padding-bottom: 18px;
-  border: none;
 }
 
 /* make the currently selected page text a different color */
