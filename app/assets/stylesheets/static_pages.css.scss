@@ -35,12 +35,11 @@ html, body {
     margin-left: -40px;
     left: 50%;
     padding: 0;
-    padding-top: 13px;
   }
 
   #bootstrap-brand img {
     width: 100%;
-    padding-top: 8px;
+    padding-top: 12px;
   }
 
   .navbar-header {
@@ -135,19 +134,18 @@ html, body {
   }
 
   #header a {
-    padding: 25px 10px 10px 10px;
     width: 135px;
-    border: none;
+  }
+
+  a#voices-brand {
+    width: 140px;
+    padding-top: 22px;
   }
 
   .navbar .nav li {
     display: inline-block;
     float: none;
     text-align: center;
-  }
-
-  #profile-dropdown {
-    margin-top: 8px;
   }
 
   #profile-dropdown a {
@@ -161,12 +159,6 @@ html, body {
   /* push the line items down in navbar */
   .dropdown-toggle {
     margin-top: 5px;
-  }
-
-  /* remove the downward push from the header image 
-     and provide additional upward push */
-  #voices-brand img {
-    margin-top: -10px;
   }
 
   #profile-dropdown .dropdown-menu-row-text {
@@ -193,14 +185,23 @@ html, body {
   text-align: center;
 }
 
-.navbar #voices-brand {
+#voices-brand {
   width: 140px;
   padding-top: 24px;
   padding-bottom: 24px;
 }
 
-.navbar #voices-brand img {
+#voices-brand img {
   width: 100%;
+}
+
+.navbar-nav > li > a {
+  font-family: "acumin-pro", sans-serif;
+  font-size: 1em;
+  color: #333;
+  padding-top: 30px;
+  padding-bottom: 18px;
+  border: none;
 }
 
 /* make the currently selected page text a different color */
