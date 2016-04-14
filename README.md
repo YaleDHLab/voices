@@ -62,6 +62,9 @@ heroku open</code></pre>
 <pre><code># to debug on heroku, you can open a terminal with the following command:  
 heroku run bash  
   
+# to run the rails console on heroku  
+heroku run rails c  
+  
 # to populate a list of all heroku instances:  
 heroku apps  
 
