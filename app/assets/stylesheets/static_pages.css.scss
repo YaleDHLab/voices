@@ -27,20 +27,10 @@ html, body {
     display: none;
   }
 
-  /* increase the size of the brand and center */
   #bootstrap-brand {
     display: block;
-    position: relative;
-    width: 80px;
-    margin-left: -40px;
-    left: 50%;
-    padding: 0;
   }
 
-  #bootstrap-brand img {
-    width: 100%;
-    padding-top: 12px;
-  }
 
   .navbar-header {
     float: none;
@@ -207,6 +197,19 @@ html, body {
   margin: 12px 0px 0px 14px;
 }
 
+#bootstrap-brand {
+  position: relative;
+  width: 80px;
+  margin-left: -40px;
+  left: 50%;
+  padding: 0;
+}
+
+#bootstrap-brand img {
+  width: 100%;
+  padding-top: 12px;
+}
+
 /****************
 * navbar colors *
 ****************/
@@ -355,13 +358,13 @@ html, body {
   }
 }
 
-@media (min-width: 620px) and (max-width: 768px) {
+@media (min-width: 620px) and (max-width: 767px) {
   #banner-image {
     height: 300px;
   }
 }
 
-@media (min-width: 769px) and (max-width: 899px) {
+@media (min-width: 768px) and (max-width: 899px) {
   #banner-image {
     height: 350px;
   }
@@ -601,7 +604,7 @@ h4 {
 *           Mobile styles            *
 **************************************/
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   
   /*************
   * containers *
@@ -739,14 +742,6 @@ h4 {
 
 @media (min-width: 768px) {
   
-  /*********
-  * footer *
-  *********/
-
-  #footer-left-bottom {
-    margin-left: 41px;
-  }
-
   /**************
   * records#new *
   **************/
