@@ -106,9 +106,39 @@ span.btn.btn-small.btn-default.btn-inverse {
   margin-bottom: 30px;
 }
 
+/************************************
+* boolean slider for mobile display *
+************************************/
+
+.boolean-slider-track {
+  width: 34px;
+  height: 13px;
+  background: #b5b5b5;
+  border-radius: 10px;
+}
+
+.boolean-slider-knob {
+  height: 18px;
+  width: 18px;
+  background-color: #fff;
+  position: absolute;
+  z-index: 1;
+  border-radius: 50%;
+  margin-top: -3px;
+  cursor: pointer;
+  border: 1px solid #a0a0a0;
+  -webkit-box-shadow: 0 0 0 0 white, 0 1px 1px #353535;
+  -moz-box-shadow: 0 0 0 0 white, 0 1px 1px #353535;
+  box-shadow: 0 0 0 0 white, 0 1px 1px #353535;
+}
+
 /**************
 * record#show *
 **************/
+
+.margin-right {
+  margin-right: 10px;
+}
 
 .invite-submissions-container {
   height: 80px;
@@ -136,7 +166,7 @@ span.btn.btn-small.btn-default.btn-inverse {
   margin-top: 37px;
 }
 
-#edit-record-button {
+.modify-record-button {
   display: inline-block;
   float: right;
   margin-top: 30px;
@@ -187,32 +217,6 @@ span.btn.btn-small.btn-default.btn-inverse {
 
 .record-display-text {
   margin-bottom: 20px;
-}
-
-/************************************
-* boolean slider for mobile display *
-************************************/
-
-.boolean-slider-track {
-  width: 34px;
-  height: 13px;
-  background: #b5b5b5;
-  border-radius: 10px;
-}
-
-.boolean-slider-knob {
-  height: 18px;
-  width: 18px;
-  background-color: #fff;
-  position: absolute;
-  z-index: 1;
-  border-radius: 50%;
-  margin-top: -3px;
-  cursor: pointer;
-  border: 1px solid #a0a0a0;
-  -webkit-box-shadow: 0 0 0 0 white, 0 1px 1px #353535;
-  -moz-box-shadow: 0 0 0 0 white, 0 1px 1px #353535;
-  box-shadow: 0 0 0 0 white, 0 1px 1px #353535;
 }
 
 
