@@ -77,7 +77,9 @@ $(document).ready(function() {
     });
   };
 
+  // add a listener and initialize the rails form to not include user name
   setBooleanChangeListener();
+  setBooleanRailsField(0);
 
   /***
   * when user clicks the file upload button, change the html of the placeholder box
