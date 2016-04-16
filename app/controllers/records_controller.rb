@@ -44,7 +44,7 @@ class RecordsController < ApplicationController
     respond_to do |format|
       if @record.save
         flash[:success] = "<strong>Success</strong>".html_safe + ": Record successfully saved."
-        format.html { redirect_to @record, notice: 'Record was successfully created.' }
+        format.html { redirect_to @record }
         format.json { render action: 'show', status: :created, location: @record }
       else
         format.html { render action: 'new' }
@@ -58,7 +58,8 @@ class RecordsController < ApplicationController
   def update
     respond_to do |format|
       if @record.update(record_params)
-        format.html { redirect_to @record, notice: 'Record was successfully updated.' }
+        flash[:success] = "<strong>Confirmation</strong>".html_safe + ": Record successfully updated."
+        format.html { redirect_to @record }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
