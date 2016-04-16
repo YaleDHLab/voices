@@ -424,11 +424,13 @@ html, body {
 *****************/
 
 /* only display fonts that are done loading */
-.wf-loading a {
+.wf-loading a,
+.wf-loading .center-text  {
   visibility: hidden;
 }
 
-.wf-active a {
+.wf-active a,
+.wf-active .center-text {
   visibility: visible;
 }
 
@@ -441,7 +443,7 @@ html, body {
   font-family: "acumin-pro", sans-serif;
 }
 
-h4 {
+h1 {
   font-size: 20px;
   font-weight: 300;
   font-family: 'Merriweather', serif;
@@ -549,10 +551,6 @@ h4 {
   list-style: none;
 }
 
-.alert button.close {
-  margin-top: -8px;
-}
-
 /*********
 * footer *
 *********/
@@ -615,7 +613,7 @@ h4 {
     font-size: 12px;
   }
 
-  h4 {
+  h1 {
     font-size: 19px;
     font-weight: 300;
     margin-top: 18px;
@@ -671,6 +669,14 @@ h4 {
   #text-overlay div {
     font-size: 11px;
   }
+
+  /********
+  * flash *
+  ********/
+
+  button.close {
+    margin-top: -4px;
+  }
 }
 
 
@@ -695,5 +701,13 @@ h4 {
     background-repeat: no-repeat;
     position: relative;
     overflow: hidden;
+  }
+
+  /********
+  * flash *
+  ********/
+
+  button.close {
+    margin-top: -1px;
   }
 }
