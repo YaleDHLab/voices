@@ -179,6 +179,7 @@ html, body {
 
 #voices-brand img {
   width: 100%;
+  visibility: visible;
 }
 
 .navbar-nav > li > a {
@@ -421,6 +422,15 @@ html, body {
 /*****************
 * text and fonts *
 *****************/
+
+/* only display fonts that are done loading */
+.wf-loading a {
+  visibility: hidden;
+}
+
+.wf-active a {
+  visibility: visible;
+}
 
 .center-text {
   text-align: center;
