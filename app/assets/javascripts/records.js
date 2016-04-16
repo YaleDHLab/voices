@@ -72,7 +72,7 @@ $(document).ready(function() {
   var setBooleanChangeListener = function() {
     // add an onchange event that updates the rails form and the
     // #boolean-slider-text div when user toggles the slider
-    $(".boolean-slider-knob").on("click", function() {
+    $(".boolean-slider-knob").on("mousedown", function() {
       toggleBooleanSlider();
     });
   };
