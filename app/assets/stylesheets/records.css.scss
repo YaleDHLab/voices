@@ -243,7 +243,122 @@ span.btn.btn-small.btn-default.btn-inverse {
   }
 }
 
+/*********************
+* small media styles *
+*********************/
+
+@media (max-width: 767px) {
+  
+  /**************
+  * records#new *
+  **************/
+
+  .mobile-background-gray {
+    background-color: #eee;
+  }
+
+  label {
+    float: none;
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .long-label {
+    width: 290px;
+  }
+
+  input, #placeholder-box {
+    background-color: #fff;
+    width: 100%;
+  }
+
+  select#record_content_type {
+    width: 100%;
+  }
+
+  div#placeholder-box {
+    display: none;
+  }
+
+  #file-upload-button {
+    width: 100%;
+  }
+
+  span.btn.btn-small.btn-default.btn-inverse {
+    margin-left: 0px;
+  }
+
+  #record-description {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .terms-and-conditions {
+    margin-left: 17px;
+    margin-top: 5px;
+  }
+
+  .postscript-text {
+    display: none;
+  }
+}
+
+
+/*********************
+* large media styles *
+*********************/
+
 @media (min-width: 768px) {
+  
+  /**************
+  * records#new *
+  **************/
+
+  input, #placeholder-box, button, select, textarea {
+    background-color: #f4f4f4;
+  }
+
+  input {
+    /* fallback for browsers without calc support */
+    width: 64%;
+    width: calc(100% - 185px);
+  }
+
+  #placeholder-box {
+    width: 200px;
+  }
+
+  select#record_content_type {
+    width: 120px;
+  }
+
+  span.btn.btn-small.btn-default.btn-inverse {
+    margin-left: 10px;
+  }
+
+  label {
+    float: left;
+  }
+
+  .long-label {
+    width: 350px;
+  }
+
+  #record-description {
+    /* fallback for browsers without calc support */
+    width: 64%;
+    max-width: 64%;
+
+    width: calc(100% - 185px);
+    max-width: calc(100% - 185px);
+  }
+
+  .terms-and-conditions {
+    float: left;
+    margin-left: 197px;
+    margin-top: -26px;
+  }
+
   .boolean-slider-track {
     margin-top: 2px;
   }
