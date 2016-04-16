@@ -72,7 +72,8 @@ class RecordsController < ApplicationController
   def destroy
     @record.destroy
     respond_to do |format|
-      format.html { redirect_to records_url }
+      flash[:success] = "<strong>Confirmation</strong>".html_safe + ": Record successfully deleted."
+      format.html { redirect_to user_show_url }
       format.json { head :no_content }
     end
   end
