@@ -23,10 +23,6 @@ label {
   width: 180px;
 }
 
-.long-label {
-  width: 350px;
-}
-
 input, button, select, textarea {
   float: left;
   height: 30px;
@@ -46,6 +42,24 @@ input {
 textarea#record-description {
   height: 150px;
   padding: 6px;
+}
+
+/* include-name slider styles */
+.long-label {
+  float: left;
+}
+
+.boolean-slider-container {
+  float: left;
+  margin-top: 1px;
+}
+
+#boolean-slider-text {
+  float: left;
+  margin-left: 10px;
+  font-weight: 700;
+  color: #878787;
+  margin-top: -2px;
 }
 
 /*********************
@@ -175,13 +189,30 @@ span.btn.btn-small.btn-default.btn-inverse {
   margin-bottom: 20px;
 }
 
+/************************************
+* boolean slider for mobile display *
+************************************/
 
-/********
-* flash *
-********/
+.boolean-slider-track {
+  width: 34px;
+  height: 13px;
+  background: #b5b5b5;
+  border-radius: 10px;
+}
 
-#notice {
-  display: none;
+.boolean-slider-knob {
+  height: 18px;
+  width: 18px;
+  background-color: #fff;
+  position: absolute;
+  z-index: 1;
+  border-radius: 50%;
+  margin-top: -3px;
+  cursor: pointer;
+  border: 1px solid #a0a0a0;
+  -webkit-box-shadow: 0 0 0 0 white, 0 1px 1px #353535;
+  -moz-box-shadow: 0 0 0 0 white, 0 1px 1px #353535;
+  box-shadow: 0 0 0 0 white, 0 1px 1px #353535;
 }
 
 
@@ -207,4 +238,13 @@ span.btn.btn-small.btn-default.btn-inverse {
     float: none;
   }
 
+  #boolean-slider-text {
+    margin-top: -2px; 
+  }
+}
+
+@media (min-width: 768px) {
+  .boolean-slider-track {
+    margin-top: 2px;
+  }
 }
