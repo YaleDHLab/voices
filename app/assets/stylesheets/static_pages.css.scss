@@ -246,7 +246,6 @@ html, body {
   color: #5E5E5E;
 }
 
-
 .navbar-default .navbar-nav > .open > a, 
 .navbar-default .navbar-nav > .open > a:hover, 
 .navbar-default .navbar-nav > .open > a:focus {
@@ -303,9 +302,7 @@ html, body {
   height: 300px;
   /* provide fallback background for devices that only support
      one background url or don't support linear-gradient */
-  background: url(march-of-resilience-dark.jpg);
-  background: linear-gradient( rgba(0, 0, 0, 0.3), 
-    rgba(0, 0, 0, 0.3) ), url(march-of-resilience.jpg);
+  background: url(march-of-resilience-mobile.jpg);
   background-position: 50% 90%;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -452,22 +449,6 @@ h4 {
        url(asset_path('Glyphicons/glyphicons-halflings-regular.svg#glyphicons_halflingsregular')) format('svg');
 }
 
-/* define yale typeface */
-@font-face {
-  font-family: YaleNew;
-  font-style: normal;
-  font-weight: normal;
-  src: url(asset_path('YaleNew/yaledesign-medium-webfont.ttf')) format('truetype');
-}
-
-/* define veneer typeface */
-@font-face {
-  font-family: Veneer;
-  font-style: normal;
-  font-weight: normal;
-  src: url(asset_path('Veneer/Veneer.otf')) format('opentype');
-}
-
 /***************
 * page content *
 ***************/
@@ -548,10 +529,6 @@ h4 {
   width: 100%;
   position: absolute;
   z-index: 1;
-}
-
-#flash-container button.close {
-  margin-top: -1px;
 }
 
 .alert {
@@ -699,6 +676,10 @@ h4 {
     margin-bottom: 3px;
   }
 
+  .long-label {
+    width: 290px;
+  }
+
   input, #placeholder-box {
     background-color: #fff;
     width: 100%;
@@ -737,13 +718,29 @@ h4 {
 }
 
 
-
 /*************************************
 *           Desktop styles           *
 *************************************/
 
 @media (min-width: 768px) {
   
+  /************
+  * home page *
+  ************/
+
+  #banner-image {
+    height: 300px;
+    background: url(march-of-resilience-dark.jpg);
+    background-position: 50% 90%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+  }
+
   /**************
   * records#new *
   **************/
@@ -772,6 +769,10 @@ h4 {
 
   label {
     float: left;
+  }
+
+  .long-label {
+    width: 350px;
   }
 
   #record-description {
