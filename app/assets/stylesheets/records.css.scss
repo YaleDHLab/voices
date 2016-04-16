@@ -23,7 +23,7 @@ label {
   width: 180px;
 }
 
-input, button, select, textarea {
+input, select, textarea {
   float: left;
   height: 30px;
   border: 1px solid lightgray;
@@ -219,7 +219,6 @@ span.btn.btn-small.btn-default.btn-inverse {
   margin-bottom: 20px;
 }
 
-
 /****************
 * mobile styles *
 ****************/
@@ -252,7 +251,7 @@ span.btn.btn-small.btn-default.btn-inverse {
 *********************/
 
 @media (max-width: 767px) {
-  
+
   /**************
   * records#new *
   **************/
