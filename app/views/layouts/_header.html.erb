@@ -36,7 +36,7 @@
         </li>
 
         <li>
-          <% if controller?("static_pages") && action?("contact") %>
+          <% if controller?("contact_forms") && action?("new") %>
             <%= link_to "CONTACT", contact_path, :class => "active" %>
           <% else %>
             <%= link_to "CONTACT", contact_path %>
@@ -44,42 +44,65 @@
         </li>
 
         <% if session[:cas_user] %>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-              <%= session[:cas_user].upcase %>
-              <span class="caret">
-              </span>
-            </a>
-            <ul class="dropdown-menu" id="profile-dropdown">
-              <li>
-                <div class="dropdown-menu-row-container">
-                  <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
-                  <div class="dropdown-menu-row-text">
-                    <%= link_to "Submissions", user_show_path %>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="dropdown-menu-row-container">
-                  <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-                  <div class="dropdown-menu-row-text">
-                    <%= link_to "Log Out", user_logout_path %>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </li>
-
-        <% else %>
           <% if controller?("user") && action?("show") %>
-            <li>
-              <% link_to "LOG IN", :controller => "user", :action => "login", :class => "active" %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <%= session[:cas_user].upcase %>
+                <span class="caret">
+                </span>
+              </a>
+              <ul class="dropdown-menu" id="profile-dropdown">
+                <li>
+                  <div class="dropdown-menu-row-container">
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                    <div class="dropdown-menu-row-text">
+                      <%= link_to "Submissions", user_show_path %>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="dropdown-menu-row-container">
+                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                    <div class="dropdown-menu-row-text">
+                      <%= link_to "Log Out", user_logout_path %>
+                    </div>
+                  </div>
+                </li>
+              </ul>
             </li>
           <% else %>
-            <li>
-              <%= link_to "LOG IN", :controller => "user", :action => "login" %>
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <%= session[:cas_user].upcase %>
+                <span class="caret">
+                </span>
+              </a>
+              <ul class="dropdown-menu" id="profile-dropdown">
+                <li>
+                  <div class="dropdown-menu-row-container">
+                    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                    <div class="dropdown-menu-row-text">
+                      <%= link_to "Submissions", user_show_path %>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="dropdown-menu-row-container">
+                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                    <div class="dropdown-menu-row-text">
+                      <%= link_to "Log Out", user_logout_path %>
+                    </div>
+                  </div>
+                </li>
+              </ul>
             </li>
           <% end %>
+
+        <% else %>
+          <li>
+            <%= link_to "LOG IN", :controller => "user", :action => "login" %>
+          </li>
         <% end %>
       
       </ul>
