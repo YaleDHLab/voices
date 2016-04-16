@@ -10,9 +10,19 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field" id="include-name-container">
     <%= f.label :include_name, "Would you like your name included in the archive?<sup>*</sup>".html_safe, :class => "long-label" %>
-    <%= f.check_box :include_name %>
+    
+    <div class="boolean-slider-container">
+      <div class="boolean-slider-track">
+        <div class="boolean-slider-knob user-selection-0"></div>
+      </div>
+    </div> 
+
+    <div id="boolean-slider-text">NO</div>
+
+    <!-- include hidden field and submit the value to that hidden field -->
+    <%= f.hidden_field :include_name %>
   </div>
 
   <div class="field">
