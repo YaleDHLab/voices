@@ -7,10 +7,11 @@
 <% provide(:page_title, "Edit Record") %>
 
 <div class="small-banner-image-container students-image"></div>
-
+<div class="should-include-name"><%= @include_user_name %></div>
 <div class="container">
   <div class="padding-sides padding-bottom">
-    <h1 class="center-text">Editing record</h1>
+    <h1>Editing Record</h1>
+
     <%= render 'form' %>
   </div>
 </div>
