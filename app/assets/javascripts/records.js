@@ -81,6 +81,12 @@ $(document).ready(function() {
   setBooleanChangeListener();
   setBooleanRailsField(0);
 
+  // if the user is editing a record, determine whether they've indicated
+  // they want to include their name with a record; if so, toggle the ui and form
+  if ($(".should-include-name").html() == "1"){
+    toggleBooleanSlider();
+  }
+
   /***
   * when user clicks the file upload button, change the html of the placeholder box
   ***/
