@@ -31,6 +31,7 @@ class RecordsController < ApplicationController
 
   # GET /records/1/edit
   def edit
+    @include_user_name = should_include_user_name?(params[:id])
   end
 
   # POST /records
@@ -93,6 +94,15 @@ class RecordsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
       params.require(:record).permit(:title, :metadata, :file_upload, :cas_user_name, :include_name, :content_type, :description, :location, :source_url, :release_checked)
+    end
+
+    # Determine whether user wants to include their name alongside the record
+    def should_include_user_name?(record_id)
+      raw_boolean = Record.find(record_id).include_name
+      if raw_boolean == true
+        return 1
+      end
+      retun 0
     end
 
 end
