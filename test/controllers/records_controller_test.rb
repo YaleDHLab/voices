@@ -39,11 +39,11 @@ class RecordsControllerTest < ActionController::TestCase
       if @record.cas_user_name == session[:cas_username]
         assert_response :success
       else
-        assert_redirected_to root_path
+        assert_redirected_to user_show_path
       end
 
     else
-      assert_redirected_to root_path
+      assert_redirected_to user_show_path
     end
   end
 
@@ -59,10 +59,10 @@ class RecordsControllerTest < ActionController::TestCase
       if @record.cas_user_name == session[:cas_username]
         assert_response :success
       else 
-        assert_redirected_to root_path
+        assert_redirected_to user_show_path
       end
     else
-      assert_redirected_to root_path
+      assert_redirected_to user_show_path
     end
   end
 
@@ -78,7 +78,7 @@ class RecordsControllerTest < ActionController::TestCase
       if @record.cas_user_name == session[:cas_username]
         assert_redirected_to record_path(assigns(:record))
       else
-        assert_redirected_to root_path
+        assert_redirected_to user_show_path
       end
     end
   end
