@@ -2,8 +2,18 @@ class UserController < ApplicationController
   before_filter CASClient::Frameworks::Rails::Filter
 
   def show
-    # retrieve all records that belong to this user
-    @user_records = Record.where(cas_user_name: session[:cas_user])
+    # if the user has typed a search, send them search results
+    if params[:keywords].present?
+      @keywords = params[:keywords]
+      record_search_term = RecordSearchTerm.new(@keywords)
+      @user_records = Record.where(
+        record_search_term.where_clause,
+        record_search_term.where_args).
+      order(record_search_term.order)
+    else
+      # otherwise retrieve all records that belong to this user
+      @user_records = Record.where(cas_user_name: session[:cas_user])
+    end
   end
 
   def login
