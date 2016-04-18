@@ -40,6 +40,7 @@ git commit -m "updated master branch before heroku deploy"
 git push heroku master  
 
 # set environment variables  
+heroku config:set VOICES_ADMINS={a_hasbang_separated_list_of_admin_cas_ids}
 heroku config:set GMAIL_USERNAME={a_gmail_email_address}  
 heroku config:set GMAIL_PASSWORD={gmail_password_for_account_above}
 heroku config:set AWS_S3_BUCKET_NAME={your_aws_s3_bucket_name}  
