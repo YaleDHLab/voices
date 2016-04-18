@@ -31,6 +31,8 @@ GEM
     aws-sdk-v1 (1.55.0)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
+    bootstrap3-datetimepicker-rails (4.17.37)
+      momentjs-rails (>= 2.8.1)
     bower-rails (0.10.0)
     builder (3.1.4)
     climate_control (0.0.3)
@@ -62,6 +64,8 @@ GEM
     mimemagic (0.3.0)
     mini_portile2 (2.0.0)
     minitest (4.7.5)
+    momentjs-rails (2.11.1)
+      railties (>= 3.1)
     multi_json (1.11.2)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
@@ -139,10 +143,12 @@ PLATFORMS
 
 DEPENDENCIES
   aws-sdk (~> 1.55.0)
+  bootstrap3-datetimepicker-rails (~> 4.17.37)
   bower-rails
   coffee-rails (~> 4.0.0)
   jbuilder (~> 1.2)
   jquery-rails
+  momentjs-rails (>= 2.9.0)
   paperclip (~> 4.2)
   paperclip-ffmpeg (~> 1.0.1)
   pg
