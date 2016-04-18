@@ -10,7 +10,11 @@ class RecordsController < ApplicationController
   # to access that record
   before_action only: [:show, :edit, :update, :destroy] do
     requested_record = Record.find_by(id: params[:id])
-    check_privileges(requested_record)
+    check_user_privileges(requested_record)
+  end
+
+  before_action only: [:index] do
+    check_admin_privileges()
   end
 
   # GET /records
@@ -93,7 +97,7 @@ class RecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      params.require(:record).permit(:title, :metadata, :file_upload, :cas_user_name, :include_name, :content_type, :description, :location, :source_url, :release_checked)
+      params.require(:record).permit(:title, :metadata, :file_upload, :cas_user_name, :include_name, :content_type, :description, :date, :location, :source_url, :release_checked)
     end
 
     # Determine whether user wants to include their name alongside the record
