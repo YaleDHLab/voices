@@ -56,6 +56,10 @@ gem 'rmagick'
 # add bower js package manager
 gem 'bower-rails'
 
+# add support for datepicker
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
+
 # add the version of ruby used locally
 ruby '2.0.0'
 
