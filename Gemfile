@@ -53,6 +53,9 @@ end
 # add rmagick gem to call the imagemagick assets on heroku
 gem 'rmagick'
 
+# add bower js package manager
+gem 'bower-rails'
+
 # add the version of ruby used locally
 ruby '2.0.0'
 
