@@ -33,8 +33,10 @@ $(document).ready(function() {
     // update the boolean-slider-text div
     if (String(i) == "1") {
       $("#boolean-slider-text").html("YES");
+      $(".boolean-slider-track").css("background", "#3399cc")
     } else {
       $("#boolean-slider-text").html("NO");
+      $(".boolean-slider-track").css("background", "#b5b5b5")
     };
   };
 
@@ -87,16 +89,28 @@ $(document).ready(function() {
     toggleBooleanSlider();
   }
 
+
   /***
   * when user clicks the file upload button, change the html of the placeholder box
   ***/
+
+  var updatePlaceholderBox = function(thisContext) {
+    $("#placeholder-box").html( thisContext.val().split("/").pop().split("\\").pop() );
+  };
 
   $("#custom-file-upload").on("change", function() {
     updatePlaceholderBox( $(this) );
   });
 
-  var updatePlaceholderBox = function(thisContext) {
-    $("#placeholder-box").html( thisContext.val().split("/").pop().split("\\").pop() );
-  };
+
+  /***
+  * create a listener that will change the value of the date
+  * field in the rails form on change of date selector
+  ***/
+
+  $(".date-container").on("dp.change", function() {
+    var selectedDate = $("#date-selector-input").val();
+    $("input#record_date").val( selectedDate );
+  });
 
 });
