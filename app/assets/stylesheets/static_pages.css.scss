@@ -9,6 +9,7 @@
 
 html, body {
   height: 100%;
+  font-size: 1em;
 }
 
 /************************************************
@@ -77,7 +78,7 @@ html, body {
   }
 
   #profile-dropdown a {
-    margin: 12px 10px 0px -24px;
+    margin: 9px 10px 0px -21px;
     display: inline-block;
     display: inline-block;
     text-decoration: none;
@@ -130,19 +131,20 @@ html, body {
 
   .navbar .nav li > a {
     width: 135px;
-    padding-top: 30px;
-    padding-bottom: 18px;
+    padding-top: 20px;
+    padding-bottom: 21px;
     border: none;
+    margin-top: 0px
   }
 
   a#voices-brand {
     width: 140px;
-    padding-top: 22px;
+    padding-top: 20px;
+    margin-right: -5px;
   }
 
   #profile-dropdown a {
     color: #000;
-    font-size: 11px;
     text-decoration: none;
     padding: 0;
     margin: 25px 10px 10px 10px;
@@ -156,6 +158,13 @@ html, body {
   #profile-dropdown .dropdown-menu-row-text {
     margin: 0px 0px 0px 30px;
     padding: 9px 0px 0px 0px;
+  }
+}
+
+/* navbar spacing on large viewports */
+@media (min-width: 930px) {
+  .navbar .nav li > a {
+    width: 180px;
   }
 }
 
@@ -184,8 +193,9 @@ html, body {
 
 .navbar-nav > li > a {
   font-family: "acumin-pro", sans-serif;
-  font-size: 1em;
   color: #333;
+  font-weight: 700;
+  letter-spacing: .05em;
 }
 
 /* make the currently selected page text a different color */
@@ -195,13 +205,19 @@ html, body {
 
 .dropdown-menu {
   min-width: 0px;
-  padding-bottom: 15px;
+  padding: 10px 10px 20px 10px;
+  border: 1px solid #cbcbcb;
+}
+
+#profile-dropdown a {
+  font-family: "acumin-pro", sans-serif;
 }
 
 .dropdown-menu .glyphicon {
   display: inline-block;
   float: left;
   margin: 12px 0px 0px 14px;
+  color: #515151;
 }
 
 #bootstrap-brand {
@@ -331,7 +347,6 @@ html, body {
   padding-right: 8px;
   color: #6f6f6f;
   cursor: pointer;
-  font-size: 13px;
   -webkit-transition: color 2s;
           transition: color 2s;
 }
@@ -424,6 +439,25 @@ html, body {
 *****************/
 
 /* only display fonts that are done loading */
+
+/* override the bootstrap path to the glyphicons */
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url(asset_path('Glyphicons/glyphicons-halflings-regular.eot'));
+  src: url(asset_path('Glyphicons/glyphicons-halflings-regular.eot?#iefix')) format('embedded-opentype'), 
+       url(asset_path('Glyphicons/glyphicons-halflings-regular.woff')) format('woff'), 
+       url(asset_path('Glyphicons/glyphicons-halflings-regular.ttf')) format('truetype'), 
+       url(asset_path('Glyphicons/glyphicons-halflings-regular.svg#glyphicons_halflingsregular')) format('svg');
+}
+
+/* add YaleNew font */
+@font-face {
+  font-family: YaleNew;
+  font-style: normal;
+  font-weight: normal;
+  src: url(asset_path('YaleNew/yaledesign-medium-webfont.ttf')) format('truetype')
+}
+
 .wf-loading a,
 .wf-loading .center-text  {
   visibility: hidden;
@@ -444,29 +478,29 @@ html, body {
 }
 
 h1 {
-  font-size: 20px;
+  font-size: 2.25em;
   font-weight: 300;
-  font-family: 'Merriweather', serif;
-  margin-bottom: 27px;
+  font-family: 'YaleNew', serif;
+  padding: 45px 0px 30px 0px;
   text-align: center;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
-/* override the bootstrap path to the glyphicons */
-@font-face {
-  font-family: 'Glyphicons Halflings';
-  src: url(asset_path('Glyphicons/glyphicons-halflings-regular.eot'));
-  src: url(asset_path('Glyphicons/glyphicons-halflings-regular.eot?#iefix')) format('embedded-opentype'), 
-       url(asset_path('Glyphicons/glyphicons-halflings-regular.woff')) format('woff'), 
-       url(asset_path('Glyphicons/glyphicons-halflings-regular.ttf')) format('truetype'), 
-       url(asset_path('Glyphicons/glyphicons-halflings-regular.svg#glyphicons_halflingsregular')) format('svg');
-}
 
 /***************
 * page content *
 ***************/
 
+.btn {
+  font-family: "acumin-pro";
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+}
+
 .blue-button {
-  background-color: #399ACA;
+  background-color: #3399CC;
   border-color: #4EA4D0;
 }
 
@@ -498,7 +532,7 @@ h1 {
 }
 
 .padding-sides {
-  padding: 10px 15% 0px 15%;
+  padding: 0px 15% 0px 15%;
   overflow: auto;
 }
 
@@ -543,13 +577,18 @@ h1 {
   list-style: none;
 }
 
+.alert-danger {
+  color: #ff3333;
+  background-color: #FFF1F5;
+  border-color: #FF989A;
+  }
+
 /*********
 * footer *
 *********/
 
 #wrap {
   min-height: 100%;
-  height: auto !important;
   height: 100%;
   margin: 0 auto -140px;
 }
@@ -600,20 +639,10 @@ h1 {
   /*****************
   * fonts and text *
   *****************/
-  
-  * {
-    font-size: 12px;
-  }
 
   h1 {
-    font-size: 19px;
+    font-size: 2.25em;
     font-weight: 300;
-    margin-top: 18px;
-    margin-bottom: 14px;
-  }
-
-  .body-text {
-    font-size: 13px;
   }
 
   /*********************
@@ -652,22 +681,6 @@ h1 {
     width: 250px;
     margin-left: -125px;
     left: 50%;
-  }
-
-  /************
-  * home page *
-  ************/
-
-  #text-overlay div {
-    font-size: 11px;
-  }
-
-  /********
-  * flash *
-  ********/
-
-  button.close {
-    margin-top: -4px;
   }
 }
 
