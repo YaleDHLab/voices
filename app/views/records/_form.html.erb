@@ -43,7 +43,7 @@
   </div>
 
   <div class="field">
-    <%= f.label :description, "Description of material" %>
+    <%= f.label :description, "Description<sup>*</sup>".html_safe %>
     <%= f.text_area(:description, size: '4x5', id: "record-description") %>
   </div>
 
@@ -72,8 +72,13 @@
   </div>
 
   <div class="field">
-    <%= f.label :metadata, "Metadata / Hashtags" %>
+    <%= f.label :metadata, "Metadata<sup>*</sup>".html_safe %>
     <%= f.text_field :metadata %>
+  </div>
+
+  <div class="field">
+    <%= f.label :hashtag, "Hashtag<sup>*</sup>".html_safe %>
+    <%= f.text_field :hashtag %>
   </div>
 
   <div class="field">
