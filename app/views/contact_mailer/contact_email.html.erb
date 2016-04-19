@@ -4,9 +4,9 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Hi <%= @contact_form.message %></h1>
-    <p>
-      Sample mail sent using smtp.
+    <p>Hello,<br><br>
+      We received the following message from a user of the Voices application:<br><br>
+      <%= @contact_form.message %>
     </p>
   </body>
 </html>
