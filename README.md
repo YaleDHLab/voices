@@ -17,7 +17,7 @@ rails s {-e production} # to serve in production environment
 rails c {production} # to run console in production context
 
 # drop the database and repopulate afresh
-rake db:drop db:create db:migrate  
+rake db:drop db:create db:migrate {RAILS_ENV="production"}  
 
 # the application will now be available at localhost:3000</code></pre>
 
