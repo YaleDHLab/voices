@@ -458,16 +458,6 @@ html, body {
   src: url(asset_path('YaleNew/yaledesign-medium-webfont.ttf')) format('truetype')
 }
 
-.wf-loading a,
-.wf-loading .center-text  {
-  visibility: hidden;
-}
-
-.wf-active a,
-.wf-active .center-text {
-  visibility: visible;
-}
-
 .center-text {
   text-align: center;
 }
@@ -502,6 +492,18 @@ h1 {
 .blue-button {
   background-color: #3399CC;
   border-color: #4EA4D0;
+}
+
+.gray-button {
+  background-color: #ccc;
+  border-color: #bdbdbd;
+  color: #fff;
+}
+
+.gray-button:hover {
+  background-color: #b6b6b6;
+  border-color: darkgray;
+  color: #fff;
 }
 
 .wide-button {
