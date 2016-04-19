@@ -5,9 +5,12 @@ class Record < ActiveRecord::Base
   # field to the record that exposes the url where the file is uploaded
   before_save { |record| record.file_upload_url = record.file_upload.url }
 
-  # Ensure user has provided the following fields
+  # Ensure user has provided the required fields
   validates :title, presence: true
   validates :file_upload, presence: true
+  validates :description, presence: true
+  validates :metadata, presence: true
+  validates :hashtag, presence: true
 
   # Use the has_attached_file method to add a file_upload property to the Record
   # class. 
