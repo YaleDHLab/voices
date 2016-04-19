@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419014737) do
+ActiveRecord::Schema.define(version: 20160419171046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20160419014737) do
     t.boolean  "release_checked"
     t.text     "date"
     t.text     "file_upload_url"
+    t.text     "hashtag"
   end
 
   create_table "users", force: true do |t|
