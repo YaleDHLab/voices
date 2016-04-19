@@ -128,4 +128,13 @@ $(document).ready(function() {
   };
   
 
+  /***
+  * add listener to launch modal if user clicks button to delete record
+  ***/
+
+  $("#delete-record-button").on("click", function() {
+    $('#delete-record-modal').modal();
+  });
+
+  
 });
