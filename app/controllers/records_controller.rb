@@ -106,9 +106,9 @@ class RecordsController < ApplicationController
     # only allow the white list through.
     def record_params
       params.require(:record).permit(
-        :title, :metadata, :file_upload, :cas_user_name, 
-        :include_name, :content_type, :description, :date, 
-        :location, :source_url, :release_checked
+        :cas_user_name, :include_name, :title, :content_type, 
+        :file_upload, :description, :date, :location, 
+        :source_url, :hashtag, :metadata, :release_checked
       )
     end
 
