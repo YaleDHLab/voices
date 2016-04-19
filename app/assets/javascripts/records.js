@@ -113,4 +113,13 @@ $(document).ready(function() {
     $("input#record_date").val( selectedDate );
   });
 
+  // if user is editing a record, initialize the date 
+  // they previously selected for the record (if any)
+  var selectedDate = $(".should-include-date").html();
+  if (selectedDate) {
+    $("#date-selector-input").val(selectedDate);
+    $("input#record_date").val(selectedDate);
+  };
+  
+
 });
