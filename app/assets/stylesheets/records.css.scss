@@ -51,7 +51,7 @@ textarea#record-description {
 
 .boolean-slider-container {
   float: left;
-  margin-top: 1px;
+  margin-top: 3px;
 }
 
 #boolean-slider-text {
@@ -59,7 +59,14 @@ textarea#record-description {
   margin-left: 10px;
   font-weight: 700;
   color: #878787;
-  margin-top: -2px;
+}
+
+sup {
+  color: #ff3333;
+}
+
+.form-group {
+  margin-bottom: 0px;
 }
 
 /*********************
@@ -69,6 +76,7 @@ textarea#record-description {
 span.btn.btn-small.btn-default.btn-inverse {
   padding: 4px 14px;
   float: left;
+  color: #000;
 }
 
 #file-upload-button .btn {
@@ -223,13 +231,19 @@ span.btn.btn-small.btn-default.btn-inverse {
 * record#edit *
 **************/
 
-.should-include-name {
+.hidden-field {
   display: none;
 }
 
 /****************
 * mobile styles *
 ****************/
+
+@media (min-width: 380px) and (max-width: 550px) {
+  .long-label {
+    width: 230px !important;
+  }
+}
 
 @media (max-width: 458px) {
   .loaded-media {
@@ -247,10 +261,6 @@ span.btn.btn-small.btn-default.btn-inverse {
   .record-display-right {
     width: 100%;
     float: none;
-  }
-
-  #boolean-slider-text {
-    margin-top: -2px; 
   }
 }
 
@@ -275,7 +285,7 @@ span.btn.btn-small.btn-default.btn-inverse {
   }
 
   .long-label {
-    width: 290px;
+    width: 380px;
   }
 
   input, #placeholder-box {
@@ -312,6 +322,15 @@ span.btn.btn-small.btn-default.btn-inverse {
   .postscript-text {
     display: none;
   }
+
+  .boolean-slider-container {
+    margin-top: 4px;
+  }
+
+  #date-selector-input {
+    background-color: #fff;
+  }
+
 }
 
 
@@ -329,7 +348,7 @@ span.btn.btn-small.btn-default.btn-inverse {
     background-color: #f4f4f4;
   }
 
-  input {
+  input, #datetimepicker1 {
     /* fallback for browsers without calc support */
     width: 64%;
     width: calc(100% - 185px);
@@ -352,7 +371,7 @@ span.btn.btn-small.btn-default.btn-inverse {
   }
 
   .long-label {
-    width: 350px;
+    width: 375px;
   }
 
   #record-description {
@@ -373,4 +392,9 @@ span.btn.btn-small.btn-default.btn-inverse {
   .boolean-slider-track {
     margin-top: 2px;
   }
+
+  #date-selector-input {
+    background-color: #f4f4f4;
+  }
+
 }
