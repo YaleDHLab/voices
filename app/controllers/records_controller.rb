@@ -36,6 +36,7 @@ class RecordsController < ApplicationController
   # GET /records/1/edit
   def edit
     @include_user_name = should_include_user_name?(params[:id])
+    @saved_date = Record.find(params[:id]).date
   end
 
   # POST /records
@@ -48,12 +49,15 @@ class RecordsController < ApplicationController
 
     respond_to do |format|
       if @record.save
-        flash[:success] = "<strong>Success</strong>".html_safe + ": Record successfully saved."
+        flash[:success] = "<strong>Success</strong>".html_safe + 
+          ": Record successfully saved."
         format.html { redirect_to @record }
-        format.json { render action: 'show', status: :created, location: @record }
+        format.json { render action: 'show', 
+          status: :created, location: @record }
       else
         format.html { render action: 'new' }
-        format.json { render json: @record.errors, status: :unprocessable_entity }
+        format.json { render json: @record.errors, 
+          status: :unprocessable_entity }
       end
     end
   end
@@ -63,12 +67,14 @@ class RecordsController < ApplicationController
   def update
     respond_to do |format|
       if @record.update(record_params)
-        flash[:success] = "<strong>Confirmation</strong>".html_safe + ": Record successfully updated."
+        flash[:success] = "<strong>Confirmation</strong>".html_safe + 
+          ": Record successfully updated."
         format.html { redirect_to @record }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
-        format.json { render json: @record.errors, status: :unprocessable_entity }
+        format.json { render json: @record.errors, 
+          status: :unprocessable_entity }
       end
     end
   end
@@ -78,7 +84,8 @@ class RecordsController < ApplicationController
   def destroy
     @record.destroy
     respond_to do |format|
-      flash[:success] = "<strong>Confirmation</strong>".html_safe + ": Record successfully deleted."
+      flash[:success] = "<strong>Confirmation</strong>".html_safe + 
+        ": Record successfully deleted."
       format.html { redirect_to user_show_url }
       format.json { head :no_content }
     end
@@ -95,18 +102,24 @@ class RecordsController < ApplicationController
       end
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Never trust parameters from the scary internet, 
+    # only allow the white list through.
     def record_params
-      params.require(:record).permit(:title, :metadata, :file_upload, :cas_user_name, :include_name, :content_type, :description, :date, :location, :source_url, :release_checked)
+      params.require(:record).permit(
+        :title, :metadata, :file_upload, :cas_user_name, 
+        :include_name, :content_type, :description, :date, 
+        :location, :source_url, :release_checked
+      )
     end
 
-    # Determine whether user wants to include their name alongside the record
+    # Determine whether user wants to include their name 
+    # alongside the record
     def should_include_user_name?(record_id)
       raw_boolean = Record.find(record_id).include_name
       if raw_boolean == true
         return 1
       end
-      retun 0
+      return 0
     end
 
 end
