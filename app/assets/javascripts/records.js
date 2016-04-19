@@ -104,10 +104,16 @@ $(document).ready(function() {
 
 
   /***
-  * create a listener that will change the value of the date
+  * initialize the datetimepicker, then create a listener 
+  * that will change the value of the date
   * field in the rails form on change of date selector
   ***/
 
+  $('#datetimepicker1').datetimepicker({
+    format: "MM/DD/YYYY"
+  });
+
+  // add listener to the datetimepicker
   $(".date-container").on("dp.change", function() {
     var selectedDate = $("#date-selector-input").val();
     $("input#record_date").val( selectedDate );
