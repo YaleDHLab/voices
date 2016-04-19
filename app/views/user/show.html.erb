@@ -11,7 +11,7 @@
 <div class="small-banner-image-container students-image"></div>
 
 <div class="container">
-  <%= render 'search_form' %>
+  <%= render 'rails_search_form' %>
 </div>
 
 <div class="gray-background">
@@ -21,7 +21,6 @@
       <div class="invite-submissions-container">
         <div class="center-text">Materials you contribute to the Voices archive will be available here.</div>
         <br>
-
           <%= link_to "CONTRIBUTE", 
              {:controller => :records, :action => :new},
              :class => "btn btn-primary wide-button blue-button" %>
