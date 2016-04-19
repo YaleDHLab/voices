@@ -13,11 +13,17 @@ class UserController < ApplicationController
     else
       # otherwise retrieve all records that belong to this user
       @user_records = Record.where(cas_user_name: session[:cas_user])
+    end    
+
+    # provide json endpoint that angular can access
+    respond_to do |format|
+      format.html {}
+      format.json { render json: @user_records }
     end
   end
 
   def login
-    flash[:success] = "<strong>Success</strong>".html_safe + ": You are logged in as " + session[:cas_user]
+    flash[:success] = "<strong>Welcome!</strong>".html_safe + " You are logged in as " + session[:cas_user]
     redirect_to static_pages_home_path
   end
 
