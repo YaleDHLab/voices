@@ -1,8 +1,13 @@
 class Record < ActiveRecord::Base
   belongs_to :user
 
-  # Ensure user has provided a title for their record
+  # Before saving the record to the database, manually add a new
+  # field to the record that exposes the url where the file is uploaded
+  before_save { |record| record.file_upload_url = record.file_upload.url }
+
+  # Ensure user has provided the following fields
   validates :title, presence: true
+  validates :file_upload, presence: true
 
   # Use the has_attached_file method to add a file_upload property to the Record
   # class. 
@@ -37,10 +42,11 @@ class Record < ActiveRecord::Base
       ],
     :message => "Please make sure you've attached a jpg, png, gif, or mp4 file"
 
-    # Before applying the Imagemagick post processing to this record
-    # check to see if we indeed wish to process the file. In the case
-    # of audio files, we don't want to apply post processing
-    before_post_process :apply_post_processing?
+  # Before applying the Imagemagick post processing to this record
+  # check to see if we indeed wish to process the file. In the case
+  # of audio files, we don't want to apply post processing
+  before_post_process :apply_post_processing?
+
 
   # Helper method that uses the =~ regex method to see if 
   # the current file_upload has a content_type 
