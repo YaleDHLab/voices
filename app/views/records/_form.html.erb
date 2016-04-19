@@ -48,6 +48,27 @@
   </div>
 
   <div class="field">
+    <%= f.label :date, "Date" %>
+    <div class="form-group date-container">
+      <div class='input-group date' id='datetimepicker1'>
+        <input type='text' class="form-control" id="date-selector-input" />
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+      </div>
+        <script type="text/javascript">
+        $(function () {
+          $('#datetimepicker1').datetimepicker({
+              format: "MM/DD/YYYY"
+          });
+        });
+        </script>
+    </div>
+
+    <%= f.hidden_field :date %>
+  </div>
+
+  <div class="field">
     <%= f.label :location, "Location" %>
     <%= f.text_field :location %>
   </div>
