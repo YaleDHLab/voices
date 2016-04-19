@@ -11,7 +11,7 @@ html, body {
 }
 
 .logo-and-greeting {
-  margin-top: 50px;
+  padding-top: 50px;
   margin-left: 50px;
   overflow: hidden;
 }
@@ -76,7 +76,7 @@ html, body {
 /* styles for small viewports */
 @media (max-width: 767px) {
   .logo-and-greeting {
-    margin-top: 20px;
+    padding-top: 20px;
     margin-left: 25px;
   }
 
@@ -119,7 +119,7 @@ html, body {
 @media (max-width: 373px) {
   .logo-and-greeting {
     margin-left: 12px;
-    margin-top: 15px;
+    padding-top: 15px;
   }
 
   .logo {
@@ -165,31 +165,22 @@ html, body {
 #footer {
   width: 100%;
   height: 140px;
-  color: #E6E4E4;
-  font-family: 'Lato', sans-serif;
+  background-color: #666;
   clear: both;
-  font-weight: 300;
 }
 
 #footer-left {
   float: left;
-  padding: 40px;
-  font-family: 'Merriweather', serif;
+  width: 300px;
+  margin-top: 40px;
+  margin-left: 50px;
 }
 
-#footer-left-top-brand,
-#footer-left-top-university {
-  display: inline-block;
-}
-
-#footer-left-top-brand {
-  font-size: 1.5em;
-}
-
-#footer-left-bottom {
-  font-style: italic;
-  font-weight: 100;
-  margin-top: -2px;
+#footer-right {
+  float: right;
+  width: 55px;
+  margin-top: 40px;
+  margin-right: 50px;
 }
 
 /*************************************
@@ -201,20 +192,9 @@ html, body {
   /*****************
   * fonts and text *
   *****************/
-  
-  * {
-    font-size: 12px;
-  }
-
-  h4 {
-    font-size: 19px;
-    font-weight: 300;
-    margin-top: 18px;
-    margin-bottom: 14px;
-  }
 
   * {
-    font-size: 13px;
+    font-size: 1em;
   }
 
   /****************
@@ -229,19 +209,19 @@ html, body {
     height: 93px;
   }
 
+  #footer-right {
+    display: none;
+  }
+
   #footer-left {
     padding: 0px; /* remove extant padding */
-    padding-top: 20px;
-    padding-left: 20px;
     position: relative;
+    margin-top: 27px;
     width: 250px;
     margin-left: -125px;
     left: 50%;
   }
 
-  #footer-left-bottom {
-    margin-left: 40px;
-  }
 }
 
 /*************************************
