@@ -227,6 +227,41 @@ span.btn.btn-small.btn-default.btn-inverse {
   margin-bottom: 20px;
 }
 
+/********
+* modal *
+********/
+
+.modal-content {
+  width: 400px;
+  left: 50%;
+  margin-left: -200px;
+}
+
+.attention {
+  font-weight: 700;
+}
+
+.confirm-text {
+  margin: 10px 20px 20px;
+}
+
+.modal-button-container {
+  margin-left: 60px;
+}
+
+.modal-button {
+  width: 120px;
+}
+
+#modal-button-cancel {
+  background-color: #bfbfbf;
+  border: 1px solid darkgray;
+}
+
+#modal-button-cancel:hover {
+  background-color: darkgray;
+}
+
 /**************
 * record#edit *
 **************/
