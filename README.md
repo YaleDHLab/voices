@@ -73,4 +73,14 @@ heroku apps
 git config --list | grep heroku  
 
 # to destroy a heroku app:  
-heroku apps:destroy --app {{ app_name }}</code></pre>
+heroku apps:destroy --app {{ app_name }}</code></pre>  
+  
+### Package management
+This site uses Gemfile to manage rails packages, and Bower to manage javascript packages. To see a list of available bower commands, run:  
+<pre><code># To initialize bower afresh (which will create a new Bowerfile)  
+rails g bower_rails:initialize  
+  
+# To install bower packages  
+bundle exec rake bower:install</code></pre>  
+  
+Bower assets will be installed to `vendor/assets/bower_components/`. To see a list of bower commands provided by bower-rails: `bundle exec rake -T bower`
