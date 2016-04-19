@@ -19,14 +19,14 @@
 </div>
 
 <div class="gray-background">
-  <div class="container padding-bottom">
+  <div class="container">
     <div class="padding-sides"> 
       
       <div class="over-image-row">
         <h3 class="record-title"> <%= @record.title %></h3> 
       
           <div class="btn-group modify-record-button">
-            <button type="button" class="btn btn-primary blue-button" id="delete-record-button" data-dismiss="modal">DELETE</button>
+            <button type="button" class="btn gray-button" id="delete-record-button" data-dismiss="modal">DELETE</button>
           </div>
 
           <div class="btn-group modify-record-button margin-right">
@@ -38,17 +38,17 @@
       <%= render 'delete_record_modal' %>
 
 
-      <% if @record.content_type == "Image" %>
+      <% if @record.is_image? %>
         <div class="record-display-container">
           <%= image_tag @record.file_upload.url(:medium), :alt => @record.title %>
         </div>
 
-      <% elsif @record.content_type == "Video" %>
+      <% elsif @record.is_video? %>
         <div class="record-display-container">
           <%= video_tag( @record.file_upload.url, poster: @record.file_upload.url(:medium), size: "300x300", class: "loaded-media loaded-video", controls: true, alt: @record.title ) %>
         </div>
 
-      <% elsif @record.content_type == "Audio" %>
+      <% elsif @record.is_audio? %>
         <div class="record-display-container">
           <%= audio_tag( @record.file_upload.url, controls: true,  class: "loaded-media loaded-audio", autoplay: true, alt: @record.title ) %>
         </div>
