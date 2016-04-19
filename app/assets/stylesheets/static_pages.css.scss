@@ -73,12 +73,17 @@ html, body {
   .dropdown.open .glyphicon {
     position: relative;
     width: 14px;
-    margin-left: -45px;
+    margin-left: -50px;
     left: 50%;
   }
 
+  #profile-dropdown {
+    margin-left: 0px;
+    padding-left: 0px;
+  }
+
   #profile-dropdown a {
-    margin: 9px 10px 0px -21px;
+    margin: 9px 10px 0px -26px;
     display: inline-block;
     display: inline-block;
     text-decoration: none;
@@ -155,8 +160,12 @@ html, body {
     margin-top: 5px;
   }
 
+  .dropdown-menu {
+    margin-left: -5px;
+  }
+
   #profile-dropdown .dropdown-menu-row-text {
-    margin: 0px 0px 0px 30px;
+    margin: 0px 0px 0px 21px;
     padding: 9px 0px 0px 0px;
   }
 }
@@ -165,6 +174,11 @@ html, body {
 @media (min-width: 930px) {
   .navbar .nav li > a {
     width: 180px;
+  }
+
+  /* recenter username dropdown menu */
+  .dropdown-menu {
+    margin-left: 18px;
   }
 }
 
@@ -204,8 +218,9 @@ html, body {
 }
 
 .dropdown-menu {
-  min-width: 0px;
-  padding: 10px 10px 20px 10px;
+  min-width: 144px;
+  width: 144px;
+  padding: 5px 0px 14px 10px;
   border: 1px solid #cbcbcb;
 }
 
@@ -216,7 +231,7 @@ html, body {
 .dropdown-menu .glyphicon {
   display: inline-block;
   float: left;
-  margin: 12px 0px 0px 14px;
+  margin: 12px 0px 0px 7px;
   color: #515151;
 }
 
@@ -320,7 +335,7 @@ html, body {
   /* provide fallback background for devices that only support
      one background url or don't support linear-gradient */
   background: url(march-of-resilience-mobile.jpg);
-  background-position: 50% 90%;
+  background-position: 50% 66%;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -358,30 +373,35 @@ html, body {
 @media (min-width: 0px) and (max-width: 359px) {
   #banner-image {
     height: 150px;
+    background-position: 50% 90%;
   }
 }
 
 @media (min-width: 360px) and (max-width: 479px) {
   #banner-image {
     height: 200px;
+    background-position: 50% 90%;
   }
 }
 
 @media (min-width: 480px) and (max-width: 619px) {
   #banner-image {
     height: 250px;
+    background-position: 50% 90%;
   }
 }
 
 @media (min-width: 620px) and (max-width: 767px) {
   #banner-image {
     height: 300px;
+    background-position: 50% 90%;
   }
 }
 
 @media (min-width: 768px) and (max-width: 899px) {
   #banner-image {
     height: 350px;
+    background-position: 50% 80%;
   }
 }
 
@@ -699,9 +719,9 @@ h1 {
   ************/
 
   #banner-image {
-    height: 300px;
+    height: 340px;
     background: url(march-of-resilience-dark.jpg);
-    background-position: 50% 90%;
+    background-position: 50% 67%;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
