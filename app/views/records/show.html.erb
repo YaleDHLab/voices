@@ -25,17 +25,18 @@
       <div class="over-image-row">
         <h3 class="record-title"> <%= @record.title %></h3> 
       
-        
           <div class="btn-group modify-record-button">
-            <%= link_to "Delete", record_path(@record), 
-              :method => :delete, :class => "btn btn-primary blue-button" %>
+            <button type="button" class="btn btn-primary blue-button" id="delete-record-button" data-dismiss="modal">DELETE</button>
           </div>
+
           <div class="btn-group modify-record-button margin-right">
             <%= link_to "Edit", edit_record_path(@record), 
               :class => "btn btn-primary blue-button" %>
           </div>
         </div>
-        
+
+      <%= render 'delete_record_modal' %>
+
 
       <% if @record.content_type == "Image" %>
         <div class="record-display-container">
