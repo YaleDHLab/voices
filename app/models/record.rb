@@ -11,6 +11,7 @@ class Record < ActiveRecord::Base
   validates :description, presence: true
   validates :metadata, presence: true
   validates :hashtag, presence: true
+  validates :release_checked, presence: true
 
   # Use the has_attached_file method to add a file_upload property to the Record
   # class. 
