@@ -1,0 +1,85 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag 'static_pages' %>
+  <%= stylesheet_link_tag 'user' %>
+  <%= stylesheet_link_tag 'gray_wrap' %>
+  <%= stylesheet_link_tag 'records' %>
+  <%= javascript_include_tag 'masonry-4.0.0' %>
+  <%= javascript_include_tag 'angular' %>
+  <%= javascript_include_tag 'records_app' %>
+<% end %>
+
+<% provide(:page_title, "Contributions") %>
+
+<div class="small-banner-image-container students-image"></div>
+<div class="gray-background">
+  <div class="container">
+
+    <article ng-app="recordsApp" 
+        ng-controller="recordSearchController">
+      
+      <!-- Angular search box -->
+      <section class="search-form">
+        <form>
+          <div class="input-group input-group-lg">
+            <label for="search.keywords" class="sr-only">Keywords</label>
+            <input type="text"
+              name="keywords"
+              class="form-control input-lg"
+              placeholder="Search"
+              ng-change="search(keywords)"
+              ng-model="keywords">
+
+          </div>
+        </form>
+
+      <!-- On page load, display all user records; if none exist, prompt user to contribute -->
+      <section class="user-records"
+          ng-if="userRanSearch === 0">
+          <div>User hasn't searched</div>
+        <div class="records-container"
+            ng-if="allUserRecords.length != 0">
+            Three Records
+        </div>
+      </section>
+
+
+
+      <!-- ERB content to display if search returns no results -->
+      <section class="search-result"
+          ng-if="records.length === 0">
+        <div class="invite-submissions-container">
+          <div class="center-text">Your search returned no results.</div>
+          <br>
+            <%= link_to "CONTRIBUTE", 
+               {:controller => :records, :action => :new},
+               :class => "btn btn-primary wide-button blue-button" %>
+        </div>
+        </section>
+      
+
+
+      <section class="search-results" 
+          ng-if="records != []">
+        <header>
+          <h1>Results</h1>
+        </header>
+        <ol class="list-group">
+          <li class="list-group-item clearfix"
+            ng-repeat="record in records">
+            <h3 class="pull-right">
+              <small class="text-uppercase" ng-bind="record.title">
+              </small>
+            </h3>
+
+            <h3>
+              <small class="text-uppercase" ng-bind="record.description">
+              </small>
+            </h3>
+          </li>
+        </ol>
+      </section>
+
+      </section>
+    </article>
+  </div>
+</div>
