@@ -1,0 +1,5 @@
+# Bowerfile for Voices project
+# Check out https://github.com/42dev/bower-rails#ruby-dsl-configuration for more options
+
+asset 'angular', '~> 1.5'
+resolution 'angular', '1.5'
