@@ -42,7 +42,10 @@ class Record < ActiveRecord::Base
       "audio/x-mpeg3", 
       "audio/mpg", 
       "audio/x-mpg", 
-      "audio/x-mpegaudio"
+      "audio/x-mpegaudio",
+      "application/doc",
+      "file/txt",
+      "text/plain"
       ],
     :message => "Please make sure you've attached a jpg, png, gif, or mp4 file"
 
@@ -50,29 +53,6 @@ class Record < ActiveRecord::Base
   # check to see if we indeed wish to process the file. In the case
   # of audio files, we don't want to apply post processing
   before_post_process :apply_post_processing?
-
-  def set_record_upload_url
-    record_id_string = self.id.to_s
-
-    # preface the id number with '0' until it's 9 digits long
-    while record_id_string.length < 9
-      record_id_string = "0" + record_id_string
-    end
-
-    # partition the 9 character string into 3 3-digit strings joined by "/"
-    id_path = record_id_string.chars.each_slice(3).map(&:join).join("/")
-
-    # construct the full path to the medium size image
-    full_image_path = self.file_upload.url(:medium).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/") 
-
-    # use that sequence to identify the full path to the asset
-    if full_image_path != self.file_upload_url
-      self.update_attributes(
-        :file_upload_url => full_image_path
-      )
-    end
-  end
-
 
   # Helper method that uses the =~ regex method to see if 
   # the current file_upload has a content_type 
@@ -89,11 +69,19 @@ class Record < ActiveRecord::Base
     self.file_upload.content_type =~ /\Aaudio\/.*\Z/
   end
 
+  def is_text?
+    self.file_upload_file_name =~ %r{\.(docx|doc|pdf|txt)$}i
+  end
+
   # If the uploaded content type is an audio file,
   # return false so that we'll skip audio post processing
   def apply_post_processing?
     if self.is_audio? 
       return false
+    
+    elsif self.is_text?
+      return false
+    
     else
       return true
     end
@@ -126,9 +114,54 @@ class Record < ActiveRecord::Base
           :format => "mp3"
         }
       }
+    elsif self.is_text?
+      {}
     else
       {}
     end
   end
   
+
+  def set_record_upload_url
+    # if the record is an audio or text file, 
+    # set the asset path to the stock audio / text
+    # file path in aws, else calculate the asset path
+    if self.is_audio?
+      if "/images/audio-icon.jpg" != self.file_upload_url
+        self.update_attributes(
+          :file_upload_url => "/images/audio-icon.jpg"
+        )
+      end
+
+    elsif self.is_text?
+      if self.file_upload_url != ActionController::Base.helpers.image_path("text-file-icon.png")
+        self.update_attributes(
+          :file_upload_url => ActionController::Base.helpers.image_path("text-file-icon.png")
+        )
+      end
+
+    else
+      record_id_string = self.id.to_s
+
+      # preface the id number with '0' until it's 9 digits long
+      while record_id_string.length < 9
+        record_id_string = "0" + record_id_string
+      end
+
+      # partition the 9 character string into 3 3-digit strings joined by "/"
+      id_path = record_id_string.chars.each_slice(3).map(&:join).join("/")
+
+      # construct the full path to the medium size image
+      full_image_path = self.file_upload.url(:medium).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/") 
+
+      # use that sequence to identify the full path to the asset
+      if full_image_path != self.file_upload_url
+        self.update_attributes(
+          :file_upload_url => full_image_path
+        )
+      end
+    end
+  end
+
+
 end
