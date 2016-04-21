@@ -3,7 +3,7 @@ class Record < ActiveRecord::Base
 
   # Before saving the record to the database, manually add a new
   # field to the record that exposes the url where the file is uploaded
-  before_save { |record| record.file_upload_url = record.file_upload.url }
+  after_save :set_record_upload_url 
 
   # Ensure user has provided the required fields
   validates :title, presence: true
@@ -51,6 +51,28 @@ class Record < ActiveRecord::Base
   # of audio files, we don't want to apply post processing
   before_post_process :apply_post_processing?
 
+  def set_record_upload_url
+    record_id_string = self.id.to_s
+
+    # preface the id number with '0' until it's 9 digits long
+    while record_id_string.length < 9
+      record_id_string = "0" + record_id_string
+    end
+
+    # partition the 9 character string into 3 3-digit strings joined by "/"
+    id_path = record_id_string.chars.each_slice(3).map(&:join).join("/")
+
+    # construct the full path to the medium size image
+    full_image_path = self.file_upload.url(:medium).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/") 
+
+    # use that sequence to identify the full path to the asset
+    if full_image_path != self.file_upload_url
+      self.update_attributes(
+        :file_upload_url => full_image_path
+      )
+    end
+  end
+
 
   # Helper method that uses the =~ regex method to see if 
   # the current file_upload has a content_type 
@@ -82,19 +104,18 @@ class Record < ActiveRecord::Base
   def check_file_type
     if self.is_image?
       {
-        :small => "200x200>", 
-        :medium => "300x300>", 
-        :large => "600x600>"
+        :thumb => "200x200>", 
+        :medium => "500x500>"
       }
     elsif self.is_video?
       {
         :thumb => { 
-          :geometry => "100x100#", 
+          :geometry => "200x200#", 
           :format => 'jpg', 
           :time => 10
         }, 
         :medium => { 
-          :geometry => "300x300#", 
+          :geometry => "500x500#", 
           :format => 'jpg', 
           :time => 10
         }
@@ -109,5 +130,5 @@ class Record < ActiveRecord::Base
       {}
     end
   end
-    
+  
 end
