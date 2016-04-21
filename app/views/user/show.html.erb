@@ -8,7 +8,9 @@
 
 <% provide(:page_title, "Contributions") %>
 
-<div class="small-banner-image-container students-image"></div>
+<div class="small-banner-image-container students-image">
+  <div class="small-banner-text">A living document of student protest at Yale</div>
+</div>
 
 <div class="container">
   <%= render 'rails_search_form' %>
@@ -61,6 +63,18 @@
                   <%= record.title %>
                 </div>
               </div>
+
+
+            <% elsif record.is_text? %>  
+              <div class="masonry-item">
+                <%= link_to record_path(record.id), :class => "section" do %>
+                  <%= image_tag("text-file-icon.png", :alt => record.title) %>
+                <% end %>
+                <div class="masonry-item-title">
+                  <%= record.title %>
+                </div>
+              </div>
+
             <% end %>
           <% end %>
         </div>
