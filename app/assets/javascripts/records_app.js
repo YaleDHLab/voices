@@ -8,29 +8,35 @@ angular.module('recordsApp', [])
         $scope.userRanSearch = 0;
 
         // define and call function to serve all user records
-        $scope.allUserRecords = function() {
+        var allUserRecords = function() {
           $http.get("/user/show.json")
           .then(function(response) {
-            $scope.allUserRecords = response.data;
-          }, function(response) {
-            console.log(response.status);
-          }
-        )};
-        $scope.allUserRecords();
-
-        // define function that places get request with user-specified query
-        // when user interacts with the search input field
-        $scope.records = [];
-        $scope.search = function(searchTerm) {
-          $scope.userRanSearch = 1;
-          $http.get("/user/show.json",
-            {"params": {"keywords": searchTerm} }  
-          ).then(function(response) {
             $scope.records = response.data;
           }, function(response) {
             console.log(response.status);
           }
-        );
+        )};
+        allUserRecords();
+
+        // define function that places get request with user-specified query
+        // when user interacts with the search input field
+        $scope.search = function(searchTerm) {
+          // if the user deletes all text in the input,
+          // restore all their records by setting the userRanSearch
+          // value back to 0
+          if (searchTerm) {
+              $scope.userRanSearch = 1;
+              $http.get("/user/show.json",
+                {"params": {"keywords": searchTerm} }  
+              ).then(function(response) {
+                $scope.records = response.data;
+              }, function(response) {
+                console.log(response.status);
+              }
+            );
+        } else {
+          allUserRecords();
+        };
       }
     }
   ]
