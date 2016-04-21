@@ -12,7 +12,7 @@
     :title => Faker::Book.title,
     :metadata => Faker::Lorem.sentence,
     :file_upload => File.new( Dir.glob("#{Rails.root}/app/assets/images/seed-images/*.jpg")[rand(0..249)] ),
-    :cas_user_name => "ded34",
+    :cas_user_name => "mo273",
     :include_name => true,
     :content_type => "Image",
     :description => Faker::Lorem.paragraph,
