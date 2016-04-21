@@ -127,9 +127,9 @@ class Record < ActiveRecord::Base
     # set the asset path to the stock audio / text
     # file path in aws, else calculate the asset path
     if self.is_audio?
-      if "/images/audio-icon.jpg" != self.file_upload_url
+      if self.file_upload_url != ActionController::Base.helpers.image_path("audio-icon.jpg")
         self.update_attributes(
-          :file_upload_url => "/images/audio-icon.jpg"
+          :file_upload_url => ActionController::Base.helpers.image_path("audio-icon.jpg")
         )
       end
 
