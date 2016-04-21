@@ -1,0 +1,25 @@
+<!-- Modal; can be rendered with $('#delete-record-modal').modal() -->
+<div class="modal fade" id="delete-record-modal" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="attention center-text">ATTENTION:</div>
+        <div class="confirm-text">Are you sure you want to delete this record?<br>
+          This action cannot be undone</div>
+        <div class="modal-button-container">
+          <button type="button" class="btn btn-primary blue-button modal-button" id="modal-button-cancel" data-dismiss="modal">CANCEL</button>
+          
+          <%= link_to "YES", record_path(@record), 
+              :method => :delete, 
+              :class => "btn btn-primary modal-button gray-button", 
+              :dataDismiss => "modal" %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
