@@ -6,6 +6,7 @@
   <%= javascript_include_tag 'masonry-4.0.0' %>
   <%= javascript_include_tag 'angular' %>
   <%= javascript_include_tag 'records_app' %>
+  <%= javascript_include_tag 'jquery.inview.min' %>
 <% end %>
 
 <% provide(:page_title, "Contributions") %>
@@ -31,53 +32,37 @@
 
           </div>
         </form>
-
-      <!-- On page load, display all user records; if none exist, prompt user to contribute -->
-      <section class="user-records"
-          ng-if="userRanSearch === 0">
-          <div>User hasn't searched</div>
-        <div class="records-container"
-            ng-if="allUserRecords.length != 0">
-            Three Records
-        </div>
-      </section>
-
-
-
-      <!-- ERB content to display if search returns no results -->
-      <section class="search-result"
-          ng-if="records.length === 0">
-        <div class="invite-submissions-container">
-          <div class="center-text">Your search returned no results.</div>
-          <br>
-            <%= link_to "CONTRIBUTE", 
-               {:controller => :records, :action => :new},
-               :class => "btn btn-primary wide-button blue-button" %>
-        </div>
-        </section>
       
 
+        <!-- If user doesn't have records, prompt them to contribute -->
+        <div ng-if="records.length === 0 && userRanSearch === 0">
+          <%= render 'user_has_no_records' %>
+        </div>
+          
+        <!-- If user ran a search and there are no records, indicate as much -->
+        <div ng-if="records.length === 0 && userRanSearch === 1">
+          <%= render 'search_returned_no_results' %>
+        </div>
 
-      <section class="search-results" 
-          ng-if="records != []">
-        <header>
-          <h1>Results</h1>
-        </header>
-        <ol class="list-group">
-          <li class="list-group-item clearfix"
-            ng-repeat="record in records">
-            <h3 class="pull-right">
-              <small class="text-uppercase" ng-bind="record.title">
-              </small>
-            </h3>
+        <!-- Otherwise, show all records -->
+        <div ng-if="records.length != 0">
+          <div class="masonry-container">
+            <div class="masonry">
+              <div ng-repeat="record in records" class="records-container">
+                <div class="masonry-item">
+                  <div class="section">
+                    <a ng-href="/records/{{record.id}}">
+                      <img ng-src="{{record.file_upload_url}}"></img>
+                      <div class="masonry-item-title">{{record.title}}</div>
+                    </a>
+                  </div>
+                </div>
 
-            <h3>
-              <small class="text-uppercase" ng-bind="record.description">
-              </small>
-            </h3>
-          </li>
-        </ol>
-      </section>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
       </section>
     </article>
