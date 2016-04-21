@@ -60,6 +60,12 @@ gem 'bower-rails'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 
+# add faker for generating seed data
+gem 'faker'
+
+# add pagination gem to support continuous scroll
+gem 'will_paginate', '~> 3.0.5'
+
 # add the version of ruby used locally
 ruby '2.0.0'
 
