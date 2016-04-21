@@ -52,6 +52,9 @@ heroku pg:reset DATABASE
   
 # run migrations  
 heroku run rake db:migrate  
+
+# seed database
+heroku run rake db:seed
   
 # restart the dyno  
 heroku restart  
