@@ -45,6 +45,7 @@ class Record < ActiveRecord::Base
       "audio/mpg", 
       "audio/x-mpg", 
       "audio/x-mpegaudio",
+      "audio/3gpp",
       "application/doc",
       "file/txt",
       "text/plain"
