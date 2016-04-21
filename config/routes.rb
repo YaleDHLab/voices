@@ -16,8 +16,8 @@ VoicesRails::Application.routes.draw do
   # static contact page
   get "static_pages/contact"
 
+  # login / logout pages
   get "user/logout"
-
   get "user/login"
 
   # support get request for email form fetch
@@ -26,9 +26,8 @@ VoicesRails::Application.routes.draw do
   get "contact" => "contact_forms#new", as: :contact_forms
   post "contact" => "contact_forms#create"
 
-  # explicitly don't support get requests for contact_forms#show, 
-  # as this view will be retired
-  #get "contact_forms/:id" => "contact_forms#show"
+  # angular search page
+  get "user/angular_show" => "user#angular_show"
 
 
 
