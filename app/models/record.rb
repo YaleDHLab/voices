@@ -1,4 +1,6 @@
 class Record < ActiveRecord::Base
+  print self
+
   belongs_to :user
 
   # Before saving the record to the database, manually add a new
