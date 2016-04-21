@@ -102,12 +102,12 @@ class Record < ActiveRecord::Base
     elsif self.is_video?
       {
         :thumb => { 
-          :geometry => "200x200!", 
+          :geometry => "200x200>", 
           :format => 'jpg', 
           :time => 10
         }, 
         :medium => { 
-          :geometry => "500x500!", 
+          :geometry => "500x500>", 
           :format => 'jpg', 
           :time => 10
         }
