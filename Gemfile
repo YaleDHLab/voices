@@ -31,7 +31,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'rubycas-client'
 
 # Add paperclip to allow users to upload content 
-gem 'paperclip', '~> 4.2'
+gem 'paperclip', '4.2.4'
 
 # Add aws-sdk for S3 storage of user-uploaded content
 gem 'aws-sdk', '~> 1.55.0'
