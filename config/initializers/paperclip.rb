@@ -7,6 +7,3 @@ Paperclip.interpolates(:placeholder) do |attachment, style|
   ActionController::Base.helpers.asset_path("missing_#{style}.png")
 end
 
-# add manual content type mapping for android audio to refrain from running 
-# file -b --mime '/{{filename.3gpp}}' on android audio files
-Paperclip.options[:content_type_mappings] = { 3gpp: 'audio/mp3' }
