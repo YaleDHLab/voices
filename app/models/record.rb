@@ -51,7 +51,7 @@ class Record < ActiveRecord::Base
       "file/txt",
       "text/plain"
       ],
-    :message => "Please make sure you've attached a jpg, png, gif, or mp4 file"
+    :message => "Sorry! We only accept the following filetypes: mp4, quicktime, jpg, png, gif, mp3, and txt"
 
   # Before applying the Imagemagick post processing to this record
   # check to see if we indeed wish to process the file. In the case
@@ -104,12 +104,12 @@ class Record < ActiveRecord::Base
         :thumb => { 
           :geometry => "200x200>", 
           :format => 'jpg', 
-          :time => 10
+          :time => 0
         }, 
         :medium => { 
           :geometry => "500x500>", 
           :format => 'jpg', 
-          :time => 10
+          :time => 0
         }
       }
     elsif self.is_audio?
