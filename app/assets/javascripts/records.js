@@ -136,5 +136,44 @@ $(document).ready(function() {
     $('#delete-record-modal').modal();
   });
 
+
+  /***
+  * add listener to update styles in record#show if viewport is too
+  * narrow to display record title and buttons in one line
+  ***/
+  var restyleRecordShow = function() {
+    var overImageRowWidth = $(".over-image-row").width();
+    var recordTitleWidth = $(".record-title").width();
+    var editDeleteButtonContainerWidth = $(".edit-delete-button-container").width();
+
+    if (recordTitleWidth + editDeleteButtonContainerWidth + 20 >= overImageRowWidth) {
+      // center both the record title and the edit and delete buttons
+      var recordTitlePadding = (overImageRowWidth - recordTitleWidth) / 2;
+      $(".record-title").css("padding-left", recordTitlePadding);
+
+      $(".edit-delete-button-container").css("margin-top", "0px");
+      $(".edit-delete-button-container").css("float", "none");
+      $(".edit-delete-button-container").css("display", "block");
+      $(".edit-delete-button-container").css("margin", "0 auto");
+    } else {
+      // restore original styles
+      $(".record-title").css("padding-left", "");
+      $(".record-title").css("display", "inline-block");
+      $(".record-title").css("width", "");
+      $(".record-title").css("text-align", "");
+
+      $(".edit-delete-button-container").css("margin-top", "31px");
+      $(".edit-delete-button-container").css("float", "right");
+      $(".edit-delete-button-container").css("display", "inline-block");
+    }
+  };
+
+  restyleRecordShow();
+
+  $(window).on("resize", function() {
+    restyleRecordShow();
+  })
+
+  
   
 });
