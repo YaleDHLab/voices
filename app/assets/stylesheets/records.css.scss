@@ -31,8 +31,8 @@ input, select, textarea {
 }
 
 input[type="radio"], input[type="checkbox"] {
-  height: 10px;
-  width: 10px;
+  height: 14px;
+  width: 14px;
 }
 
 input {
@@ -69,6 +69,7 @@ sup {
   margin-bottom: 0px;
 }
 
+
 /*********************
 * file upload styles *
 *********************/
@@ -76,7 +77,7 @@ sup {
 span.btn.btn-small.btn-default.btn-inverse {
   padding: 4px 14px;
   float: left;
-  color: #000;
+  color: #555;
 }
 
 #file-upload-button .btn {
@@ -172,20 +173,24 @@ span.btn.btn-small.btn-default.btn-inverse {
 .record-title {
   display: inline-block;
   margin-top: 37px;
+  font-family: 'YaleNew', serif;
+}
+
+.edit-delete-button-container {
+  width: 82px;
+  margin-top: 31px;
+  display: inline-block;
+  float: right;
 }
 
 .modify-record-button {
   display: inline-block;
-  float: right;
-  margin-top: 30px;
 }
 
 .record-display-container {
   width: 100%;
   background: #fff;
-  border: 1px solid darkgray;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px 0px;
 }
 
 .loaded-video {
@@ -204,7 +209,6 @@ span.btn.btn-small.btn-default.btn-inverse {
   margin-bottom: 20px;
   display: block;
   margin: auto;
-  border: 1px solid darkgray;
   max-width: 90%;
 }
 
@@ -236,6 +240,7 @@ span.btn.btn-small.btn-default.btn-inverse {
   width: 400px;
   left: 50%;
   margin-left: -200px;
+  margin-top: 50%;
 }
 
 .attention {
@@ -257,6 +262,15 @@ span.btn.btn-small.btn-default.btn-inverse {
 /**************
 * record#edit *
 **************/
+
+#delete-record-button, #edit-record-button {
+  width: 82px;
+}
+
+.edit-record-title {
+  padding: 30px 0 0 0;
+  float: left;
+}
 
 .hidden-field {
   display: none;
@@ -289,6 +303,21 @@ span.btn.btn-small.btn-default.btn-inverse {
     width: 100%;
     float: none;
   }
+
+  .modal-content {
+    width: 296px;
+    margin-left: -148px;
+  }
+
+  .modal-content br {
+    display: none;
+  }
+
+  .modal-content .modal-button {
+    width: initial;
+  }
+
+
 }
 
 /*********************
@@ -342,7 +371,7 @@ span.btn.btn-small.btn-default.btn-inverse {
   }
 
   .terms-and-conditions {
-    margin-left: 17px;
+    margin-left: 20px;
     margin-top: 5px;
   }
 
@@ -375,10 +404,14 @@ span.btn.btn-small.btn-default.btn-inverse {
     background-color: #f4f4f4;
   }
 
-  input, #datetimepicker1 {
+  input {
     /* fallback for browsers without calc support */
     width: 64%;
     width: calc(100% - 185px);
+  }
+
+  #datetimepicker1 {
+    width: 295px;
   }
 
   #placeholder-box {
@@ -412,7 +445,7 @@ span.btn.btn-small.btn-default.btn-inverse {
 
   .terms-and-conditions {
     float: left;
-    margin-left: 197px;
+    margin-left: 200px;
     margin-top: -26px;
   }
 
