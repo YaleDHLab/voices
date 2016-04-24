@@ -35,8 +35,9 @@ class RecordsController < ApplicationController
 
   # GET /records/1/edit
   def edit
+    @record = Record.find(params[:id])
     @include_user_name = should_include_user_name?(params[:id])
-    @saved_date = Record.find(params[:id]).date
+    @saved_date = @record.date
   end
 
   # POST /records
@@ -49,8 +50,8 @@ class RecordsController < ApplicationController
 
     respond_to do |format|
       if @record.save
-        flash[:success] = "<strong>Success</strong>".html_safe + 
-          ": Record successfully saved."
+        flash[:success] = "<strong>CONFIRMATION</strong>".html_safe + 
+          ": Thank you for your contribution to the archive."
         format.html { redirect_to @record }
         format.json { render action: 'show', 
           status: :created, location: @record }
