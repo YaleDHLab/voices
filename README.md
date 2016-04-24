@@ -27,7 +27,7 @@ rake db:drop db:create db:migrate db:seed {RAILS_ENV="production"}
 heroku create voices-dev  
   
 # add support for multiple buildpacks  
-heroku buildpacks:set https://github.com/ddollar/heroku-buildpack-multi.git  
+heroku buildpacks:set https://github.com/ddollar/heroku-buildpack-multi.git --app {your_app_name} 
   
 # compile and minify assets if necessary
 bundle exec rake assets:precompile RAILS_ENV=production
