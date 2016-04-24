@@ -33,7 +33,11 @@ class StaticPagesController < ApplicationController
         word_overlay_divs << available_colors[ 1 + Random.rand(5) ].html_safe
       end
 
-      word_overlay_divs << '">'.html_safe
+      # give each word a 'speed' class that specifies how fast it moves
+      word_overlay_divs << '" class=speed-'.html_safe
+      word_overlay_divs << "#{Random.rand(5)}".html_safe      
+
+      word_overlay_divs << '>'.html_safe
       word_overlay_divs << word 
       word_overlay_divs << '</div>'.html_safe
     end
