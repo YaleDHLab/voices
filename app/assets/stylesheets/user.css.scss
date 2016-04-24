@@ -11,7 +11,6 @@
 
 .masonry-container {
   padding-top: 30px;
-  padding-bottom: 140px;
   background-color: inherit;
 }
 
@@ -52,8 +51,14 @@
 
 input.btn.btn-primary.btn-lg {
   width: 100%;
+  font-size: 16px;
 }
 
 .input-group.input-group-lg {
-  margin-top: 20px;
+  margin: 60px 0px 10px;
+}
+
+input#keywords {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
 }
