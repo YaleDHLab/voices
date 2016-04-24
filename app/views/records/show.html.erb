@@ -1,6 +1,5 @@
 <% content_for :head do %>
   <%= stylesheet_link_tag 'records' %>
-  <%= stylesheet_link_tag 'gray_wrap' %>
   <%= javascript_include_tag 'records' %>
 <% end %>
 
@@ -10,74 +9,82 @@
   <div class="small-banner-text">A living document of student protest at Yale</div>
 </div>
 
-<div class="white-background">
-  <div class="container">
-    <div class="padding-sides">
-      <h1 class="text-center">Confirmation</h1>
 
-      <div class="preface-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eusimod accumsan est. Nonnec at bibendum tortor, vel elementum arcu. Duis quis nisi ac sem tempus elementum.</div>
+<div class="container">
+  <div class="padding-sides padding-bottom"> 
+    
+    <div class="over-image-row">
+      <h3 class="record-title"> <%= @record.title %></h3> 
+        
+      <div class="edit-delete-button-container">
+        <div class="btn-group modify-record-button margin-right">
+          <%= link_to "Edit", edit_record_path(@record), 
+            :class => "btn btn-primary blue-button", :id => "edit-record-button" %>
+        </div>
+
+      </div>
     </div>
-  </div>
-</div>
 
-<div class="gray-background">
-  <div class="container">
-    <div class="padding-sides"> 
-      
-      <div class="over-image-row">
-        <h3 class="record-title"> <%= @record.title %></h3> 
-      
-          <div class="btn-group modify-record-button">
-            <button type="button" class="btn gray-button" id="delete-record-button" data-dismiss="modal">DELETE</button>
-          </div>
+    <hr>
 
-          <div class="btn-group modify-record-button margin-right">
-            <%= link_to "Edit", edit_record_path(@record), 
-              :class => "btn btn-primary blue-button" %>
-          </div>
-        </div>
+    <% if @record.is_image? %>
+      <div class="record-display-container">
+        <%= image_tag @record.file_upload.url(:medium), :alt => @record.title %>
+      </div>
 
-      <%= render 'delete_record_modal' %>
+    <% elsif @record.is_video? %>
+      <div class="record-display-container">
+        <%= video_tag( @record.file_upload.url, poster: @record.file_upload.url(:medium), size: "300x300", class: "loaded-media loaded-video", controls: true, alt: @record.title ) %>
+      </div>
 
+    <% elsif @record.is_audio? %>
+      <div class="record-display-container">
+        <%= audio_tag( @record.file_upload.url, controls: true,  class: "loaded-media loaded-audio", autoplay: true, alt: @record.title ) %>
+      </div>
 
-      <% if @record.is_image? %>
-        <div class="record-display-container">
-          <%= image_tag @record.file_upload.url(:medium), :alt => @record.title %>
-        </div>
+    <% elsif @record.is_text? %>
+      <div class="record-display-container">
+        <%= image_tag( image_url("text-file-icon.png"), class: "loaded-media", alt: @record.title ) %>
+      </div>
+    <% end %>
 
-      <% elsif @record.is_video? %>
-        <div class="record-display-container">
-          <%= video_tag( @record.file_upload.url, poster: @record.file_upload.url(:medium), size: "300x300", class: "loaded-media loaded-video", controls: true, alt: @record.title ) %>
-        </div>
+    <hr>
 
-      <% elsif @record.is_audio? %>
-        <div class="record-display-container">
-          <%= audio_tag( @record.file_upload.url, controls: true,  class: "loaded-media loaded-audio", autoplay: true, alt: @record.title ) %>
-        </div>
+    <div class="metadata-spacer"></div>
 
-      <% elsif @record.is_text? %>
-        <div class="record-display-container">
-          <%= image_tag( image_url("text-file-icon.png"), class: "loaded-media", alt: @record.title ) %>
-        </div>
+    <div class="record-display-left">
+      <div class="record-display-label">Description</div>
+      <div class="record-display-text"><%= @record.description %></div>
+    </div>
+
+    <div class="record-display-right">
+      <% if @record.date %>
+        <div class="record-display-label">Date</div>
+        <div class="record-display-text"><%= @record.date %></div>
       <% end %>
 
-      <div class="metadata-spacer"></div>
-
-      <div class="record-display-left">
-        <div class="record-display-label">Description</div>
-        <div class="record-display-text"><%= @record.description %></div>
-      </div>
-
-      <div class="record-display-right">
+      <% if @record.location %>
         <div class="record-display-label">Location</div>
         <div class="record-display-text"><%= @record.location %></div>
-        
+      <% end %>
+      
+      <% if @record.source_url %>
         <div class="record-display-label">URL</div>
-        <div class="record-display-text"><%= @record.source_url %></div>
-        
-        <div class="record-display-label">Tags</div>
+        <a href=<%= @record.source_url %>>
+          <div class="record-display-text"><%= @record.source_url %></div>
+        </a>
+      <% end %>
+
+      <% if @record.metadata %>
+        <div class="record-display-label">Metadata</div>
         <div class="record-display-text"><%= @record.metadata %></div>
-      </div>
+      <% end %>
+
+      <% if @record.hashtag %>
+        <div class="record-display-label">Hashtags</div>
+        <div class="record-display-text"><%= @record.hashtag %></div>
+      <% end %>
     </div>
   </div>
 </div>
+
