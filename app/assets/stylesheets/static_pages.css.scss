@@ -116,6 +116,34 @@ html, body {
 * expanded navbar *
 ******************/
 
+@media (min-width: 768px) and (max-width: 989px) {
+  .navbar .nav li > a {
+    width: 120px;
+    padding-top: 20px;
+    padding-bottom: 21px;
+    border: none;
+    margin-top: 0px
+  }
+
+  .dropdown-menu {
+    margin-left: -12px;
+  }
+}
+
+@media (min-width: 990px) {
+  .navbar .nav li > a {
+    width: 150px;
+    padding-top: 20px;
+    padding-bottom: 21px;
+    border: none;
+    margin-top: 0px
+  }
+
+  .dropdown-menu {
+    margin-left: 3px;
+  }
+}
+
 @media (min-width: 768px){
 
   /* restore the voices brand (centered in list) 
@@ -134,18 +162,11 @@ html, body {
     text-align: center;
   }
 
-  .navbar .nav li > a {
-    width: 135px;
-    padding-top: 20px;
-    padding-bottom: 21px;
-    border: none;
-    margin-top: 0px
-  }
-
   a#voices-brand {
-    width: 140px;
+    width: 150px;
     padding-top: 20px;
-    margin-right: -5px;
+    margin-right: 30px;
+    margin-left: 38px;
   }
 
   #profile-dropdown a {
@@ -160,27 +181,13 @@ html, body {
     margin-top: 5px;
   }
 
-  .dropdown-menu {
-    margin-left: -5px;
-  }
-
   #profile-dropdown .dropdown-menu-row-text {
     margin: 0px 0px 0px 21px;
     padding: 11px 0px 0px 0px;
   }
 }
 
-/* navbar spacing on large viewports */
-@media (min-width: 930px) {
-  .navbar .nav li > a {
-    width: 180px;
-  }
 
-  /* recenter username dropdown menu */
-  .dropdown-menu {
-    margin-left: 18px;
-  }
-}
 
 /****************
 * navbar global *
@@ -352,8 +359,9 @@ html, body {
   overflow: hidden;
   transform: scale(1.4);
   text-transform: lowercase;
-  font-family: 'Merriweather', serif;
-  line-height: 1.35;
+  font-family: 'YaleNew', serif;
+  font-size: 1.25em;
+  line-height: 1.05;
   font-weight: 300;
 }
 
@@ -362,8 +370,49 @@ html, body {
   padding-right: 8px;
   color: #6f6f6f;
   cursor: pointer;
-  -webkit-transition: color 2s;
-          transition: color 2s;
+  opacity: 1;
+  -webkit-transition: color 2s, opacity 2s linear;
+          transition: color 2s, opacity 2s linear;
+}
+
+.speed-0 {
+  -webkit-animation: text-scroll 100s infinite,
+                     fade-out 10s infinite;
+}
+
+.speed-1 {
+  -webkit-animation: text-scroll 100s infinite,
+                     fade-out 20s infinite;
+}
+
+.speed-2 {
+  -webkit-animation: text-scroll 100s infinite,
+                     fade-out 30s infinite;
+}
+
+.speed-3 {
+  -webkit-animation: text-scroll 100s infinite,
+                     fade-out 40s infinite;
+}
+
+.speed-4 {
+  -webkit-animation: text-scroll 100s infinite,
+                     fade-out 50s infinite;
+}
+
+.speed-5 {
+  -webkit-animation: text-scroll 100s infinite,
+                     fade-out 60s infinite;
+}
+
+@-webkit-keyframes text-scroll {
+  0% { -webkit-transform: translateY(100%); }
+  100% { -webkit-transform: translateY(-200%); }
+}
+
+@-webkit-keyframes fade-out {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 
 #text-overlay div:hover {
@@ -488,7 +537,7 @@ html, body {
 }
 
 h1 {
-  font-size: 2.25em;
+  font-size: 2em;
   font-weight: 300;
   font-family: 'YaleNew', serif;
   padding: 45px 0px 30px 0px;
@@ -507,6 +556,7 @@ h1 {
   font-weight: 700;
   text-transform: uppercase;
   color: #fff;
+  letter-spacing: .065em;
 }
 
 .blue-button {
@@ -523,6 +573,10 @@ h1 {
 .gray-button:hover {
   background-color: #b6b6b6;
   border-color: darkgray;
+  color: #fff;
+}
+
+.gray-button:focus {
   color: #fff;
 }
 
@@ -554,12 +608,13 @@ h1 {
 }
 
 .padding-sides {
-  padding: 0px 15% 0px 15%;
+  padding-left: 15%;
+  padding-right: 15%;
   overflow: auto;
 }
 
 .padding-bottom {
-  padding-bottom: 40px;
+  padding-bottom: 60px;
 }
 
 .small-banner-image-container {
@@ -588,7 +643,7 @@ h1 {
 
 .small-banner-text {
   position: absolute;
-  font-family: YaleNew;
+  font-family: 'YaleNew', serif;
   color: #fff;
   font-size: 1.7em;
   width: 480px;
@@ -599,6 +654,11 @@ h1 {
 
 #contact_form_message {
   margin-bottom: 10px;
+}
+
+hr {
+  margin: 10px 0px;
+  border-top: 1px solid #B1B1B1;
 }
 
 /***************
@@ -676,16 +736,8 @@ h1 {
   }
 
   .padding-sides {
-    padding: 0px 6% 0px 6%;
-  }
-
-  /*****************
-  * fonts and text *
-  *****************/
-
-  h1 {
-    font-size: 2.25em;
-    font-weight: 300;
+    padding-left: 6%;
+    padding-right: 6%;
   }
 
   /*********************
@@ -712,7 +764,7 @@ h1 {
 
   .small-banner-text {
     position: absolute;
-    font-family: YaleNew;
+    font-family: 'YaleNew', serif;
     color: #fff;
     font-size: 1.1em;
     width: 320px;
