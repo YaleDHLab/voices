@@ -8,3 +8,4 @@
 //= require moment
 //= require bootstrap-datetimepicker
 //= require records
+//= masonry-4.0.0

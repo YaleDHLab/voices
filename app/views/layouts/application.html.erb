@@ -4,7 +4,7 @@
   <title>Voices | <%= yield :page_title %></title>
 
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true, :async => true %>
   
   <%= csrf_meta_tags %>
 
@@ -12,7 +12,7 @@
 
   <!-- Typekit font js dependency -->
   <script src="https://use.typekit.net/zsb0fok.js"></script>
-  <script>try{Typekit.load({ async: true });}catch(e){}</script>
+  <script async>try{Typekit.load({ async: true });}catch(e){}</script>
 
   <%= render 'layouts/shim' %>
 
