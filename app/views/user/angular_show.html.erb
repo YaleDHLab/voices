@@ -3,10 +3,10 @@
   <%= stylesheet_link_tag 'user' %>
   <%= stylesheet_link_tag 'gray_wrap' %>
   <%= stylesheet_link_tag 'records' %>
-  <%= javascript_include_tag 'masonry-4.0.0' %>
-  <%= javascript_include_tag 'angular' %>
-  <%= javascript_include_tag 'records_app' %>
-  <%= javascript_include_tag 'jquery.inview.min' %>
+  <%= javascript_include_tag 'masonry-4.0.0', :async => true %>
+  <%= javascript_include_tag 'angular', :async => true %>
+  <%= javascript_include_tag 'records_app', :async => true %>
+  <%= javascript_include_tag 'jquery.inview.min', :async => true %>
 <% end %>
 
 <% provide(:page_title, "Contributions") %>
@@ -29,10 +29,8 @@
               placeholder="Search"
               ng-change="search(keywords)"
               ng-model="keywords">
-
           </div>
         </form>
-      
 
         <!-- If user doesn't have records, prompt them to contribute -->
         <div ng-if="records.length === 0 && userRanSearch === 0">
