@@ -57,29 +57,29 @@
     </div>
 
     <div class="record-display-right">
-      <% if @record.date %>
+      <% unless @record.date.blank? %>
         <div class="record-display-label">Date</div>
         <div class="record-display-text"><%= @record.date %></div>
       <% end %>
 
-      <% if @record.location %>
+      <% unless @record.location.blank? %>
         <div class="record-display-label">Location</div>
         <div class="record-display-text"><%= @record.location %></div>
       <% end %>
       
-      <% if @record.source_url %>
+      <% unless @record.source_url.blank? %>
         <div class="record-display-label">URL</div>
         <a href=<%= @record.source_url %>>
           <div class="record-display-text"><%= @record.source_url %></div>
         </a>
       <% end %>
 
-      <% if @record.metadata %>
+      <% unless @record.metadata.blank? %>
         <div class="record-display-label">Metadata</div>
         <div class="record-display-text"><%= @record.metadata %></div>
       <% end %>
 
-      <% if @record.hashtag %>
+      <% unless @record.hashtag.blank? %>
         <div class="record-display-label">Hashtags</div>
         <div class="record-display-text"><%= @record.hashtag %></div>
       <% end %>
