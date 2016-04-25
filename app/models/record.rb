@@ -50,8 +50,11 @@ class Record < ActiveRecord::Base
       "application/doc",
       "file/txt",
       "text/plain",
-      'application/msword', 
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      "application/msword", 
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "application/pdf",
+      "application/vnd.ms-excel",     
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       ],
     :message => "Sorry! We only accept the following filetypes: mp4, quicktime, jpg, png, gif, mp3, and txt"
 
@@ -76,7 +79,7 @@ class Record < ActiveRecord::Base
   end
 
   def is_text?
-    self.file_upload_file_name =~ %r{\.(docx|doc|pdf|txt)$}i
+    self.file_upload_file_name =~ %r{\.(docx|doc|pdf|txt|xls|xlt|xlsx|xlsm|xltx|xltm|csv|tsv)$}i
   end
 
   # If the uploaded content type is an audio file,
