@@ -66,6 +66,9 @@ gem 'faker'
 # add pagination gem to support continuous scroll
 gem 'will_paginate', '~> 3.0.5'
 
+# enable compression on heroku production assets
+gem 'heroku-deflater', :group => :production
+
 # add the version of ruby used locally
 ruby '2.0.0'
 
