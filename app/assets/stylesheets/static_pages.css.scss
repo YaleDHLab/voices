@@ -371,6 +371,8 @@ html, body {
   cursor: pointer;
   opacity: 1;
   -webkit-transition: color 2s, opacity 2s linear;
+  -moz-transition: color 2s, opacity 2s linear;
+  -o-transition: color 2s, opacity 2s linear;
           transition: color 2s, opacity 2s linear;
 }
 
@@ -784,30 +786,54 @@ hr {
   .speed-0 {
     -webkit-animation: text-scroll 100s infinite,
                        fade-out 10s infinite;
+    -moz-animation: text-scroll 100s infinite,
+                   fade-out 10s infinite;
+    -o-animation: text-scroll 100s infinite,
+                   fade-out 10s infinite;
   }
 
   .speed-1 {
     -webkit-animation: text-scroll 100s infinite,
+                       fade-out 20s infinite;
+    -moz-animation: text-scroll 100s infinite,
+                       fade-out 20s infinite;
+    -o-animation: text-scroll 100s infinite,
                        fade-out 20s infinite;
   }
 
   .speed-2 {
     -webkit-animation: text-scroll 100s infinite,
                        fade-out 30s infinite;
+    -moz-animation: text-scroll 100s infinite,
+                       fade-out 30s infinite;
+    -o-animation: text-scroll 100s infinite,
+                       fade-out 30s infinite;
   }
 
   .speed-3 {
     -webkit-animation: text-scroll 100s infinite,
+                       fade-out 40s infinite;
+    -moz-animation: text-scroll 100s infinite,
+                       fade-out 40s infinite;
+    -o-animation: text-scroll 100s infinite,
                        fade-out 40s infinite;
   }
 
   .speed-4 {
     -webkit-animation: text-scroll 100s infinite,
                        fade-out 50s infinite;
+    -moz-animation: text-scroll 100s infinite,
+                       fade-out 50s infinite;
+    -o-animation: text-scroll 100s infinite,
+                       fade-out 50s infinite;
   }
 
   .speed-5 {
     -webkit-animation: text-scroll 100s infinite,
+                       fade-out 60s infinite;
+    -moz-animation: text-scroll 100s infinite,
+                       fade-out 60s infinite;
+    -o-animation: text-scroll 100s infinite,
                        fade-out 60s infinite;
   }
 
@@ -817,6 +843,26 @@ hr {
   }
 
   @-webkit-keyframes fade-out {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
+
+  @-moz-keyframes text-scroll {
+    0% { -moz-transform: translateY(100%); }
+    100% { -moz-transform: translateY(-200%); }
+  }
+
+  @-moz-keyframes fade-out {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
+
+  @-o-keyframes text-scroll {
+    0% { -o-transform: translateY(100%); }
+    100% { -o-transform: translateY(-200%); }
+  }
+
+  @-o-keyframes fade-out {
     0%, 100% { opacity: 0; }
     50% { opacity: 1; }
   }
