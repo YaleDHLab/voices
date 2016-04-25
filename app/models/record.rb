@@ -49,7 +49,9 @@ class Record < ActiveRecord::Base
       "audio/3gpp",
       "application/doc",
       "file/txt",
-      "text/plain"
+      "text/plain",
+      'application/msword', 
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
       ],
     :message => "Sorry! We only accept the following filetypes: mp4, quicktime, jpg, png, gif, mp3, and txt"
 
