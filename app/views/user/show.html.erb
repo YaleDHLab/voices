@@ -11,9 +11,11 @@
   <div class="small-banner-text">A living document of student protest at Yale</div>
 </div>
 
-<div class="container">
-  <%= render 'rails_search_form' %>
-</div>
+<% if @user_records.length != 0 %>
+  <div class="container">
+    <%= render 'rails_search_form' %>
+  </div>
+<% end %>
 
 <div class="gray-background">
   <div class="container">
