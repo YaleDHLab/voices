@@ -7,3 +7,4 @@
 //= require static_pages
 //= require moment
 //= require bootstrap-datetimepicker
+//= require records
