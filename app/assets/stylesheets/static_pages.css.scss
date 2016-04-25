@@ -188,7 +188,6 @@ html, body {
 }
 
 
-
 /****************
 * navbar global *
 ****************/
@@ -373,46 +372,6 @@ html, body {
   opacity: 1;
   -webkit-transition: color 2s, opacity 2s linear;
           transition: color 2s, opacity 2s linear;
-}
-
-.speed-0 {
-  -webkit-animation: text-scroll 100s infinite,
-                     fade-out 10s infinite;
-}
-
-.speed-1 {
-  -webkit-animation: text-scroll 100s infinite,
-                     fade-out 20s infinite;
-}
-
-.speed-2 {
-  -webkit-animation: text-scroll 100s infinite,
-                     fade-out 30s infinite;
-}
-
-.speed-3 {
-  -webkit-animation: text-scroll 100s infinite,
-                     fade-out 40s infinite;
-}
-
-.speed-4 {
-  -webkit-animation: text-scroll 100s infinite,
-                     fade-out 50s infinite;
-}
-
-.speed-5 {
-  -webkit-animation: text-scroll 100s infinite,
-                     fade-out 60s infinite;
-}
-
-@-webkit-keyframes text-scroll {
-  0% { -webkit-transform: translateY(100%); }
-  100% { -webkit-transform: translateY(-200%); }
-}
-
-@-webkit-keyframes fade-out {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
 }
 
 #text-overlay div:hover {
@@ -646,9 +605,8 @@ h1 {
   font-family: 'YaleNew', serif;
   color: #fff;
   font-size: 1.7em;
-  width: 480px;
-  left: 50%;
-  margin-left: -240px;
+  width: 100%;
+  text-align: center;
   margin-top: 60px;
 }
 
@@ -766,11 +724,10 @@ hr {
     position: absolute;
     font-family: 'YaleNew', serif;
     color: #fff;
-    font-size: 1.1em;
-    width: 320px;
-    left: 50%;
-    margin-left: -158px;
+    font-size: 1em;
     margin-top: 70px;
+    width: 100%;
+    text-align: center;
   }
 
   /****************
@@ -821,6 +778,47 @@ hr {
     background-repeat: no-repeat;
     position: relative;
     overflow: hidden;
+  }
+
+  /* CSS transitions only for larger viewports */
+  .speed-0 {
+    -webkit-animation: text-scroll 100s infinite,
+                       fade-out 10s infinite;
+  }
+
+  .speed-1 {
+    -webkit-animation: text-scroll 100s infinite,
+                       fade-out 20s infinite;
+  }
+
+  .speed-2 {
+    -webkit-animation: text-scroll 100s infinite,
+                       fade-out 30s infinite;
+  }
+
+  .speed-3 {
+    -webkit-animation: text-scroll 100s infinite,
+                       fade-out 40s infinite;
+  }
+
+  .speed-4 {
+    -webkit-animation: text-scroll 100s infinite,
+                       fade-out 50s infinite;
+  }
+
+  .speed-5 {
+    -webkit-animation: text-scroll 100s infinite,
+                       fade-out 60s infinite;
+  }
+
+  @-webkit-keyframes text-scroll {
+    0% { -webkit-transform: translateY(100%); }
+    100% { -webkit-transform: translateY(-200%); }
+  }
+
+  @-webkit-keyframes fade-out {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
   }
 
   /********
