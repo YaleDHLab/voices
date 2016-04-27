@@ -43,24 +43,29 @@ class RecordsController < ApplicationController
   # POST /records
   # POST /records.json
   def create
-    @record = Record.new(record_params)
-
     # retrieve the current cas user name from the session hash
-    @record.cas_user_name = session[:cas_user]
+    
 
-    respond_to do |format|
-      if @record.save
-        flash[:success] = "<strong>CONFIRMATION</strong>".html_safe + 
-          ": Thank you for your contribution to the archive."
-        format.html { redirect_to @record }
-        format.json { render action: 'show', 
-          status: :created, location: @record }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @record.errors, 
-          status: :unprocessable_entity }
-      end
-    end
+    #@record.cas_user_name = session[:cas_user]
+
+    @record = Record.create(record_params)
+
+    
+    #respond_to do |format|
+    #  if @record.save
+    #    flash[:success] = "<strong>CONFIRMATION</strong>".html_safe + 
+    #      ": Thank you for your contribution to the archive."
+    #    format.html { redirect_to @record }
+    #    format.json { render action: 'show', 
+    #      status: :created, location: @record }
+    #  else
+    #    format.html { render action: 'new' }
+    #    format.json { render json: @record.errors, 
+    #      status: :unprocessable_entity }
+    #  end
+    #end
+    
+
   end
 
   # PATCH/PUT /records/1
