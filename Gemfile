@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.0'
+gem 'rails', '4.2.0'
 
 # Use postgres as the database for Active Record
 gem 'pg'
@@ -28,7 +28,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.2'
 
 # Add gem to allow users to authenticate with Yale CAS server
-gem 'rubycas-client'
+gem 'rubycas-client', :git => 'git://github.com/rubycas/rubycas-client.git'
 
 # Add paperclip to allow users to upload content 
 gem 'paperclip', '4.2.4'
@@ -39,16 +39,8 @@ gem 'aws-sdk', '~> 1.55.0'
 # add video preprocessor to create video still image
 gem 'paperclip-ffmpeg', '~> 1.0.1'
 
-# add heroku requirement
-gem 'rails_12factor', group: :production
-
 # use puma server in production
 gem 'puma', '2.11.1'
-
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
-end
 
 # add rmagick gem to call the imagemagick assets on heroku
 gem 'rmagick'
@@ -66,11 +58,32 @@ gem 'faker'
 # add pagination gem to support continuous scroll
 gem 'will_paginate', '~> 3.0.5'
 
-# enable compression on heroku production assets
-gem 'heroku-deflater', :group => :production
-
 # add gem to support multiple file upload with progress bar
 gem 'jquery-fileupload-rails'
+
+# add gem to enable respond_to calls in rails 4.2
+gem 'responders', '~> 2.0'
+
+# add mimetypes gem to support mimetype extensions
+gem 'mime-types'
+
+group :doc do
+  # bundle exec rake doc:rails generates the API under doc/api.
+  gem 'sdoc', require: false
+end
+
+group :development do
+  # add web-console gem to support upgrade to rails 4.2
+  gem 'web-console', '~> 2.0'
+end
+
+group :production do
+  # enable compression on heroku production assets
+  gem 'heroku-deflater'
+
+  # add heroku requirement
+  gem 'rails_12factor'
+end
 
 # add the version of ruby used locally
 ruby '2.0.0'
