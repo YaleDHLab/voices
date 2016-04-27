@@ -38,23 +38,17 @@
     </div>
 
 
-
-    <%= f.label :file_upload, "Upload New File" %>
-    <%= f.file_field :file_upload, multiple: true, name: 'record[file_upload]' %>
-
-
-    <!--
     <div id="file-upload-container" class="field">
       <%= f.label :file_upload, "Upload File<sup>*</sup>".html_safe %>
       <div id="placeholder-box">File name...</div>
-      <%= f.file_field :file_upload, :id=> "custom-file-upload", style: "display: none;" %>
+      <%= f.file_field :file_upload, 
+        multiple: true, 
+        name: 'record[file_upload]', 
+        id: "custom-file-upload",
+        style: "display:none"
+      %>
       <span class="btn btn-small btn-default btn-inverse" id="file-upload-button" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
     </div>
-    -->
-        
-
-
-
 
 
     <div class="field">
