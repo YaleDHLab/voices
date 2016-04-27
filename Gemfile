@@ -25,7 +25,7 @@ gem 'jquery-rails'
 gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
+gem 'jbuilder', '~> 2.2'
 
 # Add gem to allow users to authenticate with Yale CAS server
 gem 'rubycas-client'
@@ -68,6 +68,9 @@ gem 'will_paginate', '~> 3.0.5'
 
 # enable compression on heroku production assets
 gem 'heroku-deflater', :group => :production
+
+# add gem to support multiple file upload with progress bar
+gem 'jquery-fileupload-rails'
 
 # add the version of ruby used locally
 ruby '2.0.0'
