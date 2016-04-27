@@ -41,9 +41,9 @@
         <%= audio_tag( @record.file_upload.url, controls: true,  class: "loaded-media loaded-audio", autoplay: true, alt: @record.title ) %>
       </div>
 
-    <% elsif @record.is_text? %>
+    <% elsif @record.has_default_image? %>
       <div class="record-display-container">
-        <%= image_tag( image_url("text-file-icon.png"), class: "loaded-media", alt: @record.title ) %>
+        <%= image_tag( @record.file_upload_url, class: "loaded-media", alt: @record.title ) %>
       </div>
     <% end %>
 
