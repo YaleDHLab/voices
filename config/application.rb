@@ -29,5 +29,8 @@ module VoicesRails
     # static_pages.css.scss for the implementation there
 
 
+    # Raise errors caused during after_rollback and after_commit
+    config.active_record.raise_in_transactional_callbacks = true
+
   end
 end
