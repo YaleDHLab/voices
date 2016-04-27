@@ -33,10 +33,13 @@ class Record < ActiveRecord::Base
     :content_type => [
       "video/mp4", 
       "video/quicktime",
+      
       "image/jpg", 
       "image/jpeg", 
       "image/png", 
       "image/gif",
+      "application/pdf",
+
       "audio/mpeg", 
       "audio/x-mpeg", 
       "audio/mp3", 
@@ -47,14 +50,29 @@ class Record < ActiveRecord::Base
       "audio/x-mpg", 
       "audio/x-mpegaudio",
       "audio/3gpp",
-      "application/doc",
+      
       "file/txt",
       "text/plain",
+
+      "application/doc",
       "application/msword", 
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "application/pdf",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.template",
+      "application/vnd.ms-word.document.macroEnabled.12",
+      "application/vnd.ms-word.template.macroEnabled.12",
+      
+
       "application/vnd.ms-excel",     
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+
+      "application/vnd.ms-powerpoint",
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "application/vnd.openxmlformats-officedocument.presentationml.template",
+      "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
+      "application/vnd.ms-powerpoint.addin.macroEnabled.12",
+      "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
+      "application/vnd.ms-powerpoint.template.macroEnabled.12",
+      "application/vnd.ms-powerpoint.slideshow.macroEnabled.12"
       ],
     :message => "Sorry! We only accept the following filetypes: mp4, quicktime, jpg, png, gif, mp3, and txt"
 
@@ -78,19 +96,38 @@ class Record < ActiveRecord::Base
     self.file_upload.content_type =~ /\Aaudio\/.*\Z/
   end
 
-  def is_text?
-    self.file_upload_file_name =~ %r{\.(docx|doc|pdf|txt|xls|xlt|xlsx|xlsm|xltx|xltm|csv|tsv)$}i
+  def is_plain_text?
+    self.file_upload_file_name =~ %r{\.(txt)$}i
+  end
+
+  def is_excel?
+    self.file_upload_file_name =~ %r{\.(xls|xlt|xla|xlsx|xlsm|xltx|xltm|xlsb|xlam|csv|tsv)$}i
+  end
+
+  def is_word_document?
+    self.file_upload_file_name =~ %r{\.(docx|doc|dotx|docm|dotm)$}i
+  end
+
+  def is_powerpoint?
+    self.file_upload_file_name =~ %r{\.(pptx|ppt|potx|pot|ppsx|pps|pptm|potm|ppsm|ppam)$}i
+  end
+
+  def is_pdf?
+    self.file_upload_file_name =~ %r{\.(pdf)$}i
+  end
+
+  def has_default_image?
+    is_audio?
+    is_plain_text?
+    is_excel?
+    is_word_document?
   end
 
   # If the uploaded content type is an audio file,
   # return false so that we'll skip audio post processing
   def apply_post_processing?
-    if self.is_audio? 
-      return false
-    
-    elsif self.is_text?
-      return false
-    
+    if self.has_default_image?
+      return false    
     else
       return true
     end
@@ -104,6 +141,12 @@ class Record < ActiveRecord::Base
         :thumb => "200x200>", 
         :medium => "500x500>"
       }
+    elsif self.is_pdf?
+      {
+        :thumb => ["200x200>", :png], 
+        :medium => ["500x500>", :png]
+      }
+
     elsif self.is_video?
       {
         :thumb => { 
@@ -123,8 +166,6 @@ class Record < ActiveRecord::Base
           :format => "mp3"
         }
       }
-    elsif self.is_text?
-      {}
     else
       {}
     end
@@ -142,12 +183,34 @@ class Record < ActiveRecord::Base
         )
       end
 
-    elsif self.is_text?
+    elsif self.is_plain_text?
       if self.file_upload_url != ActionController::Base.helpers.image_path("text-file-icon.png")
         self.update_attributes(
           :file_upload_url => ActionController::Base.helpers.image_path("text-file-icon.png")
         )
       end
+
+    elsif self.is_word_document?
+      if self.file_upload_url != ActionController::Base.helpers.image_path("word.png")
+        self.update_attributes(
+          :file_upload_url => ActionController::Base.helpers.image_path("word.png")
+        )
+      end
+
+    elsif self.is_powerpoint?
+      if self.file_upload_url != ActionController::Base.helpers.image_path("powerpoint.png")
+        self.update_attributes(
+          :file_upload_url => ActionController::Base.helpers.image_path("powerpoint.png")
+        )
+      end
+
+    elsif self.is_excel?
+      if self.file_upload_url != ActionController::Base.helpers.image_path("excel.png")
+        self.update_attributes(
+          :file_upload_url => ActionController::Base.helpers.image_path("excel.png")
+        )
+      end
+
 
     else
       record_id_string = self.id.to_s
