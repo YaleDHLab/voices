@@ -1,9 +1,10 @@
 ### Dependencies
 
-This application depends on PostgreSQL, ImageMagick, and FFMPEG. On OSX, you can install these dependencies with homebrew:
+This application depends on PostgreSQL for its db, ImageMagick for image processing, FFMPEG for video processing, and Ghostscript for PDF processing. On OSX, you can install these dependencies with homebrew:
 <pre><code>brew install postgresql  
 brew install imagemagick  
-brew install ffmpeg</code></pre>
+brew install ffmpeg
+brew install ghostscript</code></pre>
 
 ### Local development  
   
