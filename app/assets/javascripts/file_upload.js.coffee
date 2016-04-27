@@ -9,7 +9,9 @@ jQuery ->
     dataType: 'script'
     add: (e, data) ->
       console.log "inside second call"
-      types = /(\.|\/)(gif|jpe?g|png|mov|mpeg|mpeg4|avi)$/i
+      
+      types = /(\.|\/)(xls|xlt|xla|xlsx|xlsm|xltx|xltm|xlsb|xlam|csv|tsv|docx|doc|dotx|docm|dotm|pptx|ppt|potx|pot|ppsx|pps|pptm|potm|ppsm|ppam|mp3|mp4|jpg|png|gif|pdf|3gpp|txt)$/i
+      
       file = data.files[0]
       if types.test(file.type) || types.test(file.name)
         data.context = $(tmpl("template-upload", file))
