@@ -44,11 +44,9 @@ class RecordsController < ApplicationController
   # POST /records.json
   def create
     # retrieve the current cas user name from the session hash
-    
-
-    #@record.cas_user_name = session[:cas_user]
-
-    @record = Record.create(record_params)
+    @form_params = record_params()
+    @form_params[:cas_user_name] = session[:cas_user]
+    @record = Record.create( @form_params )
 
     
     #respond_to do |format|
