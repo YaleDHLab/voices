@@ -6,7 +6,6 @@
 //= require bootstrap
 //= require jquery-fileupload/basic
 //= require jquery-fileupload/vendor/tmpl
-//= require file_upload
 //= require static_pages
 //= require moment
 //= require bootstrap-datetimepicker
