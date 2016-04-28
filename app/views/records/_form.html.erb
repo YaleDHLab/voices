@@ -1,4 +1,4 @@
-<%= form_for(@record, html: { :multipart => true }) do |f| %>
+<%= form_for @record, html: { multipart: true } do |f| %>
   <% if @record.errors.any? %>
     <div class="alert alert-danger">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -38,17 +38,20 @@
     </div>
 
 
+    
     <div id="file-upload-container" class="field">
       <%= f.label :file_upload, "Upload File<sup>*</sup>".html_safe %>
       <div id="placeholder-box">File name...</div>
       <%= f.file_field :file_upload, 
-        multiple: true, 
-        name: 'record[file_upload]', 
+        multiple: true,
+        type: :file, 
+        name: 'record_attachments[]', 
         id: "custom-file-upload",
         style: "display:none"
       %>
       <span class="btn btn-small btn-default btn-inverse" id="file-upload-button" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
     </div>
+
 
 
     <div class="field">
