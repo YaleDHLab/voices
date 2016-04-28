@@ -49,19 +49,26 @@ class RecordsController < ApplicationController
     @record = Record.create( @form_params )
 
     
-    #respond_to do |format|
-    #  if @record.save
-    #    flash[:success] = "<strong>CONFIRMATION</strong>".html_safe + 
-    #      ": Thank you for your contribution to the archive."
-    #    format.html { redirect_to @record }
-    #    format.json { render action: 'show', 
-    #      status: :created, location: @record }
-    #  else
-    #    format.html { render action: 'new' }
-    #    format.json { render json: @record.errors, 
-    #      status: :unprocessable_entity }
-    #  end
-    #end
+    respond_to do |format|
+      if @record.save
+        if params[:record_attachments]
+          params[:record_attachments].each do |file_upload|
+            @record.record_attachments.create(file_upload: file_upload)
+          end
+        end
+
+
+        flash[:success] = "<strong>CONFIRMATION</strong>".html_safe + 
+          ": Thank you for your contribution to the archive."
+        format.html { redirect_to @record }
+        format.json { render action: 'show', 
+          status: :created, location: @record }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @record.errors, 
+          status: :unprocessable_entity }
+      end
+    end
     
 
   end
@@ -111,8 +118,10 @@ class RecordsController < ApplicationController
     def record_params
       params.require(:record).permit(
         :cas_user_name, :include_name, :title, :content_type, 
-        :file_upload, :description, :date, :location, 
-        :source_url, :hashtag, :metadata, :release_checked
+        :description, :date, :location, :source_url, 
+        :hashtag, :metadata, :release_checked,
+
+        :record_attachments
       )
     end
 
