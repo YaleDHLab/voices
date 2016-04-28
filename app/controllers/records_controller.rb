@@ -57,7 +57,6 @@ class RecordsController < ApplicationController
           end
         end
 
-
         flash[:success] = "<strong>CONFIRMATION</strong>".html_safe + 
           ": Thank you for your contribution to the archive."
         format.html { redirect_to @record }
