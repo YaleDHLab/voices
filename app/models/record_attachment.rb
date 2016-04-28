@@ -132,22 +132,29 @@ class RecordAttachment < ActiveRecord::Base
   def check_file_type
     if self.is_image?
       {
-        :thumb => "200x200>", 
+        :square_thumb => "200x200#", 
+        :annotation_thumb => "300x200#",
         :medium => "500x500>"
       }
     elsif self.is_pdf?
       {
-        :thumb => ["200x200>", :png], 
+        :square_thumb => ["200x200#", :png], 
+        :annotation_thumb => ["300x200#", :png],
         :medium => ["500x500>", :png]
       }
 
     elsif self.is_video?
       {
-        :thumb => { 
-          :geometry => "200x200>", 
+        :square_thumb => { 
+          :geometry => "200x200#", 
           :format => 'jpg', 
           :time => 0
         }, 
+        :annotation_thumb => {
+          :geometry => "300x200#",
+          :format => 'jpg',
+          :time => 0
+        },
         :medium => { 
           :geometry => "500x500>", 
           :format => 'jpg', 
