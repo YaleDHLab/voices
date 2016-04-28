@@ -8,6 +8,6 @@ Paperclip.interpolates(:placeholder) do |attachment, style|
 end
 
 # add initializer that manually overrides 3gpp mimetype to audio
-android_audio_type = MIME::Types["audio/3gpp"].first
-android_audio_type.extensions << "3gpp"
-MIME::Types.index_extensions android_audio_type
+Paperclip.options[:content_type_mappings] = {
+  "3gpp" => "audio/3gpp"
+}
