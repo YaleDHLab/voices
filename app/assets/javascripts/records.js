@@ -150,6 +150,7 @@ $(document).ready(function() {
       // center both the record title and the edit and delete buttons
       var recordTitlePadding = (overImageRowWidth - recordTitleWidth) / 2;
       $(".record-title").css("padding-left", recordTitlePadding);
+      $(".record-title").css("text-align", "center");
 
       $(".edit-delete-button-container").css("margin-top", "0px");
       $(".edit-delete-button-container").css("float", "none");
@@ -160,7 +161,7 @@ $(document).ready(function() {
       $(".record-title").css("padding-left", "");
       $(".record-title").css("display", "inline-block");
       $(".record-title").css("width", "");
-      $(".record-title").css("text-align", "");
+      $(".record-title").css("text-align", "left");
 
       $(".edit-delete-button-container").css("margin-top", "31px");
       $(".edit-delete-button-container").css("float", "right");
