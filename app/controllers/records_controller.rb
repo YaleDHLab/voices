@@ -26,6 +26,34 @@ class RecordsController < ApplicationController
   # GET /records/1
   # GET /records/1.json
   def show
+    @record_id = params[:id]
+    @current_page = params[:page].to_i
+
+    # run the where clause globally
+    @relevant_attachments = RecordAttachment.where(record_id: @record_id)
+    
+    # broadcast the number of attachments to the view
+    @number_of_attachments = @relevant_attachments.length
+
+    # specify the maximum number of attachments per page view
+    @maximum_attachments_per_page = 4
+
+    # determine the number of pages
+    @number_of_pages = (@number_of_attachments/@maximum_attachments_per_page.to_f).ceil
+
+    print @number_of_pages
+
+    # determine the first and last attachments for the current page
+    @page_start = @maximum_attachments_per_page * @current_page
+    @page_end = (@maximum_attachments_per_page * (@current_page + 1)) - 1
+
+    # send the view record attachments, not ActiveRecordRelations
+    # manually paginate the attachments
+    if @number_of_attachments > 1
+      @record_attachment = @relevant_attachments[@page_start..@page_end]
+    else 
+      @record_attachment = @relevant_attachments[0]
+    end
   end
 
   # GET /records/new
@@ -48,18 +76,33 @@ class RecordsController < ApplicationController
     @form_params[:cas_user_name] = session[:cas_user]
     @record = Record.create( @form_params )
 
-    
+    # if the user just uploaded multiple attachments, send special flash
+    # requesting the user to annotate each image
+    @attachment_count = 0
+
     respond_to do |format|
       if @record.save
         if params[:record_attachments]
           params[:record_attachments].each do |file_upload|
             @record.record_attachments.create(file_upload: file_upload)
+
+            # increment the attachment count so we know whether to send custom
+            # flash
+            @attachment_count += 1
           end
         end
 
-        flash[:success] = "<strong>CONFIRMATION</strong>".html_safe + 
+        # make flash a function of records user uploaded
+        if @attachment_count > 1
+          flash[:info] = "<strong>FOR BULK UPLOADS</strong>".html_safe +
+          ": Please say something about each item in this collection in the caption field."
+        else
+          flash[:success] = "<strong>CONFIRMATION</strong>".html_safe + 
           ": Thank you for your contribution to the archive."
-        format.html { redirect_to @record }
+        end
+
+        # send user to the record they just created, and initialize their view to page 1
+        format.html { redirect_to controller: 'records', action: 'show', id: @record.id, page: 0 }
         format.json { render action: 'show', 
           status: :created, location: @record }
       else
