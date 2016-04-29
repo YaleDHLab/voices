@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="padding-sides padding-bottom"> 
+    <div class="over-image-row">
+      <h3 class="record-title"> <%= @record.title %></h3>  
+      <div class="edit-delete-button-container">
+        <div class="btn-group modify-record-button margin-right">
+          <%= link_to "Edit", edit_record_path(@record), 
+            :class => "btn btn-primary blue-button", :id => "edit-record-button" %>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <% if @record_attachment.is_image? %>
+      <div class="record-display-container">
+        <%= image_tag @record_attachment.file_upload.url(:medium), :alt => @record.title %>
+      </div>
+
+    <% elsif @record_attachment.is_video? %>
+      <div class="record-display-container">
+        <%= video_tag( @record_attachment.file_upload.url, poster: @record_attachment.file_upload.url(:medium), size: "300x300", class: "loaded-media loaded-video", controls: true, alt: @record.title ) %>
+      </div>
+
+    <% elsif @record_attachment.is_audio? %>
+      <div class="record-display-container">
+        <%= audio_tag( @record_attachment.file_upload.url, controls: true,  class: "loaded-media loaded-audio", autoplay: true, alt: @record.title ) %>
+      </div>
+
+    <% elsif @record_attachment.has_default_image? %>
+      <div class="record-display-container">
+        <%= image_tag( @record_attachment.file_upload_url, class: "loaded-media", alt: @record.title ) %>
+      </div>
+    <% end %>
+
+    <hr>
+
+    <div class="metadata-spacer"></div>
+
+    <div class="record-display-left">
+      <div class="record-display-label">Description</div>
+      <div class="record-display-text"><%= @record.description %></div>
+    </div>
+
+    <div class="record-display-right">
+      <% unless @record.date.blank? %>
+        <div class="record-display-label">Date</div>
+        <div class="record-display-text"><%= @record.date %></div>
+      <% end %>
+
+      <% unless @record.location.blank? %>
+        <div class="record-display-label">Location</div>
+        <div class="record-display-text"><%= @record.location %></div>
+      <% end %>
+      
+      <% unless @record.source_url.blank? %>
+        <div class="record-display-label">URL</div>
+        <a href=<%= @record.source_url %>>
+          <div class="record-display-text"><%= @record.source_url %></div>
+        </a>
+      <% end %>
+
+      <% unless @record.metadata.blank? %>
+        <div class="record-display-label">Metadata</div>
+        <div class="record-display-text"><%= @record.metadata %></div>
+      <% end %>
+
+      <% unless @record.hashtag.blank? %>
+        <div class="record-display-label">Hashtags</div>
+        <div class="record-display-text"><%= @record.hashtag %></div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,125 @@
+<div class="container">
+  <div class="padding-sides padding-bottom"> 
+    <div class="over-image-row">
+      <h3 class="record-title"> <%= @record.title %></h3>  
+      <div class="edit-delete-button-container">
+        <div class="btn-group modify-record-button margin-right">
+          <%= link_to "Edit", edit_record_path(@record), 
+            :class => "btn btn-primary blue-button", :id => "edit-record-button" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="masonry-container">
+      <div class="masonry">
+
+        <% @record_attachment.each do |attachment| %>
+          <% if attachment.is_image? %>
+            <div class="masonry-item">
+              <%= image_tag attachment.file_upload.url(:annotation_thumb), :alt => @record.title %>
+              <div class="attachment-annotation"></div>
+            </div>
+
+          <% elsif attachment.is_video? %>
+            <div class="masonry-item">
+              <%= video_tag( attachment.file_upload.url, poster: attachment.file_upload.url(:annotation_thumb), size: "300x300", class: "loaded-media loaded-video", controls: true, alt: @record.title ) %>
+              <div class="attachment-annotation"></div>
+            </div>
+
+          <% elsif attachment.is_audio? %>
+            <div class="masonry-item">
+              <%= audio_tag( attachment.file_upload.url, controls: true,  class: "loaded-media loaded-audio", autoplay: true, alt: @record.title ) %>
+              <div class="attachment-annotation"></div>
+            </div>
+
+          <% elsif attachment.has_default_image? %>
+            <div class="masonry-item">
+              <%= image_tag( attachment.file_upload_url, class: "loaded-media", alt: @record.title ) %>
+              <div class="attachment-annotation"></div>
+            </div>
+          <% end %>
+
+        <% end %>
+      </div>
+    </div>
+
+    <% if @number_of_pages > 1 %>
+
+      <div class="pagination-controls">
+        <% if @current_page > 0 %>
+          <%= link_to record_path(:id => @record_id, :page => @current_page - 1) do %>
+            <div class="previous-page">
+              &lsaquo;&lsaquo; Previous
+            </div>
+          <% end %>
+        <% else %>
+          <div class="previous-page"></div>
+        <% end %>
+
+        <!-- add one to offset 0-based indexing -->
+        <% if @current_page + 1 < @number_of_pages %>
+          <%= link_to record_path(:id => @record_id, :page => @current_page + 1) do %>
+            <div class="next-page">Next &rsaquo;&rsaquo;</div>
+          <% end %>
+        <% else %>
+          <div class="next-page"></div>
+        <% end %>
+
+        <div class="page-toggles">
+          <div class="circle-outer-container">
+            <div class="circle-inner-container">
+
+              <% @number_of_pages.times do |page_number| %>
+                <%= link_to record_path(:id => @record_id, :page => page_number) do %>
+                  <% if @current_page == page_number %>
+                    <div class="circle active" id="page-number- <%= page_number %> "></div>
+                  <% else %>
+                    <div class="circle" id="page-number- <%= page_number %> "></div>
+                  <% end %>
+                <% end %>
+              <% end %>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <% end %>
+
+    <hr class="clear-floats">
+    <div class="metadata-spacer"></div>
+    <div class="record-display-left">
+      <div class="record-display-label">Description</div>
+      <div class="record-display-text"><%= @record.description %></div>
+    </div>
+
+    <div class="record-display-right">
+      <% unless @record.date.blank? %>
+        <div class="record-display-label">Date</div>
+        <div class="record-display-text"><%= @record.date %></div>
+      <% end %>
+
+      <% unless @record.location.blank? %>
+        <div class="record-display-label">Location</div>
+        <div class="record-display-text"><%= @record.location %></div>
+      <% end %>
+      
+      <% unless @record.source_url.blank? %>
+        <div class="record-display-label">URL</div>
+        <a href=<%= @record.source_url %>>
+          <div class="record-display-text"><%= @record.source_url %></div>
+        </a>
+      <% end %>
+
+      <% unless @record.metadata.blank? %>
+        <div class="record-display-label">Metadata</div>
+        <div class="record-display-text"><%= @record.metadata %></div>
+      <% end %>
+
+      <% unless @record.hashtag.blank? %>
+        <div class="record-display-label">Hashtags</div>
+        <div class="record-display-text"><%= @record.hashtag %></div>
+      <% end %>
+    </div>
+  </div>
+</div>
