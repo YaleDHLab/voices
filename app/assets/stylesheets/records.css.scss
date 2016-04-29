@@ -190,7 +190,7 @@ span.btn.btn-small.btn-default.btn-inverse {
 .record-display-container {
   width: 100%;
   background: #fff;
-  padding: 20px 0px;
+  padding: 30px 0px;
 }
 
 .loaded-video {
@@ -212,6 +212,10 @@ span.btn.btn-small.btn-default.btn-inverse {
   max-width: 90%;
 }
 
+.hr-top {
+  padding-bottom: 10px;
+}
+
 .record-display-left {
   float: left;
   width: 60%;
@@ -230,6 +234,99 @@ span.btn.btn-small.btn-default.btn-inverse {
 
 .record-display-text {
   margin-bottom: 20px;
+}
+
+/***********************************
+* multiple uploads in records#show *
+***********************************/
+
+.masonry-container {
+  padding-top: 20px;
+  background-color: inherit;
+}
+
+.masonry {
+  column-count: 2;
+  -moz-column-width: 13em;
+  -webkit-column-width: 13em;
+  -moz-column-gap: 1em;
+  -webkit-column-gap: 1em; 
+}
+
+.masonry-item {
+  display: inline-block;
+  margin: 0 0 14px 0;
+  width:  100%; 
+  background:  #efefef;
+  border: 1px solid #a7a7a7;
+}
+
+.masonry-item img {
+  width: 100%;
+  height: auto;
+}
+
+.masonry-item .attachment-annotation {
+  margin-right: 1px;
+  height: 30px;
+  background-color: #fff;
+  border-top: 1px solid #a7a7a7;
+}
+
+.pagination-controls {
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+
+/* set heights so classes are present even if they have no content */
+.previous-page {
+  width: 20%;
+  min-height: 1px;
+  float: left;
+}
+
+.next-page {
+  width: 20%;
+  min-height: 1px;
+  float: right;
+  text-align: right;
+}
+
+.page-toggles {
+  width: 60%;
+  float: left;
+  overflow: hidden;
+}
+
+.circle-outer-container {
+  position: relative;
+  left: 50%;
+  float: left;
+  padding-left: 4px;
+}
+
+.circle-inner-container {
+  position: relative;
+  left: -50%;
+  float: left;
+  padding-left: 8px;
+  padding-top: 8px;
+}
+
+.circle {
+  height: 7px;
+  width: 7px;
+  border-radius: 5px;
+  background-color: #a7a7a7;
+  border: 1px solid #929292;
+  float: left;
+  margin-right: 16px;
+  margin-bottom: 7px;
+}
+
+.circle.active {
+  background-color: #3399CC;
+  border: 1px solid #4EA4D0;
 }
 
 /********
@@ -385,6 +482,20 @@ span.btn.btn-small.btn-default.btn-inverse {
 
   #date-selector-input {
     background-color: #fff;
+  }
+
+  /* multirecord uploads */
+
+  .page-toggles {
+    display: none;
+  }
+
+  .previous-page, .next-page {
+    width: 50%;
+  }
+
+  .pagination-controls {
+    padding-bottom: 50px;
   }
 
 }
