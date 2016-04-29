@@ -10,107 +10,98 @@
     </div>
   <% end %>
 
-  <div class="actions">
-
-    <div class="field" id="include-name-container">
-      <%= f.label :include_name, "Would you like your name included in the archive?<sup>*</sup>".html_safe, :class => "long-label" %>
-      
-      <div class="boolean-slider-container">
-        <div class="boolean-slider-track">
-          <div class="boolean-slider-knob user-selection-0"></div>
-        </div>
-      </div> 
-
-      <div id="boolean-slider-text">NO</div>
-
-      <!-- include hidden field and submit the value to that hidden field -->
-      <%= f.hidden_field :include_name %>
-    </div>
-
-    <div class="field">
-      <%= f.label :title, "Title of Material<sup>*</sup>".html_safe %>
-      <%= f.text_field :title %>
-    </div>
-
-    <div class="field">
-      <%= f.label :content_type, "Content Type" %>
-      <%= f.select :content_type, options_for_content_type, :selected => "Image" %>
-    </div>
-
-
+  <div class="field" id="include-name-container">
+    <%= f.label :include_name, "Would you like your name included in the archive?<sup>*</sup>".html_safe, :class => "long-label" %>
     
-    <div id="file-upload-container" class="field">
-      <%= f.label :file_upload, "Upload File<sup>*</sup>".html_safe %>
-      <div id="placeholder-box">File name...</div>
-      <%= f.file_field :file_upload, 
-        multiple: true,
-        type: :file, 
-        name: 'record_attachments[]', 
-        id: "custom-file-upload",
-        style: "display:none"
-      %>
-      <span class="btn btn-small btn-default btn-inverse" id="file-upload-button" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
-    </div>
-
-
-
-    <div class="field">
-      <%= f.label :description, "Description<sup>*</sup>".html_safe %>
-      <%= f.text_area(:description, size: '4x5', id: "record-description") %>
-    </div>
-
-    <div class="field">
-      <%= f.label :date, "Date" %>
-      <div class="form-group date-container">
-        <div class='input-group date' id='datetimepicker1'>
-          <input type='text' class="form-control" id="date-selector-input" />
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-          </span>
-        </div>
+    <div class="boolean-slider-container">
+      <div class="boolean-slider-track">
+        <div class="boolean-slider-knob user-selection-0"></div>
       </div>
+    </div> 
 
-      <%= f.hidden_field :date %>
+    <div id="boolean-slider-text">NO</div>
+
+    <!-- include hidden field and submit the value to that hidden field -->
+    <%= f.hidden_field :include_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :title, "Title of Material<sup>*</sup>".html_safe %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :content_type, "Content Type" %>
+    <%= f.select :content_type, options_for_content_type, :selected => "Image" %>
+  </div>
+
+
+  <div id="file-upload-container" class="field">
+    <%= f.label :file_upload, "Upload File<sup>*</sup>".html_safe %>
+    <div id="placeholder-box">File name...</div>
+    <%= f.file_field :file_upload, 
+      multiple: true,
+      type: :file, 
+      name: 'record_attachments[]', 
+      id: "custom-file-upload",
+      style: "display:none"
+    %>
+    <span class="btn btn-small btn-default btn-inverse" id="file-upload-button" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
+  </div>
+
+  <!-- Append progress-bars of uploading files -->
+  <div id="progress-bar-container"></div>
+
+
+  <div class="field">
+    <%= f.label :description, "Description<sup>*</sup>".html_safe %>
+    <%= f.text_area(:description, size: '4x5', id: "record-description") %>
+  </div>
+
+  <div class="field">
+    <%= f.label :date, "Date" %>
+    <div class="form-group date-container">
+      <div class='input-group date' id='datetimepicker1'>
+        <input type='text' class="form-control" id="date-selector-input" />
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+      </div>
     </div>
 
-    <div class="field">
-      <%= f.label :location, "Location" %>
-      <%= f.text_field :location %>
-    </div>
+    <%= f.hidden_field :date %>
+  </div>
 
-    <div class="field">
-      <%= f.label :source_url, "Source URL" %>
-      <%= f.text_field :source_url %>
-    </div>
+  <div class="field">
+    <%= f.label :location, "Location" %>
+    <%= f.text_field :location %>
+  </div>
 
-    <div class="field">
-      <%= f.label :metadata, "Metadata<sup>*</sup>".html_safe %>
-      <%= f.text_field :metadata %>
-    </div>
+  <div class="field">
+    <%= f.label :source_url, "Source URL" %>
+    <%= f.text_field :source_url %>
+  </div>
 
-    <div class="field">
-      <%= f.label :hashtag, "Hashtag<sup>*</sup>".html_safe %>
-      <%= f.text_field :hashtag %>
-    </div>
+  <div class="field">
+    <%= f.label :metadata, "Metadata<sup>*</sup>".html_safe %>
+    <%= f.text_field :metadata %>
+  </div>
 
-    <div class="field">
-      <%= f.label :release_checked, "Terms & Conditions<sup>*</sup>".html_safe %>
-      <%= f.check_box :release_checked, :class => "custom-checkbox" %>
-      <div class="terms-and-conditions">If my contribution is accepted, I agree to donate this material to the Community Voices Archive at Yale University Library for preservation and distribution for research and educational purposes. I understand that I will not receive financial compensation for this material.</div>
-    </div>
+  <div class="field">
+    <%= f.label :hashtag, "Hashtag<sup>*</sup>".html_safe %>
+    <%= f.text_field :hashtag %>
+  </div>
 
-    <div class="clear-floats"></div>
+  <div class="field">
+    <%= f.label :release_checked, "Terms & Conditions<sup>*</sup>".html_safe %>
+    <%= f.check_box :release_checked, :class => "custom-checkbox" %>
+    <div class="terms-and-conditions">If my contribution is accepted, I agree to donate this material to the Community Voices Archive at Yale University Library for preservation and distribution for research and educational purposes. I understand that I will not receive financial compensation for this material.</div>
+  </div>
 
-    <%= f.submit %>
-  <!-- 
+  <div class="clear-floats"></div>
+
   <%= button_tag(type: 'submit', class: "btn btn-primary blue-button submit-button") do %>
     <i class="icon-ok icon-white"></i> SUBMIT
   <% end %>
-  -->
-
-  </div>
 
 <% end %>
-
-<% # jquery upload template # %>
-<script id="template-upload" type="text/x-tmpl"><div class="upload">{%=o.name%}<div class="progress"><div class="progress-bar bar" style="width: 0%"></div></div></div></script>
