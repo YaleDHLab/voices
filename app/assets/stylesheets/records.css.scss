@@ -212,10 +212,6 @@ span.btn.btn-small.btn-default.btn-inverse {
   max-width: 90%;
 }
 
-.hr-top {
-  padding-bottom: 10px;
-}
-
 .record-display-left {
   float: left;
   width: 60%;
@@ -327,6 +323,10 @@ span.btn.btn-small.btn-default.btn-inverse {
 .circle.active {
   background-color: #3399CC;
   border: 1px solid #4EA4D0;
+}
+
+hr.clear-floats {
+  margin-top: 22px;
 }
 
 /********
