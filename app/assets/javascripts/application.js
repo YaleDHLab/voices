@@ -4,10 +4,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
-//= require jquery-fileupload/basic
-//= require jquery-fileupload/vendor/tmpl
 //= require static_pages
 //= require moment
 //= require bootstrap-datetimepicker
 //= require records
 //= require masonry-4.0.0
+//= require angular
