@@ -31,17 +31,13 @@ class RecordsController < ApplicationController
 
     # run the where clause globally
     @relevant_attachments = RecordAttachment.where(record_id: @record_id)
-    
-    # broadcast the number of attachments to the view
-    @number_of_attachments = @relevant_attachments.length
+    @relevant_record = Record.find(@record_id)
 
     # specify the maximum number of attachments per page view
     @maximum_attachments_per_page = 4
 
     # determine the number of pages
-    @number_of_pages = (@number_of_attachments/@maximum_attachments_per_page.to_f).ceil
-
-    print @number_of_pages
+    @number_of_pages = (@relevant_attachments.length / @maximum_attachments_per_page.to_f).ceil
 
     # determine the first and last attachments for the current page
     @page_start = @maximum_attachments_per_page * @current_page
@@ -49,10 +45,19 @@ class RecordsController < ApplicationController
 
     # send the view record attachments, not ActiveRecordRelations
     # manually paginate the attachments
-    if @number_of_attachments > 1
+    if @relevant_attachments.length > 1
       @record_attachment = @relevant_attachments[@page_start..@page_end]
     else 
       @record_attachment = @relevant_attachments[0]
+    end
+
+    respond_to do |format|
+      format.html {}
+      format.json { render json: {
+        record: @relevant_record, 
+        attachments: @record_attachment,
+        number_of_pages: @number_of_pages
+      }.to_json }
     end
   end
 
@@ -102,7 +107,7 @@ class RecordsController < ApplicationController
         end
 
         # send user to the record they just created, and initialize their view to page 1
-        format.html { redirect_to controller: 'records', action: 'show', id: @record.id, page: 0 }
+        format.html { redirect_to controller: 'records', action: 'show', id: @record.id }
         format.json { render action: 'show', 
           status: :created, location: @record }
       else
