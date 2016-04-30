@@ -1,0 +1,105 @@
+<% content_for :head do %>
+  <%= javascript_include_tag 'gallery_app' %>
+<% end %>
+
+<div class="container" ng-app="GalleryApp" ng-controller="GalleryController">
+  <div class="padding-sides padding-bottom"> 
+    <div class="over-image-row">
+      <h3 class="record-title">{{ data.record.title }}</h3>  
+      <div class="edit-delete-button-container">
+        <div class="btn-group modify-record-button margin-right">
+          <%= link_to "Edit", edit_record_path(@record), 
+            :class => "btn btn-primary blue-button", :id => "edit-record-button" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="masonry-container">
+      <div class="masonry">
+        <div ng-repeat="attachment in data.attachments">
+          <div class="masonry-item">
+            <img src="{{ attachment.file_upload_url.replace('/medium/', '/annotation_thumb/') }}"></img>
+            <div class="attachment-annotation"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Only show pagination controls if num_pages > 1 -->
+    <div ng-show="data.number_of_pages > 1">
+      <div class="pagination-controls">
+        
+        <!-- Previous page link -->
+        <div ng-if="current_page > 0">
+          <a href="" ng-click="previousPage()">
+            <div class="previous-page">
+              &lsaquo;&lsaquo; Previous
+            </div>
+          </a>
+        </div>
+        
+        <div ng-if="current_page == 0">
+          <div class="previous-page"></div>
+        </div>
+
+        <!-- Next page link -->
+        <div ng-if="current_page + 1 < data.number_of_pages">
+          <a href="" ng-click="nextPage()">
+            <div class="next-page">
+              Next &rsaquo;&rsaquo;
+            </div>
+          </a>
+        </div>
+
+        <div ng-if="current_page == data.number_of_pages">
+          <div>class="next-page"></div>
+        </div>
+
+        <!-- Page toggle circles -->
+        <div class="page-toggles">
+          <div class="circle-outer-container">
+            <div class="circle-inner-container" ng-repeat="i in pageArray(data.number_of_pages) track by $index">
+
+              <a href="" ng-click="fetchAttachments(recordId, $index)">
+                <div ng-if="current_page === $index" class="circle active"></div>
+                <div ng-if="current_page != $index" class="circle"></div>
+              </a>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="clear-floats">
+    <div class="metadata-spacer"></div>
+    <div class="record-display-left">
+      <div class="record-display-label">Description</div>
+      <div class="record-display-text">{{ data.record.description }}</div>
+    </div>
+
+    <div class="record-display-right">
+      <div ng-if="data.record.date" class="record-display-label">Date</div>
+      <div ng-if="data.record.date" class="record-display-text">{{ data.record.date }}</div>
+
+      <div ng-if="data.record.location" class="record-display-label">Location</div>
+      <div ng-if="data.record.location" class="record-display-text">{{ data.record.location }}</div>
+
+      <div ng-if="data.record.source_url" class="record-display-label">Source URL</div>
+      <div ng-if="data.record.source_url" class="record-display-text">
+        <a ng-href="data.record.source_url">
+          {{ data.record.source_url }}
+        </a>
+      </div>
+
+      <div ng-if="data.record.metadata" class="record-display-label">Metadata</div>
+      <div ng-if="data.record.metadata" class="record-display-text">{{ data.record.metadata }}</div>
+
+      <div ng-if="data.record.hashtag" class="record-display-label">Hashtags</div>
+      <div ng-if="data.record.hashtag" class="record-display-text">{{ data.record.hashtags }}</div>
+
+
+    </div>
+  </div>
+</div>
