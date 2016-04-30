@@ -8,8 +8,8 @@
   <div class="small-banner-text">A living document of student protest at Yale</div>
 </div>
 
-<% if @number_of_attachments == 1 %>
+<% if @relevant_attachments.length == 1 %>
   <%= render 'single_record_attachment_view' %>
-<% elsif @number_of_attachments > 1 %>
-  <%= render 'multiple_record_attachment_view' %>
+<% elsif @relevant_attachments.length > 1 %>
+  <%= render 'multiple_attachments_angular' %>
 <% end %>

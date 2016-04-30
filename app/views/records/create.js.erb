@@ -1,9 +1,0 @@
-<% if @record.new_record? %>
-  alert('Failed');
-<% else %>
-  if ($('h1') !== undefined) {
-    console.log('called template');
-    $('h1').append("<%=escape_javascript render partial: 'records/record', locals: { record: @record } %>");
-  }
-<% end %>
-
