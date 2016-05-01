@@ -120,8 +120,8 @@ class RecordAttachment < ActiveRecord::Base
   # If the uploaded content type is an audio file,
   # return false so that we'll skip audio post processing
   def apply_post_processing?
-    if self.has_default_image?
-      return false    
+    if self.is_audio?
+      return false
     else
       return true
     end
