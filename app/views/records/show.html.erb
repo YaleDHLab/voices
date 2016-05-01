@@ -1,5 +1,6 @@
 <% content_for :head do %>
   <%= stylesheet_link_tag 'records' %>
+  <%= javascript_include_tag 'gallery_app' %>
 <% end %>
 
 <% provide(:page_title, "Show Record") %>
@@ -8,8 +9,12 @@
   <div class="small-banner-text">A living document of student protest at Yale</div>
 </div>
 
+<!-- Render the attachment(s) -->
 <% if @relevant_attachments.length == 1 %>
-  <%= render 'single_record_attachment_view' %>
+  <%= render 'single_attachment_angular' %>
 <% elsif @relevant_attachments.length > 1 %>
   <%= render 'multiple_attachments_angular' %>
 <% end %>
+
+<!-- Render the record-level metadata -->
+<%= render 'record_metadata' %>
