@@ -30,7 +30,7 @@ class RecordsController < ApplicationController
     @current_page = params[:page].to_i
 
     # run the where clause globally
-    @relevant_attachments = RecordAttachment.where(record_id: @record_id)
+    @relevant_attachments = RecordAttachment.where(record_id: @record_id).order("id")
     @relevant_record = Record.find(@record_id)
 
     # specify the maximum number of attachments per page view
