@@ -18,8 +18,12 @@
       <div class="masonry">
         <div ng-repeat="attachment in data.attachments">
           <div class="masonry-item">
-            <img src="{{ attachment.file_upload_url.replace('/medium/', '/annotation_thumb/') }}"></img>
-            <div class="attachment-annotation"></div>
+            <img ng-src="{{ attachment.file_upload_url.replace('/medium/', '/annotation_thumb/') }}"></img>
+            <input ng-model="attachment.annotation" 
+                   placeholder="Say something about this file..." 
+                   class="attachment-annotation"
+                   ng-change="saveAnnotation(attachment.annotation, attachment.id)"
+                   >
           </div>
         </div>
       </div>
