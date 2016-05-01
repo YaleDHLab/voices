@@ -9,7 +9,7 @@ GalleryApp.controller("GalleryController", [
 
     // on page load, parse the requested record and page number from the params
     var url = window.location.href;
-    var recordId = Number( url.split("records/")[1].split(".")[0] );
+    var recordId = Number( url.split("records/")[1].split("?")[0].split(".")[0] );
     var pageNumber = 0
 
     // save the recordId for future requests
@@ -23,8 +23,6 @@ GalleryApp.controller("GalleryController", [
           // on success
           $scope.data = response.data;
           $scope.current_page = pageNumber;
-          console.log($scope.data, pageNumber);
-
         }, // on failure
           function(response) {
             console.log("http request failed", response.status);
@@ -53,9 +51,20 @@ GalleryApp.controller("GalleryController", [
       $scope.fetchAttachments(recordId, $scope.current_page);
     }
 
+    // save user annotations (send CSRF token for security)
+    $scope.saveAnnotation = function(userAnnotation, attachmentId) {
+      console.log(userAnnotation, attachmentId);
+      
+      $.ajax({ url: "/record_attachments/" + attachmentId + ".json",
+        type: 'PUT',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        data: {"annotation": userAnnotation},
+        success: function(response) {}
+      });
+    };
 
     // initialize page with values from url
     $scope.fetchAttachments(recordId, pageNumber);
-
+      
   }
 ]);
