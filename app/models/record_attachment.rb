@@ -174,10 +174,18 @@ class RecordAttachment < ActiveRecord::Base
   
 
   def set_remote_urls
-    # if the record is an audio or text file, 
-    # set the asset path to the stock audio / text
-    # file path in aws, else calculate the asset path
+    # save the path to the original file upload, then store the paths to
+    # the images we'll use to represent the file
     
+    # set the url to the original asset
+    if self.file_upload_url != self.file_upload.url(:original)
+      self.update_attributes(
+        :file_upload_url => self.file_upload.url(:original)
+      )
+    end
+
+    # then, for each asset type, store a link to the appropriate image assets
+
     # audio
     if self.is_audio?
       if self.medium_image_url != ActionController::Base.helpers.asset_path("medium_image_url_mp3.png")

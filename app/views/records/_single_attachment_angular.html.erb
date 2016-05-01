@@ -1,0 +1,31 @@
+<div class="container" ng-app="GalleryApp" ng-controller="GalleryController">
+  <div class="padding-sides padding-bottom"> 
+    <div class="over-image-row">
+      <h3 class="record-title">{{ data.record.title }}</h3>  
+      <div class="edit-delete-button-container">
+        <div class="btn-group modify-record-button margin-right">
+          <%= link_to "Edit", edit_record_path(@record), 
+            :class => "btn btn-primary blue-button", :id => "edit-record-button" %>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="record-display-container">
+      <img ng-if="data.record.media_type === 'image'" 
+           ng-src="{{ data.attachments[0].medium_image_url }}"
+           alt="{{ data.record.title }}">
+
+      <video ng-if="data.record.media_type === 'video'" controls
+             poster="{{data.attachments[0].medium_image_url}}"> 
+        <source ng-src="{{ data.attachments[0].file_url }}">
+        Sorry! Your browser does not recognize video tags.
+      </video>
+
+      <audio ng-if="data.record.media_type === 'audio'" controls
+             poster="{{ data.attachments[0].medium_image_url }}">
+        <source ng-src="{{ data.attachments[0].file_url }}">
+        Sorry! Your browser does not recognize audio tags.
+      </audio>
+    </div>

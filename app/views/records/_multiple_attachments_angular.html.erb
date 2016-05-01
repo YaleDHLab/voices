@@ -14,7 +14,8 @@
       <div class="masonry">
         <div ng-repeat="attachment in data.attachments">
           <div class="masonry-item">
-            <img ng-src="{{ attachment.annotation_thumb_url }}"></img>
+            <img ng-src="{{ attachment.annotation_thumb_url }}"
+                 alt="{{ attachment.file_upload_url.split('/').pop().split('?')[0] }}"></img>
             <input ng-model="attachment.annotation" 
                    placeholder="Say something about this file..." 
                    class="attachment-annotation"
