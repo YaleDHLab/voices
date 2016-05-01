@@ -1,7 +1,6 @@
 // identify ngRoute as a dependency of this module
 var GalleryApp = angular.module('GalleryApp', []);
   
-
 GalleryApp.controller("GalleryController", [
         "$scope", "$http", "$location",
   function($scope, $http, $location) {
@@ -23,6 +22,7 @@ GalleryApp.controller("GalleryController", [
           // on success
           $scope.data = response.data;
           $scope.current_page = pageNumber;
+          
         }, // on failure
           function(response) {
             console.log("http request failed", response.status);
