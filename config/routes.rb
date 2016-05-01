@@ -29,7 +29,8 @@ VoicesRails::Application.routes.draw do
   # angular search page
   get "user/angular_show" => "user#angular_show"
 
-
+  # expose update method for record_attachments so users can annotate
+  put "record_attachments/:id" => "record_attachments#update_annotation"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
