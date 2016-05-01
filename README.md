@@ -94,7 +94,7 @@ Bower assets will be installed to `vendor/assets/bower_components/`. To see a li
 <pre><code>[
   {
     "annotation": null,  
-    "annotation_thumb_url": "http://voices-uploads.s3.amazonaws.  com/record_attachments/file_uploads/000/000/024/annotation_thumb/psd.  png?1462116938",  
+    "annotation_thumb_url": "http://voices-uploads.s3.amazonaws.com/record_attachments/file_uploads/000/000/024/annotation_thumb/psd.png?1462116938",  
     "created_at": "2016-05-01T15:35:38.995Z",  
     "file_upload_content_type": "image/png",  
     "file_upload_file_name": "psd.png",  
@@ -103,9 +103,9 @@ Bower assets will be installed to `vendor/assets/bower_components/`. To see a li
     "file_upload_url": null,  
     "id": 24,  
     "media_type": "image",  
-    "medium_image_url": "http://voices-uploads.s3.amazonaws.  com/record_attachments/file_uploads/000/000/024/medium/psd.png?1462116938",  
+    "medium_image_url": "http://voices-uploads.s3.amazonaws.com/record_attachments/file_uploads/000/000/024/medium/psd.png?1462116938",  
     "record_id": 3,  
-    "square_thumb_url": "http://voices-uploads.s3.amazonaws.  com/record_attachments/file_uploads/000/000/024/square_thumb/psd.  png?1462116938",  
+    "square_thumb_url": "http://voices-uploads.s3.amazonaws.com/record_attachments/file_uploads/000/000/024/square_thumb/psd.  png?1462116938",  
     "updated_at": "2016-05-01T15:35:38.995Z"  
     },  
 ]</code></pre>
