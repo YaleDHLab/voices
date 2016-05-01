@@ -28,9 +28,13 @@ module VoicesRails
     # One can now to reference glyphicons/glyphicons-halflings-regular.woff; see
     # static_pages.css.scss for the implementation there
 
-
     # Raise errors caused during after_rollback and after_commit
     config.active_record.raise_in_transactional_callbacks = true
+
+    # Add assets in all subdirectories of images to asset pipeline
+    Dir.glob("#{Rails.root}/app/assets/images/**/").each do |path|
+      config.assets.paths << path
+    end
 
   end
 end
