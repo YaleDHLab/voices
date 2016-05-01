@@ -87,4 +87,35 @@ rails g bower_rails:initialize
 # To install bower packages  
 bundle exec rake bower:install</code></pre>  
   
-Bower assets will be installed to `vendor/assets/bower_components/`. To see a list of bower commands provided by bower-rails: `bundle exec rake -T bower`
+Bower assets will be installed to `vendor/assets/bower_components/`. To see a list of bower commands provided by bower-rails: `bundle exec rake -T bower`  
+  
+### Changing placeholder images  
+`/lib/tasks/retrieve_thumbs.py` is a helper script meant to quickly fetch all placeholder images in all formats used by the app (square thumb, annotation thumb, and medium). It expects to read in a `placeholder_images.json` file that contains a json array of the following format:  
+<pre><code>[
+  {
+    "annotation": null,  
+    "annotation_thumb_url": "http://voices-uploads.s3.amazonaws.  com/record_attachments/file_uploads/000/000/024/annotation_thumb/psd.  png?1462116938",  
+    "created_at": "2016-05-01T15:35:38.995Z",  
+    "file_upload_content_type": "image/png",  
+    "file_upload_file_name": "psd.png",  
+    "file_upload_file_size": 11105,  
+    "file_upload_updated_at": "2016-05-01T15:35:38.744Z",  
+    "file_upload_url": null,  
+    "id": 24,  
+    "media_type": "image",  
+    "medium_image_url": "http://voices-uploads.s3.amazonaws.  com/record_attachments/file_uploads/000/000/024/medium/psd.png?1462116938",  
+    "record_id": 3,  
+    "square_thumb_url": "http://voices-uploads.s3.amazonaws.  com/record_attachments/file_uploads/000/000/024/square_thumb/psd.  png?1462116938",  
+    "updated_at": "2016-05-01T15:35:38.995Z"  
+    },  
+]</code></pre>
+
+Each member of the array represents a single RecordAttachment object. The easiest way to replace the placeholder images is to simply create a new Record, attach all of the placeholder images you wish you use as attachments for that Record, and then use the Record.id from the newly created object to grab the relevant json in the format described above. You can do so as follows:  
+<pre><code>rails c  
+f = File.new("placeholder_images.json", "w")   
+f &lt;&lt; RecordAttachment.where(record_id: {{your_record_id}})  
+f.close()</code></pre>
+
+You can then run the script to fetch the placeholder images by running (from the root of the application):  
+<pre><code>cd lib/tasks  
+python retrieve_thumbs.py</code></pre>
