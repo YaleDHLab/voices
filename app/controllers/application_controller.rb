@@ -17,14 +17,5 @@ class ApplicationController < ActionController::Base
       redirect_to user_show_path
     end
   end
-
-  def set_record
-    begin
-      found_record = Record.find(params[:id])
-      @record = found_record
-    rescue
-      raise ActionController::RoutingError.new('Not Found')
-    end
-  end
   
 end
