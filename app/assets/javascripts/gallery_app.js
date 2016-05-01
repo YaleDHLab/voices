@@ -1,6 +1,15 @@
 // identify ngRoute as a dependency of this module
 var GalleryApp = angular.module('GalleryApp', []);
   
+// provide a filter we can use to trust resources requested from aws
+GalleryApp.filter('trusted', [
+      "$sce", 
+  function ($sce) {
+  return function(url) {
+    return $sce.trustAsResourceUrl(url);
+  };
+}]);
+
 GalleryApp.controller("GalleryController", [
         "$scope", "$http", "$location",
   function($scope, $http, $location) {
@@ -52,9 +61,7 @@ GalleryApp.controller("GalleryController", [
     }
 
     // save user annotations (send CSRF token for security)
-    $scope.saveAnnotation = function(userAnnotation, attachmentId) {
-      console.log(userAnnotation, attachmentId);
-      
+    $scope.saveAnnotation = function(userAnnotation, attachmentId) {      
       $.ajax({ url: "/record_attachments/" + attachmentId + ".json",
         type: 'PUT',
         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
