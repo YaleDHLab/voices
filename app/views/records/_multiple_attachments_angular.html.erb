@@ -1,7 +1,3 @@
-<% content_for :head do %>
-  <%= javascript_include_tag 'gallery_app' %>
-<% end %>
-
 <div class="container" ng-app="GalleryApp" ng-controller="GalleryController">
   <div class="padding-sides padding-bottom"> 
     <div class="over-image-row">
@@ -18,7 +14,7 @@
       <div class="masonry">
         <div ng-repeat="attachment in data.attachments">
           <div class="masonry-item">
-            <img ng-src="{{ attachment.file_upload_url.replace('/medium/', '/annotation_thumb/') }}"></img>
+            <img ng-src="{{ attachment.annotation_thumb_url }}"></img>
             <input ng-model="attachment.annotation" 
                    placeholder="Say something about this file..." 
                    class="attachment-annotation"
@@ -75,35 +71,3 @@
       </div>
 
     </div>
-
-    <hr class="clear-floats">
-    <div class="metadata-spacer"></div>
-    <div class="record-display-left">
-      <div class="record-display-label">Description</div>
-      <div class="record-display-text">{{ data.record.description }}</div>
-    </div>
-
-    <div class="record-display-right">
-      <div ng-if="data.record.date" class="record-display-label">Date</div>
-      <div ng-if="data.record.date" class="record-display-text">{{ data.record.date }}</div>
-
-      <div ng-if="data.record.location" class="record-display-label">Location</div>
-      <div ng-if="data.record.location" class="record-display-text">{{ data.record.location }}</div>
-
-      <div ng-if="data.record.source_url" class="record-display-label">Source URL</div>
-      <div ng-if="data.record.source_url" class="record-display-text">
-        <a ng-href="data.record.source_url">
-          {{ data.record.source_url }}
-        </a>
-      </div>
-
-      <div ng-if="data.record.metadata" class="record-display-label">Metadata</div>
-      <div ng-if="data.record.metadata" class="record-display-text">{{ data.record.metadata }}</div>
-
-      <div ng-if="data.record.hashtag" class="record-display-label">Hashtags</div>
-      <div ng-if="data.record.hashtag" class="record-display-text">{{ data.record.hashtags }}</div>
-
-
-    </div>
-  </div>
-</div>
