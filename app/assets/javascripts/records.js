@@ -143,7 +143,7 @@ $(document).ready(function() {
   ***/
   var restyleRecordShow = function() {
     var overImageRowWidth = $(".over-image-row").width();
-    var recordTitleWidth = $(".record-title").width();
+    var recordTitleWidth = $(".ng-binding.record-title").width();
     var editDeleteButtonContainerWidth = $(".edit-delete-button-container").width();
 
     if (recordTitleWidth + editDeleteButtonContainerWidth + 20 >= overImageRowWidth) {
