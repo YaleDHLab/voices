@@ -12,20 +12,24 @@
 
     <hr>
 
-    <div class="record-display-container">
-      <img ng-if="data.record.media_type === 'image'" 
-           ng-src="{{ data.attachments[0].medium_image_url }}"
-           alt="{{ data.record.title }}">
+    <div class="record-display-container" ng-repeat="attachment in data.attachments">
+      <img ng-if="attachment.media_type === 'image'" 
+           ng-src="{{ attachment.medium_image_url }}" 
+           alt="{{ data.record.title }}" >
 
-      <video ng-if="data.record.media_type === 'video'" controls
-             poster="{{data.attachments[0].medium_image_url}}"> 
-        <source ng-src="{{ data.attachments[0].file_url }}">
+      <video ng-if="attachment.media_type === 'video'" controls
+             ng-attr-poster="{{ attachment.medium_image_url }}"
+             class="loaded-media loaded-video"> 
+        <source ng-if="attachment.media_type === 'video'"
+                ng-src="{{ attachment.file_upload_url | trusted }}">
         Sorry! Your browser does not recognize video tags.
       </video>
 
-      <audio ng-if="data.record.media_type === 'audio'" controls
-             poster="{{ data.attachments[0].medium_image_url }}">
-        <source ng-src="{{ data.attachments[0].file_url }}">
+      <audio ng-if="attachment.media_type === 'audio'" controls
+             ng-attr-poster="{{ attachment.medium_image_url }}"
+             class="loaded-media loaded-audio">
+        <source ng-if="attachment.media_type === 'audio'"
+                ng-src="{{ attachment.file_upload_url | trusted }}">
         Sorry! Your browser does not recognize audio tags.
       </audio>
     </div>
