@@ -46,16 +46,20 @@ class RecordsController < ApplicationController
     # send the view record attachments, not ActiveRecordRelations
     # manually paginate the attachments
     if @relevant_attachments.length > 1
-      @record_attachment = @relevant_attachments[@page_start..@page_end]
+      # return an array containing the current page of 
+      # attachments for the current record
+      @record_attachments = @relevant_attachments[@page_start..@page_end]
     else 
-      @record_attachment = @relevant_attachments[0]
+      # return a single member array (to keep attachment json form identical
+      # to the multiple attachment case)
+      @record_attachments = [@relevant_attachments[0]]
     end
 
     respond_to do |format|
       format.html {}
       format.json { render json: {
         record: @relevant_record, 
-        attachments: @record_attachment,
+        attachments: @record_attachments,
         number_of_pages: @number_of_pages
       }.to_json }
     end
