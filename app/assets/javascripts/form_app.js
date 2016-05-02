@@ -42,8 +42,6 @@ FormApp.service('uploadDispatcher', [
 
 
 
-
-
 FormApp.controller("FormController", [
         "$scope", "$http", "$location", "uploadDispatcher", "Upload" ,
   function($scope, $http, $location, uploadDispatcher, Upload ) {
@@ -53,19 +51,13 @@ FormApp.controller("FormController", [
 
       // files will contain all user selected files
       var files = event.target.files;
-      
-      // dummy example
-      var fileToUpload = files[0];
       var uploadUrl = "/record_attachments";
 
       // retrieve the CSRF token to we can make the POST request without getting 422'd
       var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-      var fd = new FormData();
-      fd.append("record_attachment[file_upload]", fileToUpload);
-
       for (i=0; i < files.length; i++)  {
-        var file = files[i];
+        var fileToUpload = files[i];
 
         $scope.upload = Upload.upload({
           url: uploadUrl,
@@ -91,16 +83,11 @@ FormApp.controller("FormController", [
               var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
               console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
         });
-
-
-
       };
 
       
-
       // execute the command to actually upload the file
       //uploadDispatcher.uploadFileToUrl(fileToUpload, uploadUrl);
     };
-
   }
 ]);
