@@ -48,8 +48,10 @@ gem 'rmagick'
 # add bower js package manager
 gem 'bower-rails'
 
-# add support for datepicker
+# add datepicker dependency
 gem 'momentjs-rails', '>= 2.9.0'
+
+# add datepicker utils
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 
 # add faker for generating seed data
