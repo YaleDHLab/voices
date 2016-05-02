@@ -35,23 +35,24 @@
     <%= f.select :content_type, options_for_content_type, :selected => "Image" %>
   </div>
 
-
-  <div id="file-upload-container" class="field">
+  <div id="file-upload-container" class="field" ng-app="FormApp" ng-controller="FormController">
     <%= f.label :file_upload, "Upload File<sup>*</sup>".html_safe %>
     <div id="placeholder-box">File name...</div>
-    <%= f.file_field :file_upload, 
-      multiple: true,
-      type: :file, 
-      name: 'record_attachments[]', 
-      id: "custom-file-upload",
-      style: "display:none"
-    %>
+    <input 
+      multiple
+      type="file"
+      name="record_attachments[]"
+      id="custom-file-upload"
+      style="display:none"
+      ng-model="userFiles"
+      on-file-input-change="uploadFiles"
+    >
+
     <span class="btn btn-small btn-default btn-inverse" id="file-upload-button" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
   </div>
 
   <!-- Append progress-bars of uploading files -->
   <div id="progress-bar-container"></div>
-
 
   <div class="field">
     <%= f.label :description, "Description<sup>*</sup>".html_safe %>
