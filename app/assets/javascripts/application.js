@@ -10,3 +10,5 @@
 //= require records
 //= require masonry-4.0.0
 //= require angular
+//= require ng-file-upload
+//= require ng-file-upload-shim
