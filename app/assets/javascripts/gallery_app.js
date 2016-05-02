@@ -1,4 +1,3 @@
-// identify ngRoute as a dependency of this module
 var GalleryApp = angular.module('GalleryApp', []);
   
 // provide a filter we can use to trust resources requested from aws
