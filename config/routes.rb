@@ -29,6 +29,9 @@ VoicesRails::Application.routes.draw do
   # angular search page
   get "user/angular_show" => "user#angular_show"
 
+  # expose endpoint for creation of new record_attachments
+  post "record_attachments" => "record_attachments#create"
+
   # expose update method for record_attachments so users can annotate
   put "record_attachments/:id" => "record_attachments#update_annotation"
 
