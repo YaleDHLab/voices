@@ -23,7 +23,11 @@ $(document).on('ready', function() {
   // on document load, add listener for click of any 
   // child element in #text-overlay
   $("#text-overlay").children().on("click", function(el) {
-    console.log(el.target);
+    var clickedWord = el.target.innerText;
+
+    // send user to twitter using the clicked word as a query
+    location.href = 'https://twitter.com/search?q=' + clickedWord;
   });
+
 
 });
