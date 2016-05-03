@@ -7,7 +7,12 @@ Paperclip.interpolates(:placeholder) do |attachment, style|
   ActionController::Base.helpers.asset_path("missing_#{style}.png")
 end
 
-# add initializer that manually overrides 3gpp mimetype to audio
-Paperclip.options[:content_type_mappings] = {
-  "3gpp" => "audio/3gpp"
-}
+# use client-side spoof detection, not paperclip's
+require 'paperclip/media_type_spoof_detector'
+module Paperclip
+  class MediaTypeSpoofDetector
+    def spoofed?
+      false
+    end
+  end
+end
