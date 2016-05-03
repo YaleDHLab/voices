@@ -91,15 +91,12 @@ class RecordsController < ApplicationController
 
     respond_to do |format|
       if @record.save
-        if params[:record_attachments]
-          params[:record_attachments].each do |file_upload|
-            @record.record_attachments.create(file_upload: file_upload)
 
-            # increment the attachment count so we know whether to send custom
-            # flash
-            @attachment_count += 1
-          end
-        end
+        # if the record was successfully saved, find of the current user's
+        # RecordAttachment objects, then find the subset that have nil for a 
+        # record_id, and set the record_id of each to the id of the current
+        # record
+        @attachment_count = RecordAttachment.where(cas_user_name: session[:cas_user]).where("record_id IS?", nil).update_all(:record_id => @record.id)
 
         # make flash a function of records user uploaded
         if @attachment_count > 1
@@ -120,7 +117,6 @@ class RecordsController < ApplicationController
           status: :unprocessable_entity }
       end
     end
-    
 
   end
 
@@ -168,9 +164,9 @@ class RecordsController < ApplicationController
     # only allow the white list through.
     def record_params
       params.require(:record).permit(
-        :cas_user_name, :include_name, :title, :content_type, 
+        :cas_user_name, :include_name, :title,
         :description, :date, :location, :source_url, 
-        :hashtag, :metadata, :release_checked,
+        :hashtag, :release_checked,
 
         :record_attachments
       )
