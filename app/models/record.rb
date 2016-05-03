@@ -8,7 +8,6 @@ class Record < ActiveRecord::Base
   # Ensure user has provided the required fields
   validates :title, presence: true
   validates :description, presence: true
-  validates :metadata, presence: true
   validates :hashtag, presence: true
   validates :release_checked, presence: true
   
