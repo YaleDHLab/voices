@@ -1,108 +1,168 @@
-<%= form_for @record, html: { multipart: true } do |f| %>
-  <% if @record.errors.any? %>
-    <div class="alert alert-danger">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <ul>
-         <% @record.errors.full_messages.each do |msg| %>
-         <li><%= msg %></li>
-         <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field" id="include-name-container">
-    <%= f.label :include_name, "Would you like your name included in the archive?<sup>*</sup>".html_safe, :class => "long-label" %>
-    
-    <div class="boolean-slider-container">
-      <div class="boolean-slider-track">
-        <div class="boolean-slider-knob user-selection-0"></div>
+<div ng-app="FormApp" ng-controller="FormController">
+  <%= form_for @record, html: { multipart: true } do |f| %>
+    <% if @record.errors.any? %>
+      <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <ul>
+           <% @record.errors.full_messages.each do |msg| %>
+           <li><%= msg %></li>
+           <% end %>
+        </ul>
       </div>
-    </div> 
+    <% end %>
 
-    <div id="boolean-slider-text">NO</div>
+    <div class="field" id="include-name-container">
+      <%= f.label :include_name, "Would you like your name included in the archive?<sup>*</sup>".html_safe, :class => "long-label" %>
+      
+      <div class="boolean-slider-container">
+        <div class="boolean-slider-track">
+          <div class="boolean-slider-knob user-selection-0"></div>
+        </div>
+      </div> 
 
-    <!-- include hidden field and submit the value to that hidden field -->
-    <%= f.hidden_field :include_name %>
-  </div>
+      <div id="boolean-slider-text">NO</div>
 
-  <div class="field">
-    <%= f.label :title, "Title of Material<sup>*</sup>".html_safe %>
-    <%= f.text_field :title %>
-  </div>
+      <!-- include hidden field and submit the value to that hidden field -->
+      <input 
+        type="hidden" 
+        name="record[include_name]" 
+        id="record_include_name" 
+        value="0"
+        required
+        ng-model="form.include_name">
 
-  <div class="field">
-    <%= f.label :content_type, "Content Type" %>
-    <%= f.select :content_type, options_for_content_type, :selected => "Image" %>
-  </div>
-
-  <div id="file-upload-container" class="field" ng-app="FormApp" ng-controller="FormController">
-    <%= f.label :file_upload, "Upload File<sup>*</sup>".html_safe %>
-    <div id="placeholder-box">File name...</div>
-    <input 
-      multiple
-      type="file"
-      name="record_attachments[]"
-      id="custom-file-upload"
-      style="display:none"
-      ng-model="userFiles"
-      on-file-input-change="uploadFiles"
-    >
-
-    <span class="btn btn-small btn-default btn-inverse" id="file-upload-button" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
-  </div>
-
-  <!-- Append progress-bars of uploading files -->
-  <div id="progress-bar-container"></div>
-
-  <div class="field">
-    <%= f.label :description, "Description<sup>*</sup>".html_safe %>
-    <%= f.text_area(:description, size: '4x5', id: "record-description") %>
-  </div>
-
-  <div class="field">
-    <%= f.label :date, "Date" %>
-    <div class="form-group date-container">
-      <div class='input-group date' id='datetimepicker1'>
-        <input type='text' class="form-control" id="date-selector-input" />
-        <span class="input-group-addon">
-          <span class="glyphicon glyphicon-calendar"></span>
-        </span>
-      </div>
     </div>
 
-    <%= f.hidden_field :date %>
-  </div>
+    <div class="field">
+      <%= f.label :title, "Title of Material<sup>*</sup>".html_safe %>
+      <input 
+        type="text" 
+        name="record[title]" 
+        id="record_title"
+        required
+        ng-model="form.title">
+    </div>
 
-  <div class="field">
-    <%= f.label :location, "Location" %>
-    <%= f.text_field :location %>
-  </div>
+    <div id="file-upload-container" class="field">
+      <%= f.label :file_upload, "Upload File<sup>*</sup>".html_safe %>
+      <div id="placeholder-box">File name...</div>
+      <input 
+        multiple
+        type="file"
+        id="custom-file-upload"
+        style="display:none"
+        ng-model="form.files"
+        on-file-input-change="uploadFiles"
+      >
 
-  <div class="field">
-    <%= f.label :source_url, "Source URL" %>
-    <%= f.text_field :source_url %>
-  </div>
+      <span class="btn btn-small btn-default btn-inverse" id="file-upload-button" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
+    </div>
 
-  <div class="field">
-    <%= f.label :metadata, "Metadata<sup>*</sup>".html_safe %>
-    <%= f.text_field :metadata %>
-  </div>
 
-  <div class="field">
-    <%= f.label :hashtag, "Hashtag<sup>*</sup>".html_safe %>
-    <%= f.text_field :hashtag %>
-  </div>
+    <!-- Append progress-bars of uploading files -->
+    <div id="progress-bar-table-container" ng-show="filesToSend">
+      <div class="panel panel-default" id="round-table-edges">
+        <table id="progress-bar-table" class="table table-striped table-bordered">
+          <tbody>
+            <tr ng-repeat="f in filesToSend">
+              <td class="file-name-container">
+                <div class="file-name">{{f.name}}</div>
+              </td>
+              <td>
+                <span class="progress" ng-show="f.progress >= 0">
+                  <div style="width:{{f.progress}}%"></div>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-  <div class="field">
-    <%= f.label :release_checked, "Terms & Conditions<sup>*</sup>".html_safe %>
-    <%= f.check_box :release_checked, :class => "custom-checkbox" %>
-    <div class="terms-and-conditions">If my contribution is accepted, I agree to donate this material to the Community Voices Archive at Yale University Library for preservation and distribution for research and educational purposes. I understand that I will not receive financial compensation for this material.</div>
-  </div>
+    <div class="field">
+      <%= f.label :description, "Description<sup>*</sup>".html_safe %>
+      
+      <textarea 
+        id="record-description" 
+        name="record[description]" 
+        cols="4" 
+        rows="5"
+        placeholder="Add a description of your material (for example, who, what, where and why) to enhance searchability within the archive. Don't forget to credit authors, creators, photographers, etc."
+        required
+        ng-model="form.record_description">
+      </textarea>
+    </div>
 
-  <div class="clear-floats"></div>
+    <div class="field">
+      <%= f.label :date, "Date" %>
+      <div class="form-group date-container">
+        <div class='input-group date' id='datetimepicker1'>
+          <input type='text' class="form-control" id="date-selector-input" />
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
 
-  <%= button_tag(type: 'submit', class: "btn btn-primary blue-button submit-button") do %>
-    <i class="icon-ok icon-white"></i> SUBMIT
+      <input 
+        type="hidden" 
+        name="record[date]" 
+        id="record_date"
+        ng-model="form.date">
+    </div>
+
+    <div class="field">
+      <%= f.label :location, "Location" %>
+      <input 
+        type="text" 
+        name="record[location]" 
+        id="record_location"
+        ng-model="form.record_location">
+    </div>
+
+    <div class="field">
+      <%= f.label :source_url, "Source URL" %>
+      <input 
+        type="text" 
+        name="record[source_url]" 
+        id="record_source_url"
+        ng-model="form.source_url">
+    </div>
+
+    <div class="field">
+      <%= f.label :hashtag, "Hashtag<sup>*</sup>".html_safe %>
+      <input 
+      type="text" 
+      name="record[hashtag]" 
+      id="record_hashtag"
+      placeholder="Add social media hashtags here, e.g. #WeAreYale #YaleProtest"
+      required
+      ng-model="form.hashtag">
+    </div>
+
+    <div class="field">
+      <%= f.label :release_checked, "Terms & Conditions<sup>*</sup>".html_safe %>
+      
+      <input 
+        class="custom-checkbox" 
+        type="checkbox" 
+        value="1" 
+        name="record[release_checked]" 
+        id="record_release_checked"
+        required
+        ng-model="form.release_checked">
+
+      <div class="terms-and-conditions">If my contribution is accepted, I agree to donate this material to the Community Voices Archive at Yale University Library for preservation and distribution for research and educational purposes. I understand that I will not receive financial compensation for this material.</div>
+    </div>
+
+    <div class="clear-floats"></div>
+
+    <button 
+      name="button" 
+      type="submit" 
+      class="btn btn-primary blue-button submit-button"
+      ng-disabled="filesToSend.length != filesSent.length">SUBMIT
+    </button>
+
   <% end %>
-
-<% end %>
+</div>
