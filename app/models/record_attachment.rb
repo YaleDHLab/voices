@@ -1,7 +1,7 @@
 class RecordAttachment < ActiveRecord::Base
   print "record attachment", self
 
-  belongs_to :record
+  belongs_to :record, touch: true
 
   validates :file_upload, presence: true
 
@@ -346,6 +346,5 @@ class RecordAttachment < ActiveRecord::Base
       end
     end
   end
-
 
 end
