@@ -14,11 +14,9 @@ ENV["VOICES_ADMINS"].split("#").each do |username|
 
         new_record = Record.new({
             :title => Faker::Book.title,
-            :metadata => Faker::Lorem.sentence,
             :file_upload => File.new( Dir.glob("#{Rails.root}/app/assets/images/seed-images/*.jpg")[rand(0..249)] ),
             :cas_user_name => username,
             :include_name => true,
-            :content_type => "Image",
             :description => Faker::Lorem.paragraph,
             :location => Faker::Address.street_name + ", " + Faker::Address.city,
             :source_url => Faker::Internet.url,
