@@ -24,6 +24,13 @@ class RecordAttachmentsController < ApplicationController
     render :nothing => true
   end
 
+  # DELETE /record_attachments/1
+  def destroy
+    @record_attachment = RecordAttachment.find(params[:id])
+    @record_attachment.destroy
+    render :nothing => true
+  end
+
   private
     def record_attachment_params
       params.require(:record_attachment).permit(:file_upload, :cas_user_name, :annotation)
