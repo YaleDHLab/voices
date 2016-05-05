@@ -49,16 +49,53 @@ textarea#record-description {
   float: left;
 }
 
-.boolean-slider-container {
+/* postscript present in desktop */
+.postscript-text {
+  padding-top: 30px;
+}
+
+/************************
+* boolean slider styles *
+************************/
+
+#switch-container {
+  margin-top: 2px;
+}
+
+.onoffswitch {
   float: left;
-  margin-top: 3px;
+}
+
+/* switch track set as false */
+.switch {
+  height: 11px;
+  width: 32px;
+  background: rgb(181, 181, 181);
+}
+
+/* switch track set as true */
+.switch.checked {
+  background: rgb(51, 153, 204);
+  border-color: rgb(51, 153, 204);
+}
+
+.switch.checked small {
+  left: 16px;
+}
+
+.switch small {
+  height: 18px;
+  width: 18px;
+  margin-top: -4px;
+  border: 1px solid darkgray;
 }
 
 #boolean-slider-text {
   float: left;
-  margin-left: 10px;
+  margin-left: 6px;
   font-weight: 700;
   color: #878787;
+  margin-top: -1px;
 }
 
 sup {
@@ -69,8 +106,28 @@ sup {
   margin-bottom: 0px;
 }
 
-#record_hashtag, #record-description {
+/************************
+* input box text styles *
+*************************/
+
+::-webkit-input-placeholder {
+  font-style: italic;
   font-weight: 100;
+}
+
+:-moz-placeholder {
+  font-style: italic;
+  font-weight: 100;  
+}
+
+::-moz-placeholder {
+  font-style: italic;
+  font-weight: 100;  
+}
+
+:-ms-input-placeholder {  
+  font-style: italic;
+  font-weight: 100; 
 }
 
 /**********************
@@ -186,34 +243,8 @@ span.btn.btn-small.btn-default.btn-inverse {
   position: relative;
   margin-left: -60px;
   left: 50%;
-  margin-bottom: 30px;
 }
 
-/************************************
-* boolean slider for mobile display *
-************************************/
-
-.boolean-slider-track {
-  width: 34px;
-  height: 13px;
-  background: #b5b5b5;
-  border-radius: 10px;
-}
-
-.boolean-slider-knob {
-  height: 18px;
-  width: 18px;
-  background-color: #fff;
-  position: absolute;
-  z-index: 1;
-  border-radius: 10px;
-  margin-top: -3px;
-  cursor: pointer;
-  border: 1px solid #a0a0a0;
-  -webkit-box-shadow: 0 0 0 0 white, 0 1px 1px #353535;
-  -moz-box-shadow: 0 0 0 0 white, 0 1px 1px #353535;
-  box-shadow: 0 0 0 0 white, 0 1px 1px #353535;
-}
 
 /**************
 * record#show *
@@ -263,7 +294,6 @@ span.btn.btn-small.btn-default.btn-inverse {
 
 .record-display-container {
   width: 100%;
-  background: #fff;
   padding: 30px 0px;
 }
 
@@ -287,7 +317,8 @@ span.btn.btn-small.btn-default.btn-inverse {
   margin-bottom: 20px;
   display: block;
   margin: auto;
-  max-width: 90%;
+  max-width: 100%;
+  width: 100%;
 }
 
 .record-display-left {
@@ -332,7 +363,9 @@ span.btn.btn-small.btn-default.btn-inverse {
   margin: 0 0 14px 0;
   width:  100%; 
   background:  #efefef;
-  border: 1px solid #a7a7a7;
+  border-left: 1px solid #a7a7a7;
+  border-top: 1px solid #a7a7a7;
+  border-right: 1px solid #a7a7a7;
 }
 
 .masonry-item img {
@@ -344,9 +377,11 @@ span.btn.btn-small.btn-default.btn-inverse {
   margin-right: 1px;
   height: 30px;
   background-color: #fff;
-  border-top: 1px solid #a7a7a7;
+  border: 1px solid #a7a7a7;
   width: 100%;
   border-radius: 0px;
+  border-left: none;
+  border-right: none;
 }
 
 .pagination-controls {
@@ -440,8 +475,13 @@ hr.clear-floats {
 * record#edit *
 **************/
 
-#delete-record-button, #edit-record-button {
+#edit-record-button {
   width: 82px;
+}
+
+#delete-record-button {
+  width: 90px;
+  margin-left: -8px;
 }
 
 .edit-record-title {
@@ -451,6 +491,32 @@ hr.clear-floats {
 
 .hidden-field {
   display: none;
+}
+
+.record-attachment-container {
+  position:relative;
+}
+
+.delete-attachment-icon-container {
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  cursor: pointer;
+}
+
+.delete-attachment-icon {
+  background-color: #fff;
+  width: 24px;
+  height: 23px;
+  padding: 3px;
+}
+
+.save-updates-button {
+  margin-top: 30px;
+  width: 139px;
+  position: relative;
+  margin-left: -70px;
+  left: 50%;
 }
 
 /****************
@@ -507,6 +573,10 @@ hr.clear-floats {
   * records#new *
   **************/
 
+  #switch-container {
+    margin-top: 2px;
+  }
+
   .mobile-background-gray {
     background-color: #eee;
   }
@@ -534,10 +604,6 @@ hr.clear-floats {
     width: 100%;
   }
 
-  span.btn.btn-small.btn-default.btn-inverse {
-    margin-left: 0px;
-  }
-
   #record-description {
     width: 100%;
     max-width: 100%;
@@ -561,7 +627,6 @@ hr.clear-floats {
   }
 
   /* multirecord uploads */
-
   .page-toggles {
     display: none;
   }
@@ -571,7 +636,14 @@ hr.clear-floats {
   }
 
   .pagination-controls {
-    padding-bottom: 50px;
+    padding-bottom: 22px;
+  }
+
+  /* make progress bars full width */
+  #progress-bar-table-container {
+    padding-top: 30px;
+    padding-left: 0px;
+    padding-right: 0px;
   }
 
 }
@@ -603,10 +675,6 @@ hr.clear-floats {
 
   #placeholder-box {
     width: 200px;
-  }
-
-  span.btn.btn-small.btn-default.btn-inverse {
-    margin-left: 10px;
   }
 
   label {
