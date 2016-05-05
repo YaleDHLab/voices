@@ -3,7 +3,8 @@
   "dependencies": {
     "angular": "~> 1.5",
     "ng-file-upload-shim": "latest",
-    "ng-file-upload": "latest"
+    "ng-file-upload": "latest",
+    "angular-ui-switch": "latest"
   },
   "resolutions": {
     "angular": "1.5"
