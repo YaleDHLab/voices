@@ -328,6 +328,15 @@ html, body {
 }
 
 
+/*******************
+*  angular helpers *
+*******************/
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+
 /************************************************
 *                   home page                   *
 ************************************************/
@@ -532,13 +541,9 @@ h1 {
   color: #fff;
 }
 
-.gray-button:hover {
+.gray-button:hover, .gray-button:focus, .gray-button:active {
   background-color: #b6b6b6;
   border-color: darkgray;
-  color: #fff;
-}
-
-.gray-button:focus {
   color: #fff;
 }
 
@@ -634,7 +639,7 @@ hr {
 }
 
 .alert {
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .alert li {
