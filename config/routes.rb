@@ -35,6 +35,13 @@ VoicesRails::Application.routes.draw do
   # expose update method for record_attachments so users can annotate
   put "record_attachments/:id" => "record_attachments#update_annotation"
 
+  # expose get method for annotate page (only shown on multiple attachment records)
+  get "annotate/:id" => "records#annotate"
+
+  # expose a method for deleting record attachments
+  delete "record_attachments/:id" => "record_attachments#destroy"
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
