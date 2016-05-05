@@ -38,6 +38,7 @@
   background-color: #fff;
   padding: 10px 14px;
   font-family: lato;
+  color: #000;
 }
 
 .masonry-item a {
@@ -48,6 +49,10 @@
 /*************
 * search box *
 *************/
+
+.input-group-btn {
+  min-width: 167px;
+}
 
 input.btn.btn-primary.btn-lg {
   width: 100%;
@@ -61,4 +66,9 @@ input.btn.btn-primary.btn-lg {
 input#keywords {
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
+}
+
+/* remove text decorations from items in user show feed */
+a:link{
+  text-decoration: none!important;
 }
