@@ -8,14 +8,8 @@
   <div class="small-banner-text">A living document of student protest at Yale</div>
 </div>
 
-<!-- Render the attachment(s) -->
-
-<div class="container" data-ng-app="VoicesApp" data-ng-controller="GalleryController">
-  <% if @relevant_attachments.length == 1 %>
-    <%= render 'single_attachment_show' %>
-  <% elsif @relevant_attachments.length > 1 %>
-    <%= render 'multiple_attachments_show' %>
-  <% end %>
+<div data-ng-app="VoicesApp" data-ng-controller="GalleryController">
+  <%= render 'annotate_records' %>
 
   <!-- Render the record-level metadata -->
   <%= render 'record_metadata' %>

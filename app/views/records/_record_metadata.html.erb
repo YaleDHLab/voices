@@ -1,26 +1,56 @@
-
     <div class="metadata-spacer"></div>
     <div class="record-display-left">
-      <div ng-show="data.record.description"class="record-display-label">Description</div>
-      <div ng-show="data.record.description" class="record-display-text">{{ data.record.description }}</div>
+      <div data-ng-if="data.record.description" 
+           class="record-display-label"
+           data-ng-cloak>Description
+      </div>
+      <div data-ng-if="data.record.description" 
+           class="record-display-text"
+           data-ng-cloak>{{ data.record.description }}
+      </div>
     </div>
 
     <div class="record-display-right">
-      <div ng-show="data.record.date" class="record-display-label">Date</div>
-      <div ng-show="data.record.date" class="record-display-text">{{ data.record.date }}</div>
+      <div data-ng-if="data.record.date" 
+           class="record-display-label"
+           data-ng-cloak>Date
+      </div>
+      <div data-ng-if="data.record.date" 
+           class="record-display-text"
+           data-ng-cloak>{{ data.record.date }}
+      </div>
 
-      <div ng-show="data.record.location" class="record-display-label">Location</div>
-      <div ng-show="data.record.location" class="record-display-text">{{ data.record.location }}</div>
+      <div data-ng-if="data.record.location" 
+           class="record-display-label"
+           data-ng-cloak>Location
+      </div>
+      <div data-ng-if="data.record.location" 
+           class="record-display-text"
+           data-ng-cloak>{{ data.record.location }}
+      </div>
 
-      <div ng-show="data.record.source_url" class="record-display-label">Source URL</div>
-      <div ng-show="data.record.source_url" class="record-display-text">
-        <a ng-href="{{data.record.source_url}}">
+      <div data-ng-if="data.record.source_url" 
+           class="record-display-label"
+           data-ng-cloak>Source URL
+      </div>
+      
+      <div data-ng-if="data.record.source_url" 
+           class="record-display-text"
+           data-ng-cloak>
+        <a data-ng-href="{{data.record.source_url}}"
+           data-ng-cloak>
           {{ data.record.source_url }}
         </a>
       </div>
 
-      <div ng-show="data.record.hashtag" class="record-display-label">Hashtags</div>
-      <div ng-show="data.record.hashtag" class="record-display-text">{{ data.record.hashtag }}</div>
+      <div data-ng-if="data.record.hashtag" 
+           class="record-display-label"
+           data-ng-cloak>Hashtags
+      </div>
+      <div data-ng-if="data.record.hashtag" 
+           class="record-display-text"
+           data-ng-cloak>{{ data.record.hashtag }}
+      </div>
 
     </div>
   </div>

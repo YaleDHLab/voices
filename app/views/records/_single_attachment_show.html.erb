@@ -1,0 +1,45 @@
+<div class="padding-sides padding-bottom"> 
+  <div class="over-image-row">
+    <h3 class="record-title">
+        {{ data.record.title }}
+    </h3>  
+    <div class="edit-delete-button-container">
+      <div class="btn-group modify-record-button margin-right">
+        <%= link_to "Edit", edit_record_path(@record), 
+          :class => "btn btn-primary blue-button", :id => "edit-record-button" %>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="record-display-container" data-ng-repeat="attachment in data.attachments">
+    <img data-ng-show="attachment.media_type == 'image'" 
+         data-ng-src="{{ attachment.medium_image_url }}" 
+         alt="{{ data.record.title }}" 
+         data-ng-cloak>
+
+    <video data-ng-show="attachment.media_type == 'video'" 
+           controls
+           data-ng-attr-poster="{{ attachment.medium_image_url }}"
+           class="loaded-media loaded-video"
+           data-ng-cloak> 
+      <source data-ng-show="attachment.media_type == 'video'"
+              data-ng-src="{{ attachment.file_upload_url | trusted }}"
+              data-ng-cloak>
+      Sorry! Your browser does not recognize video tags.
+    </video>
+
+    <audio data-ng-show="attachment.media_type == 'audio'" 
+           controls
+           data-ng-attr-poster="{{ attachment.medium_image_url }}"
+           class="loaded-media loaded-audio"
+           data-ng-cloak>
+      <source data-ng-show="attachment.media_type == 'audio'"
+              data-ng-src="{{ attachment.file_upload_url | trusted }}"
+              data-ng-cloak>
+      Sorry! Your browser does not recognize audio tags.
+    </audio>
+  </div>
+
+  <hr>

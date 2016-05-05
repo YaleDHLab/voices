@@ -2,8 +2,6 @@
   <%= stylesheet_link_tag 'records' %>
   <%= stylesheet_link_tag 'mobile_gray_wrap' %>
   <%= stylesheet_link_tag 'bootstrap-datetimepicker' %>
-
-  <%= javascript_include_tag 'form_app' %>
 <% end %>
 
 <% provide(:page_title, "New Record") %>
@@ -23,12 +21,12 @@
   <div class="container">
     <div class="padding-sides padding-bottom">
 
-      <%= render 'form' %>
+      <div data-ng-app="VoicesApp" data-ng-controller="FormController">
+        <%= render 'new_record_form' %>
+      </div>
 
       <div class="clear-floats"></div>
-
       <div class="postscript-text">To discuss donating other collections of personal papers, ephemera, or organizational records to Manuscripts and Archives, please send inquiries to: <b>mssa.donatematerials@yale.edu</b></div>
-      
     </div>
   </div>
 </div>
