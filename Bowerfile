@@ -6,3 +6,4 @@ resolution 'angular', '1.5'
 
 asset 'ng-file-upload-shim'
 asset 'ng-file-upload'
+asset 'angular-ui-switch'
