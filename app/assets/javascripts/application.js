@@ -12,3 +12,5 @@
 //= require angular
 //= require ng-file-upload
 //= require ng-file-upload-shim
+//= require angular-ui-switch
+//= require voices_app
