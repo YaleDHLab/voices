@@ -13,12 +13,66 @@ class UserController < ApplicationController
     else
       # otherwise retrieve all records that belong to this user
       @user_records = Record.where(cas_user_name: session[:cas_user])
+
+      """expose json of the following form:
+
+        [ 
+          {
+            'record': 
+              {
+                'id': 1, 
+                'record_name': 'myname'
+              }, 
+
+             'attachments': 
+              [
+                {
+                  'id': 1, 
+                  'name': 'attachment_name'
+                },
+                {
+                  'id': 2, 
+                  'name': 'other_attachment_name'
+                }
+              ]
+          },
+
+          {
+            'record': 
+              {
+                'id': 2, 
+                'record_name': 'myname'
+              }, 
+
+             'attachments': 
+              [
+                {
+                  'id': 3, 
+                  'name': 'attachment_name'
+                },
+                {
+                  'id': 4, 
+                  'name': 'other_attachment_name'
+                }
+              ]
+          }
+        ]
+      """
+
+      @user_records_with_attachments = []
+
+      @user_records.each do |r|
+        @record_attachments = RecordAttachment.where(record_id: r.id)
+        @record_with_attachments = {record: r, attachments: @record_attachments}
+        @user_records_with_attachments << @record_with_attachments
+      end
+
     end    
 
     # provide json endpoint that angular can access
     respond_to do |format|
       format.html {}
-      format.json { render json: @user_records }
+      format.json { render json: @user_records_with_attachments }
     end
   end
 
