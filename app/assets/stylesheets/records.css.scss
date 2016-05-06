@@ -135,9 +135,18 @@ sup {
 **********************/
 
 #progress-bar-table-container {
-  padding-left: 180px;
-  padding-top: 20px;
-  padding-right: 6px;
+  margin-left: 180px;
+  margin-top: 20px;
+  margin-right: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  max-height: 297px;
+  overflow: scroll;
+}
+
+#progress-bar-table-container .panel, 
+#progress-bar-table-container .panel-default {
+  border: none;
 }
 
 #progress-bar-table {
@@ -317,8 +326,8 @@ span.btn.btn-small.btn-default.btn-inverse {
   margin-bottom: 20px;
   display: block;
   margin: auto;
-  max-width: 100%;
-  width: 100%;
+  max-width: 70%;
+  width: 70%;
 }
 
 .record-display-left {
@@ -341,21 +350,140 @@ span.btn.btn-small.btn-default.btn-inverse {
   margin-bottom: 20px;
 }
 
-/***********************************
-* multiple uploads in records#show *
-***********************************/
+/**********************************
+* multiple attachments per record *
+**********************************/
 
 .masonry-container {
   padding-top: 20px;
   background-color: inherit;
 }
 
-.masonry {
-  column-count: 2;
-  -moz-column-width: 13em;
+.one-column-masonry {
+ -webkit-column-count: 1;
+    -moz-column-count: 1;
+         column-count: 1;
+       
+    -webkit-column-gap: 1em; 
+       -moz-column-gap: 1em;
+}
+
+.two-column-masonry {
+ -webkit-column-count: 2;
+    -moz-column-count: 2;
+         column-count: 2;
+     
   -webkit-column-width: 13em;
-  -moz-column-gap: 1em;
-  -webkit-column-gap: 1em; 
+     -moz-column-width: 13em;
+       
+    -webkit-column-gap: 1em; 
+       -moz-column-gap: 1em;
+}
+
+.five-column-masonry {
+  columns: 5;
+  
+ -webkit-column-count: 5;
+    -moz-column-count: 5;
+         column-count: 5;
+            
+    -webkit-column-gap: 1em; 
+       -moz-column-gap: 1em;
+}
+
+.pagination-controls hr {
+  clear: both;
+}
+
+/*************
+* pagination * 
+*************/
+
+.view-mode-toggle-container {
+  width: 60%;
+  float: left;
+  overflow: hidden;
+}
+
+.view-mode-toggle-outer {
+  position: relative;
+  left: 50%;
+  float: left;
+}
+
+.view-mode-toggle-inner {
+  position: relative;
+  left: -50%;
+  float: left;
+  padding-top: 11px;
+}
+
+.multiple-record-view-container, 
+.single-record-view-container {
+  float: left;
+}
+
+.pagination-controls button {
+  color: #5B5B5B;
+  height: 30px;
+  width: 38px;
+}
+
+.single-record-view-button,
+.multiple-record-view-button {
+  background-color: #E5E4E4;
+  float: left;
+}
+
+.multiple-record-view-button.active,
+.single-record-view-button.active {
+  background-color: #C0C0C0;
+  outline: none;
+}
+
+.pagination-controls button:focus {
+  outline: none !important;
+}
+
+#next-page-button,
+#previous-page-button {
+  background-color: #fff;
+  border: none;
+  margin-top: -2px;
+}
+
+#next-page-button:hover,
+#previous-page-button:hover,
+#next-page-button.active,
+#previous-page-button.active, {
+  background-color: #fff;
+  color: #3399CC;
+  box-shadow: none;
+}
+
+.current-page-annotation, .current-page-number {
+  display: inline-block;
+}
+
+.current-page-number {
+  font-size: .75em;
+  padding-right: 5px;
+}
+
+
+/***********************************
+* multiple uploads in records#show *
+***********************************/
+
+.single-masonry-item {
+  display: inline-block;
+  margin: 0 0 14px 0;
+  width: 60%;
+  background: #efefef;
+  border-left: 1px solid #a7a7a7;
+  border-top: 1px solid #a7a7a7;
+  border-right: 1px solid #a7a7a7;
+  margin-left: 20%;
 }
 
 .masonry-item {
@@ -368,7 +496,7 @@ span.btn.btn-small.btn-default.btn-inverse {
   border-right: 1px solid #a7a7a7;
 }
 
-.masonry-item img {
+.masonry-item img, .single-masonry-item img {
   width: 100%;
   height: auto;
 }
@@ -391,22 +519,31 @@ span.btn.btn-small.btn-default.btn-inverse {
 
 /* set heights so classes are present even if they have no content */
 .previous-page {
+  padding-top: 16px;
   width: 20%;
   min-height: 1px;
   float: left;
+  color: #5F5E5E;
 }
 
 .next-page {
+  padding-top: 16px;
   width: 20%;
   min-height: 1px;
   float: right;
   text-align: right;
+  color: #5F5E5E;
 }
 
 .page-toggles {
   width: 60%;
   float: left;
   overflow: hidden;
+  padding-bottom: 6px;
+}
+
+.bottom-row-page-circles {
+  padding-top: 14px;
 }
 
 .circle-outer-container {
@@ -495,6 +632,10 @@ hr.clear-floats {
 
 .record-attachment-container {
   position:relative;
+}
+
+.record-attachment-container:hover {
+  cursor: pointer;
 }
 
 .delete-attachment-icon-container {
@@ -631,17 +772,9 @@ hr.clear-floats {
     display: none;
   }
 
-  .previous-page, .next-page {
-    width: 50%;
-  }
-
-  .pagination-controls {
-    padding-bottom: 22px;
-  }
-
   /* make progress bars full width */
   #progress-bar-table-container {
-    padding-top: 30px;
+    margin-top: 30px;
     padding-left: 0px;
     padding-right: 0px;
   }
