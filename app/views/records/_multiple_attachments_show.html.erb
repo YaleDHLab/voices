@@ -1,8 +1,6 @@
 <div class="padding-sides padding-bottom"> 
   <div class="over-image-row">
-    <h3 class="record-title" >
-        {{ data.record.title }}
-    </h3>  
+    <h3 class="record-title" >{{ data.record.title }}</h3>  
     <div class="edit-delete-button-container">
       <div class="btn-group modify-record-button margin-right">
         <%= link_to "Edit", edit_record_path(@record), 
@@ -13,68 +11,9 @@
 
   <hr>
 
-  <div class="masonry-container">
-    <div class="masonry">
-      <div data-ng-repeat="attachment in data.attachments" data-ng-cloak>
-        <div class="masonry-item">
-          <img data-ng-src="{{ attachment.annotation_thumb_url }}"
-               alt="{{ attachment.file_upload_url.split('/').pop().split('?')[0] }}">
-          <input data-ng-model="attachment.annotation" 
-                 placeholder="Say something about this file..." 
-                 class="attachment-annotation"
-                 data-ng-change="saveAnnotation(attachment.annotation, attachment.id)"
-                 >
-        </div>
-      </div>
-    </div>
-  </div>
+  <%= render 'attachment_gallery' %>
 
   <!-- Only show pagination controls if num_pages > 1 -->
-  <div data-ng-if="data.number_of_pages > 1" data-ng-cloak>
-    <div class="pagination-controls">
-      
-      <!-- Previous page link -->
-      <div data-ng-if="currentPage > 0">
-        <a href="" data-ng-click="previousPage()">
-          <div class="previous-page">
-            &lsaquo;&lsaquo; Previous
-          </div>
-        </a>
-      </div>
-      
-      <div data-ng-if="currentPage == 0">
-        <div class="previous-page"></div>
-      </div>
+  <%= render 'pagination_controls' %>
 
-      <!-- Next page link -->
-      <div data-ng-if="currentPage + 1 < data.number_of_pages">
-        <a href="" data-ng-click="nextPage()">
-          <div class="next-page">
-            Next &rsaquo;&rsaquo;
-          </div>
-        </a>
-      </div>
-
-      <div data-ng-if="currentPage == data.number_of_pages">
-        <div>class="next-page"></div>
-      </div>
-
-      <!-- Page toggle circles -->
-      <div class="page-toggles">
-        <div class="circle-outer-container">
-          <div class="circle-inner-container">
-
-            <a data-ng-repeat="i in pageArray(data.number_of_pages) track by $index"
-               href="" 
-               data-ng-click="fetchAttachments(recordId, $index)">
-              <div data-ng-if="currentPage === $index" class="circle active"></div>
-              <div data-ng-if="currentPage != $index" class="circle"></div>
-            </a>
-           
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
   <hr class="clear-floats">
