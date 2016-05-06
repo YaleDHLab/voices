@@ -1,6 +1,14 @@
 $(window).ready(function() {
 
   /***
+  * initialize the datetimepicker, then create a listener 
+  ***/
+
+  $('#datetimepicker1').datetimepicker({
+    format: "MM/DD/YYYY"
+  });
+
+  /***
   * add listener to update styles in record#show if viewport is too
   * narrow to display record title and buttons in one line
   ***/
@@ -15,7 +23,6 @@ $(window).ready(function() {
     if (recordTitleWidth + editDeleteButtonContainerWidth + 40 >= overImageRowWidth) {
       // center both the record title and the edit and delete buttons
       var recordTitlePadding = (overImageRowWidth - recordTitleWidth) / 2;
-      $(".record-title").css("padding-left", recordTitlePadding);
       $(".record-title").css("width", "100%");
       $(".record-title").css("text-align", "center");
 
