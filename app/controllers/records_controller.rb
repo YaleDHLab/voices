@@ -27,34 +27,15 @@ class RecordsController < ApplicationController
   # GET /records/1.json
   def show
     @record_id = params[:id]
-    @current_page = params[:page].to_i
 
     # run the where clause globally
     @relevant_record = Record.find(@record_id)
     @relevant_attachments = RecordAttachment.where(record_id: @record_id).order("id")
 
-
-
-    # the maximum number of attachments per page is a function of the number of attachments
-    # given 20 or more attachments, allow 20 attachments per page, else 
-    @maximum_attachments_per_page = 4
-
-    # determine the number of pages
-    @number_of_pages = (@relevant_attachments.length / @maximum_attachments_per_page.to_f).ceil
-
-    # determine the first and last attachments for the current page
-    @page_start = @maximum_attachments_per_page * @current_page
-    @page_end = (@maximum_attachments_per_page * (@current_page + 1)) - 1
-
-    # send the view record attachments, not ActiveRecordRelations
-    # manually paginate the attachments
+    # make the record attachments an array if it isn't already 
     if @relevant_attachments.length > 1
-      # return an array containing the current page of 
-      # attachments for the current record
-      @record_attachments = @relevant_attachments[@page_start..@page_end]
+      @record_attachments = @relevant_attachments
     else 
-      # return a single member array (to keep attachment json form identical
-      # to the multiple attachment case)
       @record_attachments = [@relevant_attachments[0]]
     end
 
@@ -63,15 +44,19 @@ class RecordsController < ApplicationController
       format.json { render json: {
         record: @relevant_record, 
         attachments: @record_attachments,
-        number_of_pages: @number_of_pages
       }.to_json }
     end
   end
 
+
   # GET /records/new
   def new
+    # when user loads the new record page, delete any record attachments they have that
+    # don't belong to a record (to clear out any attachments they added before a page reload)
+    RecordAttachment.where(cas_user_name: session[:cas_user]).where("record_id IS?", nil).destroy_all
     @record = Record.new
   end
+
 
   # GET /records/1/edit
   def edit
@@ -88,31 +73,6 @@ class RecordsController < ApplicationController
 
     # run the where clause globally
     @relevant_attachments = RecordAttachment.where(record_id: @record_id).order("id")
-    @relevant_record = Record.find(@record_id)
-
-    # the maximum number of attachments per page is a function of the number of attachments
-    # given 20 or more attachments, allow 20 attachments per page, else 
-    @maximum_attachments_per_page = 4
-
-    # determine the number of pages
-    @number_of_pages = (@relevant_attachments.length / @maximum_attachments_per_page.to_f).ceil
-
-    # determine the first and last attachments for the current page
-    @page_start = @maximum_attachments_per_page * @current_page
-    @page_end = (@maximum_attachments_per_page * (@current_page + 1)) - 1
-
-    # send the view record attachments, not ActiveRecordRelations
-    # manually paginate the attachments
-    if @relevant_attachments.length > 1
-      # return an array containing the current page of 
-      # attachments for the current record
-      @record_attachments = @relevant_attachments[@page_start..@page_end]
-    else 
-      # return a single member array (to keep attachment json form identical
-      # to the multiple attachment case)
-      @record_attachments = [@relevant_attachments[0]]
-    end
-
   end
 
   # POST /records
