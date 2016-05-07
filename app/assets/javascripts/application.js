@@ -13,4 +13,5 @@
 //= require ng-file-upload
 //= require ng-file-upload-shim
 //= require angular-ui-switch
+//= require angular-modal-service
 //= require voices_app
