@@ -61,13 +61,7 @@ class RecordsController < ApplicationController
   # GET /records/1/edit
   def edit
     @record = Record.find(params[:id])
-    @include_user_name = should_include_user_name?(params[:id])
     @saved_date = @record.date
-
-    ######################################################
-    # TODO: ABSTRACT OUT METHODS NEEDED BY SHOW AND EDIT #
-    ######################################################
-
     @record_id = params[:id]
     @current_page = params[:page].to_i
 
@@ -178,21 +172,11 @@ class RecordsController < ApplicationController
     # only allow the white list through.
     def record_params
       params.require(:record).permit(
-        :cas_user_name, :include_name, :title,
+        :cas_user_name, :make_private, :title,
         :description, :date, :location, :source_url, 
         :hashtag, :release_checked,
         :record_attachments
       )
-    end
-
-    # Determine whether user wants to include their name 
-    # alongside the record
-    def should_include_user_name?(record_id)
-      raw_boolean = Record.find(record_id).include_name
-      if raw_boolean == true
-        return 1
-      end
-      return 0
     end
 
 end
