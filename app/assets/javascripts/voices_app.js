@@ -232,6 +232,25 @@ VoicesApp.controller('ModalController', [
       saveAnnotationService.saveAnnotation(annotation, attachmentId);
     };
 
+    // on record#edit, allow users to delete an attachment on click of button
+    $scope.deleteAttachment = function(attachmentId) {
+      console.log("called");
+
+      // need to pass this attachmentId to a global state object 
+      
+
+
+      // add the attachment id to the array of attachments to hide
+      $scope.hiddenAttachments.push(attachmentId);
+
+      $.ajax({ url: "/record_attachments/" + attachmentId,
+        type: 'DELETE',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        data: {},
+        success: function(response) {}
+      });
+    };
+
   }
 ]);
 
@@ -430,20 +449,6 @@ VoicesApp.controller("GalleryController", [
     };
 
 
-    // on record#edit, allow users to delete an attachment on click of button
-    $scope.deleteAttachment = function(attachmentId) {
-      // add the attachment id to the array of attachments to hide
-      $scope.hiddenAttachments.push(attachmentId);
-
-      $.ajax({ url: "/record_attachments/" + attachmentId,
-        type: 'DELETE',
-        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-        data: {},
-        success: function(response) {}
-      });
-    }
-
-
     $scope.multipleRecordViewClicked = function() {
       // toggle the view buttons
       $scope.multipleRecordView = true;
@@ -501,18 +506,6 @@ VoicesApp.controller("GalleryController", [
         });
       });
     };
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     // initialize the function chain
