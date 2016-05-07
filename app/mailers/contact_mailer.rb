@@ -6,4 +6,10 @@ class ContactMailer < ActionMailer::Base
     mail(to: "douglas.duhaime@gmail.com", subject: "Sample Email")
   end  
 
+  def report_record(reported_record, reporting_agent)
+    @reported_record = reported_record
+    @reporting_agent = reporting_agent
+    mail(to: "douglas.duhaime@gmail.com", subject: "VOICES: Report Record")
+  end 
+
 end
