@@ -31,8 +31,6 @@ $(window).ready(function() {
   var restyleRecordShow = function() {
     var overImageRowWidth = $(".over-image-row").width();
 
-    console.log(recordTitleWidth, editDeleteButtonContainerWidth, overImageRowWidth);
-
     if (recordTitleWidth + editDeleteButtonContainerWidth + 40 >= overImageRowWidth) {
       // center both the record title and the edit and delete buttons
       $(".record-title").css("width", "100%");
