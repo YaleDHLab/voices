@@ -1,0 +1,27 @@
+<!-- Angular modeal to show attachment -->
+<script type="text/ng-template" id="attachmentModal.html">
+  <div class="modal fade" role="dialog">
+    <!-- Modal content-->
+    <div class="attachment-modal-content">
+
+      <div class="delete-icon-container">
+        <div class="delete-attachment-icon-container">
+          <div class="delete-attachment-icon">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="attachment-modal-image-container">
+        <img data-ng-src="{{ attachment.annotation_thumb_url }}"
+             alt="{{ attachment.file_upload_url.split('/').pop().split('?')[0] }}">
+
+        <input data-ng-model="attachment.annotation" 
+               placeholder="Say something about this file..." 
+               class="modal-attachment-annotation"
+                   data-ng-change="saveAnnotation(attachment.annotation, attachment.id)">
+
+      </div>
+    </div>
+  </div>
+</script>

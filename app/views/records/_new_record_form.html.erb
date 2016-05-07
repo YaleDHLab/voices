@@ -10,46 +10,8 @@
     </div>
   <% end %>
 
-  <div class="field" id="include-name-container">
-    <%= f.label :include_name, "Would you like your name included in the archive?<sup>*</sup>".html_safe, :class => "long-label" %>
-    
-    <!-- field for include name -->
-    <div class="hidden">
-      <input 
-        name="record[include_name]"
-        data-ng-value="form.include_name">
-    </div>
-
-    <div id="switch-container">
-      <div class="onoffswitch">
-        <switch 
-          id="record_include_name" 
-          data-ng-model="form.include_name" 
-          class="blue">
-        </switch>
-        <br>
-      </div>
-
-      <div id="boolean-slider-text" data-ng-cloak>
-        <div data-ng-if="form.include_name != true && form.include_name != false" style="float:left">NO</div>
-        <div data-ng-if="form.include_name == true" style="float:left">YES</div>
-        <div data-ng-if="form.include_name == false" style="float:left">NO</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="field">
-    <%= f.label :title, "Title of Material<sup>*</sup>".html_safe %>
-    <input 
-      type="text" 
-      name="record[title]" 
-      id="record_title"
-      required
-      data-ng-model="form.title">
-  </div>
-
   <div id="file-upload-container" class="field">
-    <%= f.label :file_upload, "Upload File(s)<sup>*</sup>".html_safe %>
+    <%= f.label :file_upload, "Add Files<sup>*</sup>".html_safe %>
     <input 
       multiple
       type="file"
@@ -84,6 +46,16 @@
   </div>
 
   <div class="field">
+    <%= f.label :title, "Title of Material<sup>*</sup>".html_safe %>
+    <input 
+      type="text" 
+      name="record[title]" 
+      id="record_title"
+      required
+      data-ng-model="form.title">
+  </div>
+
+  <div class="field">
     <%= f.label :description, "Description<sup>*</sup>".html_safe %>
     
     <textarea 
@@ -98,7 +70,7 @@
   </div>
 
   <div class="field">
-    <%= f.label :date, "Date" %>
+    <%= f.label :date, "Date of Event" %>
     <div class="form-group date-container">
       <div class='input-group date' id='datetimepicker1'>
         <input 
@@ -141,6 +113,34 @@
     placeholder="Add social media hashtags here, e.g. #WeAreYale"
     required
     data-ng-model="form.hashtag">
+  </div>
+
+  <div class="field" id="make-private-container">
+    <%= f.label :make_private, "Make this record private so only I can see it.".html_safe, :class => "long-label" %>
+    
+    <!-- field for make private field -->
+    <div class="hidden">
+      <input 
+        name="record[make_private]"
+        data-ng-value="form.make_private">
+    </div>
+
+    <div id="switch-container">
+      <div class="onoffswitch">
+        <switch 
+          id="record_make_private" 
+          data-ng-model="form.make_private" 
+          class="blue">
+        </switch>
+        <br>
+      </div>
+
+      <div id="boolean-slider-text" data-ng-cloak>
+        <div data-ng-if="form.make_private != true && form.make_private != false" style="float:left">NO</div>
+        <div data-ng-if="form.make_private == true" style="float:left">YES</div>
+        <div data-ng-if="form.make_private == false" style="float:left">NO</div>
+      </div>
+    </div>
   </div>
 
   <div class="field">
