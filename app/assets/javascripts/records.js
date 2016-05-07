@@ -9,20 +9,32 @@ $(window).ready(function() {
   });
 
   /***
+  * add listener to launch modal if user clicks button to delete record
+  ***/
+
+  $("#delete-record-button").on("click", function() {
+    $('#delete-record-modal').modal();
+  });
+
+  /***
   * add listener to update styles in record#show if viewport is too
   * narrow to display record title and buttons in one line
   ***/
 
   // store element widths, as these wont' change
-  var recordTitleWidth = $("h3").width();
-  var editDeleteButtonContainerWidth = $(".edit-delete-button-container").width();
+  var recordTitle = $("h3");
+  var editDeleteButtonContainer = $(".edit-delete-button-container");
+
+  var recordTitleWidth = recordTitle.width();
+  var editDeleteButtonContainerWidth = editDeleteButtonContainer.width();
 
   var restyleRecordShow = function() {
     var overImageRowWidth = $(".over-image-row").width();
 
+    console.log(recordTitleWidth, editDeleteButtonContainerWidth, overImageRowWidth);
+
     if (recordTitleWidth + editDeleteButtonContainerWidth + 40 >= overImageRowWidth) {
       // center both the record title and the edit and delete buttons
-      var recordTitlePadding = (overImageRowWidth - recordTitleWidth) / 2;
       $(".record-title").css("width", "100%");
       $(".record-title").css("text-align", "center");
 
