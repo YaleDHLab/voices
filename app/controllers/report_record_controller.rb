@@ -14,12 +14,11 @@ class ReportRecordController < ApplicationController
       # send an email to our inbox on save of a contact form
       ContactMailer.report_record(@reported_record, @reporting_agent).deliver
       flash[:success] = "<strong>Success</strong>".html_safe + ": Thank you for contacting us."
-      redirect_to root_path
+      redirect_to user_show_path
     
     else
       flash[:info] = "<strong>Sorry</strong>".html_safe + ": This request could not be processed; please try again."
-      format.html { redirect_to root_path }
-
+      redirect_to user_show_path
     end
   end
 
