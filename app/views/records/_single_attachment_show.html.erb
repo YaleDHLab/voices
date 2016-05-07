@@ -4,10 +4,17 @@
         {{ data.record.title }}
     </h3>  
     <div class="edit-delete-button-container">
-      <div class="btn-group modify-record-button margin-right">
-        <%= link_to "Edit", edit_record_path(@record), 
-          :class => "btn btn-primary blue-button", :id => "edit-record-button" %>
-      </div>
+      <% if session[:cas_user] == @record.cas_user_name %>
+        <div class="btn-group modify-record-button margin-right">
+          <%= link_to "Edit", edit_record_path(@record), 
+            :class => "btn btn-primary blue-button", :id => "edit-record-button" %>
+        </div>
+      <% else %>
+        <div class="btn-group modify-record-button margin-right">
+          <%= link_to "Report Record", flag_record_path(@record), 
+            :class => "btn btn-primary blue-button", :id => "flag-record-button" %>
+        </div>
+      <% end %>
     </div>
   </div>
 
