@@ -1,0 +1,49 @@
+
+<div class="gray-background">
+  <div class="container">
+    <!-- Angular search box -->
+    <section class="search-form">
+      <form>
+        <div class="input-group input-group-lg">
+          <label for="search.keywords" class="sr-only">Keywords</label>
+          <input type="text"
+            name="keywords"
+            class="form-control input-lg"
+            placeholder="Search"
+            ng-change="search(keywords)"
+            ng-model="keywords">
+
+        </div>
+      </form>
+
+      <!-- If user doesn't have records, prompt them to contribute -->
+      <div ng-if="records.length === 0 && userRanSearch === 0">
+        <%= render 'user_has_no_records' %>
+      </div>
+        
+      <!-- If user ran a search and there are no records, indicate as much -->
+      <div ng-if="records.length === 0 && userRanSearch === 1">
+        <%= render 'search_returned_no_results' %>
+      </div>
+
+      <!-- Otherwise, show all records -->
+      <div ng-if="records.length != 0">
+        <div class="masonry-container">
+          <div class="masonry">
+            <div ng-repeat="record in records" class="records-container">
+              <div class="masonry-item">
+                <div class="section">
+                  <a ng-href="/records/{{record.id}}">
+                    <img ng-src="{{record.file_upload_url}}"></img>
+                    <div class="masonry-item-title">{{record.title}}</div>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
