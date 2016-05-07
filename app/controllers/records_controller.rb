@@ -6,11 +6,16 @@ class RecordsController < ApplicationController
 
   before_action :set_record, only: [:show, :edit, :update, :annotate, :destroy]
   
-  # before serving user with a record, validate that they have permission
-  # to access that record
-  before_action only: [:show, :edit, :update, :destroy] do
+  # allow users to have view only acess to records
+  before_action only: [:show] do
     requested_record = Record.find_by(id: params[:id])
     check_user_privileges(requested_record)
+  end
+
+  # only allow those who created records to edit, update, or destroy the records
+  before_action only: [:edit, :update, :destroy] do
+    requested_record = Record.find_by(id: params[:id])
+    check_private_user_privileges(requested_record)
   end
 
   before_action only: [:index] do
@@ -75,6 +80,7 @@ class RecordsController < ApplicationController
     # retrieve the current cas user name from the session hash
     @form_params = record_params()
     @form_params[:cas_user_name] = session[:cas_user]
+    @form_params[:flagged_for_removal] = false
     @record = Record.create( @form_params )
 
     # if the user just uploaded multiple attachments, send special flash
