@@ -4,7 +4,8 @@
     "angular": "~> 1.5",
     "ng-file-upload-shim": "latest",
     "ng-file-upload": "latest",
-    "angular-ui-switch": "latest"
+    "angular-ui-switch": "latest",
+    "angular-modal-service": "latest"
   },
   "resolutions": {
     "angular": "1.5"
