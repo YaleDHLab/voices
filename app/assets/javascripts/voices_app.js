@@ -69,9 +69,13 @@ VoicesApp.service('saveAnnotationService', [
 
 
 
+
+
+
 VoicesApp.controller("FormController", [
         "$scope", "$http", "$location", "Upload", "postRecordForm",
   function($scope, $http, $location, Upload, postRecordForm ) {
+
 
     // define the array to which we'll append all user uploaded files
     // and the array in which we'll store the files for which we've received
@@ -126,65 +130,64 @@ VoicesApp.controller("FormController", [
     // nb: to submit a record form with current params, we can call:
     //postRecordForm.uploadForm($scope.form);
     // this requires that $scope.form be defined, and that all elements
-    // including the boolean slider be tied to the form element
+    // be tied to the form element
 
-    // fire call when user interacts with file upload
-    $scope.uploadFiles = function(event){
 
-      // specify the function we'll call to upload files
-      var requestFileUpload = function(file) {
+    // specify the url endpoint to which we'll submit the files
+    var uploadUrl = "/record_attachments";
 
-        if ($scope.recordId) {
-            var formData = {"file_upload": file, 
-                   "file_upload[record_id]": $scope.recordId, 
-                   "file": "in file_upload"}
+    // retrieve the CSRF token to we can make the POST request without getting 422'd
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+    // specify the function we'll call to upload files
+    var requestFileUpload = function(file) {
+
+
+      if ($scope.recordId) {
+          var formData = {"file_upload": file, 
+                 "file_upload[record_id]": $scope.recordId, 
+                 "file": "in file_upload"}
+        } else {
+          var formData = {"file_upload": file, 
+                 "file": "in file_upload"}
+        };
+
+      $scope.upload = Upload.upload({
+        url: uploadUrl,
+        method: 'POST',
+        // pass in a hash that provides the requisite hash key (file_upload) and dummy file key
+        data: formData,
+        headers: {'X-CSRF-Token': csrfToken},
+        // specify below the model and database column in which we'll store uploads
+        fileFormDataName: 'record_attachment[file_upload]', 
+        formDataAppender: function(fda, key, val) {
+          if (angular.isArray(val)) {
+                angular.forEach(val, function(v) {
+                  fda.append('record_attachment['+key+']', v);
+              });
           } else {
-            var formData = {"file_upload": file, 
-                   "file": "in file_upload"}
-          };
-
-        $scope.upload = Upload.upload({
-          url: uploadUrl,
-          method: 'POST',
-          // pass in a hash that provides the requisite hash key (file_upload) and dummy file key
-          data: formData,
-          headers: {'X-CSRF-Token': csrfToken},
-          // specify below the model and database column in which we'll store uploads
-          fileFormDataName: 'record_attachment[file_upload]', 
-          formDataAppender: function(fda, key, val) {
-            if (angular.isArray(val)) {
-                  angular.forEach(val, function(v) {
-                    fda.append('record_attachment['+key+']', v);
-                });
-            } else {
-                fda.append('record_attachment['+key+']', val);
-            }
+              fda.append('record_attachment['+key+']', val);
           }
-        }).then(function (resp) {
-              // log the success then store the fact we received a response for this file
-              console.log('Success ' + resp.config.data.file_upload.name + 'uploaded. Response: ' + resp.data);
-              $scope.filesSent.push(resp.config.data.file_upload.name);
+        }
+      }).then(function (resp) {
+            // log the success then store the fact we received a response for this file
+            console.log('Success ' + resp.config.data.file_upload.name + 'uploaded. Response: ' + resp.data);
+            $scope.filesSent.push(resp.config.data.file_upload.name);
 
-          }, function (resp) {
-              // log the error then store the fact that we received a response for this file
-              console.log('Error status: ' + resp.status);
-              $scope.filesSent.push(resp.config.data.file_upload.name);
+        }, function (resp) {
+            // log the error then store the fact that we received a response for this file
+            console.log('Error status: ' + resp.status);
+            $scope.filesSent.push(resp.config.data.file_upload.name);
 
-          }, function (evt) {
-              // tie a progress value to this file; Math.min fixes an IE bug (otherwise progress can go to 200%)
-              file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-        });
-      };
+        }, function (evt) {
+            // tie a progress value to this file; Math.min fixes an IE bug (otherwise progress can go to 200%)
+            file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+      });
+    };
 
-      // specify the url endpoint to which we'll submit the files
-      var uploadUrl = "/record_attachments";
+    
 
-      // retrieve the CSRF token to we can make the POST request without getting 422'd
-      var csrfToken = $('meta[name="csrf-token"]').attr('content');
-
-      // files = all files the user selected on button click
-      var files = event.target.files;
-
+    var uploadAllFiles = function(files) {
       // iterate over files, upload and set progress bar for each
       for (i=0; i < files.length; i++)  {
         // append the file to our array of files to send
@@ -194,8 +197,30 @@ VoicesApp.controller("FormController", [
         var fileToUpload = files[i];
         requestFileUpload(fileToUpload);
       }; // closes file upload for loop
+    }
+    
+
+
+    // fire call when user interacts with file upload button
+    $scope.uploadFiles = function(event){
+      // files = all files the user selected on button click
+      var files = event.target.files;
+      uploadAllFiles(files);
     }; // closes uploadFiles function
     
+
+
+
+    // when user drags file onto screen, call function
+    $scope.$watch('draggedFiles', function () {
+      if ($scope.draggedFiles) {
+        uploadAllFiles($scope.draggedFiles);
+      }
+    });
+
+
+
+
   }
 ]);
 
