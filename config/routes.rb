@@ -41,6 +41,9 @@ VoicesRails::Application.routes.draw do
   # expose a method for deleting record attachments
   delete "record_attachments/:id" => "record_attachments#destroy"
 
+  # provie route that will send a request for a record to be removed
+  get "report_record" => "report_record#create"
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
