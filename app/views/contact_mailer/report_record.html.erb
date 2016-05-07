@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Hello,<br><br>
+      A user of the VOICES app (<%= @reporting_agent %>) requested the removal of the following record:<br><br>
+      <%= @reported_record.to_json %>
+    </p>
+  </body>
+</html>
+
