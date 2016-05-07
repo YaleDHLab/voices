@@ -33,9 +33,9 @@
             <div ng-repeat="record in records" class="records-container">
               <div class="masonry-item">
                 <div class="section">
-                  <a ng-href="/records/{{record.id}}">
-                    <img ng-src="{{record.file_upload_url}}"></img>
-                    <div class="masonry-item-title">{{record.title}}</div>
+                  <a ng-href="/records/{{record.record.id}}">
+                    <img ng-src="{{record.record.file_upload_url}}"></img>
+                    <div class="masonry-item-title">{{record.record.title}}</div>
                   </a>
                 </div>
               </div>
