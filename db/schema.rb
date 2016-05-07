@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160503215026) do
+ActiveRecord::Schema.define(version: 20160507000142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(version: 20160503215026) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "cas_user_name"
-    t.boolean  "include_name"
     t.text     "description"
     t.string   "location"
     t.string   "source_url"
@@ -52,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160503215026) do
     t.text     "date"
     t.text     "file_upload_url"
     t.text     "hashtag"
+    t.boolean  "make_private"
   end
 
   create_table "users", force: :cascade do |t|

@@ -10,13 +10,16 @@
 # seed each admin's database
 ENV["VOICES_ADMINS"].split("#").each do |username|
 
-    20.times do |r|
+    if username == "ded34"
+        next
+    end
+
+    7.times do |r|
 
         new_record = Record.new({
             :title => Faker::Book.title,
-            :file_upload => File.new( Dir.glob("#{Rails.root}/app/assets/images/seed-images/*.jpg")[rand(0..249)] ),
             :cas_user_name => username,
-            :include_name => true,
+            :make_private => false,
             :description => Faker::Lorem.paragraph,
             :location => Faker::Address.street_name + ", " + Faker::Address.city,
             :source_url => Faker::Internet.url,
@@ -25,6 +28,18 @@ ENV["VOICES_ADMINS"].split("#").each do |username|
             :hashtag => "#" + Faker::Hipster.words(4).join(" #")
         })
 
-        new_record.save!
+        i = new_record.save!
+
+        # create eather 1, 8, or 24 attachments for this record
+        [1, 8, 24][rand(0..2)].times do
+            new_record_attachment = RecordAttachment.new({
+                :record_id => new_record.id,
+                :annotation => Faker::Lorem.sentence,
+                :file_upload => File.new( Dir.glob("#{Rails.root}/app/assets/images/seed-images/*.jpg")[rand(0..249)] ),
+                :cas_user_name => username
+            })
+
+            new_record_attachment.save!
+        end 
     end
 end
