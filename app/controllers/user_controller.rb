@@ -14,6 +14,24 @@ class UserController < ApplicationController
       # otherwise retrieve all records that belong to this user
       @user_records = Record.where(cas_user_name: session[:cas_user])
 
+      # and all records that users have marked as open
+      @public_records = Record.where(make_private: false)
+
+      # combine those lists
+      @combined_results = []
+
+      # add each result to the array
+      @user_records.each do |r|
+        @combined_results << r 
+      end
+
+      @public_records.each do |r|
+        @combined_results << r 
+      end
+
+      # dedupe the list
+      @combined_results = @combined_results.uniq
+
       """expose json of the following form:
 
         [ 
@@ -61,13 +79,13 @@ class UserController < ApplicationController
 
       @user_records_with_attachments = []
 
-      @user_records.each do |r|
+      @combined_results.each do |r|
         @record_attachments = RecordAttachment.where(record_id: r.id)
         @record_with_attachments = {record: r, attachments: @record_attachments}
         @user_records_with_attachments << @record_with_attachments
       end
 
-    end    
+    end
 
     # provide json endpoint that angular can access
     respond_to do |format|
