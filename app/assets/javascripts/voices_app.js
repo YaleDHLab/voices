@@ -477,8 +477,6 @@ VoicesApp.controller("GalleryController", [
     };
 
 
-
-
     $scope.showAttachmentModal = function(attachment) {
       console.log(attachment);
 
@@ -531,53 +529,6 @@ VoicesApp.controller("GalleryController", [
 ]);
 
 
-
-VoicesApp.controller("recordSearchController", [
-        "$scope", "$http",
-      function($scope, $http) {
-        var self = this;
-        
-        // initialize a variable that keeps track of whether a user has run a search
-        $scope.userRanSearch = 0;
-
-        // define and call function to serve all user records
-        var allUserRecords = function() {
-          $http.get("/user/show.json")
-          .then(function(response) {
-            $scope.records = response.data;
-          }, function(response) {
-            console.log(response.status);
-          }
-        )};
-
-        allUserRecords();
-
-        // define function that places get request with user-specified query
-        // when user interacts with the search input field
-        $scope.search = function(searchTerm) {
-          // if the user deletes all text in the input,
-          // restore all their records by setting the userRanSearch
-          // value back to 0
-          if (searchTerm) {
-              $scope.userRanSearch = 1;
-              $http.get("/user/show.json",
-                {"params": {"keywords": searchTerm} }  
-              ).then(function(response) {
-                $scope.records = response.data;
-              }, function(response) {
-                console.log(response.status);
-              }
-            );
-        } else {
-          allUserRecords();
-        };
-      }
-    }
-  ]
-);
-
-
-
 VoicesApp.controller("userController", [
         "$scope", "$http", "$timeout",
     function($scope, $http, $timeout) {
@@ -596,7 +547,6 @@ VoicesApp.controller("userController", [
       // initialize the function below to allow the displayIndex to change
       //incrementDisplayIndex();
 
-
       // retreives an array of hashes, each of which has record and attachment keys
       var getUserRecords = function() {
         $http.get("/user/show.json")
@@ -609,13 +559,8 @@ VoicesApp.controller("userController", [
 
       getUserRecords();
 
-
-
-
       // initialize a variable that keeps track of whether a user has run a search
       $scope.userRanSearch = 0;
-
-
 
       // define and call function to serve all user records
       var allUserRecords = function() {
@@ -629,6 +574,7 @@ VoicesApp.controller("userController", [
 
       allUserRecords();
 
+      
       // define function that places get request with user-specified query
       // when user interacts with the search input field
       $scope.search = function(searchTerm) {
@@ -641,6 +587,7 @@ VoicesApp.controller("userController", [
               {"params": {"keywords": searchTerm} }  
             ).then(function(response) {
               $scope.records = response.data;
+
             }, function(response) {
               console.log(response.status);
             }
@@ -649,14 +596,5 @@ VoicesApp.controller("userController", [
         allUserRecords();
       };
     }
-
-
-
-
-
-
-
-
-    }
-  ]
+  }]
 );
