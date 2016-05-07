@@ -4,7 +4,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def check_user_privileges(requested_record)
-    if requested_record.cas_user_name != session[:cas_user]
+    # if the requested record does not belong to the current user
+    # and is private, prevent the user from accessing the record
+    if (requested_record.cas_user_name != session[:cas_user]) && (requested_record.make_private == true)
       flash[:info] = "<strong>ACCESS RESTRICTED</strong>".html_safe + ": You do not have access to this page. Please contact your administrator about your permissions."
       redirect_to user_show_path
     end
