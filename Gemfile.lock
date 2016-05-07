@@ -67,6 +67,8 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     debug_inspector (0.0.2)
+    delayed_paperclip (2.10.0)
+      paperclip (>= 3.3)
     erubis (2.7.0)
     execjs (2.6.0)
     faker (1.6.3)
@@ -193,6 +195,7 @@ DEPENDENCIES
   bootstrap3-datetimepicker-rails (~> 4.17.37)
   bower-rails
   coffee-rails (~> 4.0.0)
+  delayed_paperclip
   faker
   heroku-deflater
   jbuilder (~> 2.2)
