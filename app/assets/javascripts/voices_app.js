@@ -1,5 +1,5 @@
 // compile all required controllers into one app to expose to views
-var VoicesApp = angular.module('VoicesApp', ['ngFileUpload', 'uiSwitch']);
+var VoicesApp = angular.module('VoicesApp', ['ngFileUpload', 'uiSwitch', 'angularModalService']);
 
 VoicesApp.directive('onFileInputChange', function() {
   return {
@@ -25,7 +25,7 @@ VoicesApp.service('postRecordForm', [
       // manually build up form. nb. cas username is set by the controller
       var fd = new FormData();
       fd.append('record[title]', form.title );
-      fd.append('record[include_name]', form.include_name );
+      fd.append('record[make_private]', form.make_private );
       fd.append('record[description]', form.description );
       fd.append('record[hashtag]', form.hashtag );
       fd.append('record[release_checked]', form.release_checked );
@@ -51,6 +51,24 @@ VoicesApp.service('postRecordForm', [
 
 
 
+
+// service to POST attachment annotations to db
+VoicesApp.service('saveAnnotationService', [
+  function () {
+    this.saveAnnotation = function(annotation, attachmentId) {
+      $.ajax({ url: "/record_attachments/" + attachmentId + ".json",
+        type: 'PUT',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        data: {"annotation": annotation},
+        success: function(response) {}
+      });
+    }
+  }
+]);
+
+
+
+
 VoicesApp.controller("FormController", [
         "$scope", "$http", "$location", "Upload", "postRecordForm",
   function($scope, $http, $location, Upload, postRecordForm ) {
@@ -60,6 +78,12 @@ VoicesApp.controller("FormController", [
     // success or error messages from the server
     $scope.filesToSend = [];
     $scope.filesSent = [];
+
+    // create empty form
+    $scope.form = {};
+
+    // initialize privacy settings to keep records private
+    $scope.form.make_private = $scope.form.make_private? $scope.form.make_private: true;
 
     // setter for form elements; only to be called when user is editing record
     // TODO: Make into a service that returns response.data.record
@@ -188,9 +212,34 @@ VoicesApp.filter('trusted', [
 
 
 
+// this controller allows us to display record attachments
+// and requires a close method 
+VoicesApp.controller('ModalController', [
+    "$scope", "$http", "close", "attachment", "saveAnnotationService",
+  function($scope, $http, close, attachment, saveAnnotationService) {
+    
+    // make the attachment available to the view
+    $scope.attachment = attachment;
+
+    // close the modal with a 500 ms fade
+    $scope.close = function(result) {
+      close(result, 500); 
+    }; 
+
+    // function that allows users to save annotation to db
+    $scope.saveAnnotation = function(annotation, attachmentId) {
+      // call the saveAnnotation service
+      saveAnnotationService.saveAnnotation(annotation, attachmentId);
+    };
+
+  }
+]);
+
+
+
 VoicesApp.controller("GalleryController", [
-        "$scope", "$http", "$location",
-  function($scope, $http, $location) {
+        "$scope", "$http", "$location", "ModalService", "saveAnnotationService",
+  function($scope, $http, $location, ModalService, saveAnnotationService) {
     var self = this;
 
     // always start user on page 0
@@ -202,6 +251,9 @@ VoicesApp.controller("GalleryController", [
 
     // array of elements to hide (in case user deletes attachment)
     $scope.hiddenAttachments = [];
+
+    // array of elements over which user is hovering
+    $scope.hoveredAttachments = [];
     
     $scope.getRecordId = function() {
       
@@ -312,6 +364,19 @@ VoicesApp.controller("GalleryController", [
     };
 
 
+    // function to include moused over attachment in array of hovered attachments
+    $scope.addHoveredAttachment = function(attachment) {
+      $scope.hoveredAttachments.push(attachment);
+    };
+
+
+    // function to remove moused out attachment from array of hovered attachments
+    $scope.removeHoveredAttachment = function(attachment) {
+      var indexOfAttachment = $scope.hoveredAttachments.indexOf(attachment);
+      $scope.hoveredAttachments.splice(indexOfAttachment, 1);
+    };
+
+
     // function that returns all attachments on a aparticular page 
     // of a record, and updates the current page in scope to the retrieved
     // page
@@ -357,14 +422,11 @@ VoicesApp.controller("GalleryController", [
     }
 
 
-    // save user annotations (send CSRF token for security)
-    $scope.saveAnnotation = function(userAnnotation, attachmentId) {      
-      $.ajax({ url: "/record_attachments/" + attachmentId + ".json",
-        type: 'PUT',
-        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-        data: {"annotation": userAnnotation},
-        success: function(response) {}
-      });
+    // function that allows users to save annotation to db
+    $scope.saveAnnotation = function(annotation, attachmentId) {
+      
+      // call the saveAnnotation service
+      saveAnnotationService.saveAnnotation(annotation, attachmentId);
     };
 
 
@@ -413,6 +475,47 @@ VoicesApp.controller("GalleryController", [
 
       console.log("single record clicked", $scope.attachmentsPerPage);
     };
+
+
+
+
+    $scope.showAttachmentModal = function(attachment) {
+      console.log(attachment);
+
+      /***
+      * templateUrl: the template to be rendered (this is inlined)
+      * controller: the controller that will handle the modal
+      * inputs: data to be passed to the specified controller
+      ***/
+                    
+      ModalService.showModal({
+        templateUrl: "attachmentModal.html",
+        controller: "ModalController",
+        inputs: {
+          attachment: attachment
+        }
+      }).then(function(modal) {
+
+        //it's a bootstrap element, use 'modal' to show it
+        modal.element.modal();
+        modal.close.then(function(result) {
+          console.log(result);
+        });
+      });
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // initialize the function chain
     $scope.getRecordId();
@@ -476,9 +579,23 @@ VoicesApp.controller("recordSearchController", [
 
 
 VoicesApp.controller("userController", [
-        "$scope", "$http",
-    function($scope, $http) {
+        "$scope", "$http", "$timeout",
+    function($scope, $http, $timeout) {
       var self = this;
+
+      // variable to set the index of the attachment that should be shown
+      $scope.displayIndex = 0;
+
+      // variable that indicates the index of the image to display
+      var incrementDisplayIndex = function() {
+        // increment the counter, then call the function again with a timeout
+        $scope.displayIndex++;        
+        $timeout(incrementDisplayIndex, 2000);
+      };
+
+      // initialize the function below to allow the displayIndex to change
+      //incrementDisplayIndex();
+
 
       // retreives an array of hashes, each of which has record and attachment keys
       var getUserRecords = function() {
@@ -491,6 +608,54 @@ VoicesApp.controller("userController", [
       )};
 
       getUserRecords();
+
+
+
+
+      // initialize a variable that keeps track of whether a user has run a search
+      $scope.userRanSearch = 0;
+
+
+
+      // define and call function to serve all user records
+      var allUserRecords = function() {
+        $http.get("/user/show.json")
+        .then(function(response) {
+          $scope.records = response.data;
+        }, function(response) {
+          console.log(response.status);
+        }
+      )};
+
+      allUserRecords();
+
+      // define function that places get request with user-specified query
+      // when user interacts with the search input field
+      $scope.search = function(searchTerm) {
+        // if the user deletes all text in the input,
+        // restore all their records by setting the userRanSearch
+        // value back to 0
+        if (searchTerm) {
+            $scope.userRanSearch = 1;
+            $http.get("/user/show.json",
+              {"params": {"keywords": searchTerm} }  
+            ).then(function(response) {
+              $scope.records = response.data;
+            }, function(response) {
+              console.log(response.status);
+            }
+          );
+      } else {
+        allUserRecords();
+      };
+    }
+
+
+
+
+
+
+
 
     }
   ]
