@@ -39,6 +39,9 @@ gem 'aws-sdk', '~> 1.55.0'
 # add video preprocessor to create video still image
 gem 'paperclip-ffmpeg', '~> 1.0.1'
 
+# allow file uploads to happen as background processes
+gem 'delayed_paperclip'
+
 # use puma server in production
 gem 'puma', '2.11.1'
 
