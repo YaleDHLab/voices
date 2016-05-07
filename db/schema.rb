@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507000142) do
+ActiveRecord::Schema.define(version: 20160507115542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,7 +49,6 @@ ActiveRecord::Schema.define(version: 20160507000142) do
     t.string   "source_url"
     t.boolean  "release_checked"
     t.text     "date"
-    t.text     "file_upload_url"
     t.text     "hashtag"
     t.boolean  "make_private"
   end
