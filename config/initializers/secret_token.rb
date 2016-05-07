@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-VoicesRails::Application.config.secret_key_base = '9368979424dfdaa2a4f8d5a5d5b7bdef0cb2e20b4a659616e4c1850052851a2afac63f64bfd5d46395ea46244e92ddcc72af62e38d183c655db2f882127b689c'
+VoicesRails::Application.config.secret_key_base = ENV["VOICES_SECRET_KEY"]
