@@ -34,7 +34,10 @@
               <div class="masonry-item">
                 <div class="section">
                   <a ng-href="/records/{{record.record.id}}">
-                    <img ng-src="{{record.record.file_upload_url}}"></img>
+                    <img data-ng-if="record.attachments[ displayIndex % record.attachments.length ].media_type === 'image'"
+                         data-ng-src="{{ record.attachments[ displayIndex % record.attachments.length ].medium_image_url }}" 
+                         alt="{{ record.record.title }}">
+
                     <div class="masonry-item-title">{{record.record.title}}</div>
                   </a>
                 </div>
