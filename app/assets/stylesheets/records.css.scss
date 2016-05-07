@@ -399,6 +399,10 @@ span.btn.btn-small.btn-default.btn-inverse {
 * pagination * 
 *************/
 
+.pagination-hr {
+  margin-top: 8px;
+}
+
 .view-mode-toggle-container {
   width: 60%;
   float: left;
@@ -461,12 +465,13 @@ span.btn.btn-small.btn-default.btn-inverse {
   box-shadow: none;
 }
 
-.current-page-annotation, .current-page-number {
+.current-page-annotation, 
+.current-page-number {
+  font-size: .75em;
   display: inline-block;
 }
 
 .current-page-number {
-  font-size: .75em;
   padding-right: 5px;
 }
 
@@ -581,9 +586,9 @@ hr.clear-floats {
   margin-top: 22px;
 }
 
-/********
-* modal *
-********/
+/**********************
+* record delete modal *
+**********************/
 
 .modal-content {
   width: 400px;
@@ -608,6 +613,16 @@ hr.clear-floats {
   width: 120px;
 }
 
+/*******************
+* attachment modal *
+*******************/
+
+.modal-attachment-annotation {
+  width: 300px;
+}
+
+
+
 /**************
 * record#edit *
 **************/
@@ -630,14 +645,22 @@ hr.clear-floats {
   display: none;
 }
 
-.record-attachment-container {
-  position:relative;
+.record-attachment-container, 
+.attachment-modal-content {
+  position: relative;
 }
 
-.record-attachment-container:hover {
+.pointer-cursor:hover {
   cursor: pointer;
 }
 
+.attachment-modal-content {
+  width: 300px;
+  margin: 0 auto;
+  margin-top: 25%;
+}
+
+.edit-attachment-icon-container,
 .delete-attachment-icon-container {
   position: absolute;
   right: 7px;
@@ -645,11 +668,20 @@ hr.clear-floats {
   cursor: pointer;
 }
 
+.edit-attachment-icon,
 .delete-attachment-icon {
   background-color: #fff;
   width: 24px;
   height: 23px;
   padding: 3px;
+}
+
+.delete-icon-container {
+  position: relative;
+}
+
+.delete-icon-container button {
+  float: right;
 }
 
 .save-updates-button {
@@ -729,7 +761,7 @@ hr.clear-floats {
   }
 
   .long-label {
-    width: 380px;
+    width: 330px;
   }
 
   input, #placeholder-box {
@@ -771,6 +803,11 @@ hr.clear-floats {
   .page-toggles {
     display: none;
   }
+
+  #next-page-button.mobile-gray,
+  #previous-page-button.mobile-gray {
+    background-color: #eee;
+  } 
 
   /* make progress bars full width */
   #progress-bar-table-container {
@@ -815,7 +852,7 @@ hr.clear-floats {
   }
 
   .long-label {
-    width: 375px;
+    width: 330px;
   }
 
   #record-description {
