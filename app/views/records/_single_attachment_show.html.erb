@@ -11,7 +11,7 @@
         </div>
       <% else %>
         <div class="btn-group modify-record-button margin-right">
-          <%= link_to "Report Record", flag_record_path(@record), 
+          <%= link_to "Report Record", {:controller => "report_record", :action => "create", :id => @record.id, :reporting_agent => session[:cas_user] }, 
             :class => "btn btn-primary blue-button", :id => "flag-record-button" %>
         </div>
       <% end %>
