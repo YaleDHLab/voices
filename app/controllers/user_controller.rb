@@ -2,89 +2,79 @@ class UserController < ApplicationController
   before_filter CASClient::Frameworks::Rails::Filter
 
   def show
-    # if the user has typed a search, send them search results
+    # users have access to records they've uploaded and non-private records
+    # populate a collection of searchable records
+    @user_records = Record.where("make_private = ? OR cas_user_name = ?", false, session[:cas_user])
+
     if params[:keywords].present?
       @keywords = params[:keywords]
+
+      # create a new search query
       record_search_term = RecordSearchTerm.new(@keywords)
-      @user_records = Record.where(
+      
+      # retrieve the records to display to the user
+      @records_to_display = @user_records.where(
         record_search_term.where_clause,
         record_search_term.where_args).
-      order(record_search_term.order)
+      order(record_search_term.order).uniq
+
     else
       # otherwise retrieve all records that belong to this user
-      @user_records = Record.where(cas_user_name: session[:cas_user])
+      @records_to_display = @user_records 
+    end
 
-      # and all records that users have marked as open
-      @public_records = Record.where(make_private: false)
 
-      # combine those lists
-      @combined_results = []
+    """expose json of the following form:
 
-      # add each result to the array
-      @user_records.each do |r|
-        @combined_results << r 
-      end
+      [ 
+        {
+          'record': 
+            {
+              'id': 1, 
+              'record_name': 'myname'
+            }, 
 
-      @public_records.each do |r|
-        @combined_results << r 
-      end
-
-      # dedupe the list
-      @combined_results = @combined_results.uniq
-
-      """expose json of the following form:
-
-        [ 
-          {
-            'record': 
+           'attachments': 
+            [
               {
                 'id': 1, 
-                'record_name': 'myname'
-              }, 
-
-             'attachments': 
-              [
-                {
-                  'id': 1, 
-                  'name': 'attachment_name'
-                },
-                {
-                  'id': 2, 
-                  'name': 'other_attachment_name'
-                }
-              ]
-          },
-
-          {
-            'record': 
+                'name': 'attachment_name'
+              },
               {
                 'id': 2, 
-                'record_name': 'myname'
-              }, 
+                'name': 'other_attachment_name'
+              }
+            ]
+        },
 
-             'attachments': 
-              [
-                {
-                  'id': 3, 
-                  'name': 'attachment_name'
-                },
-                {
-                  'id': 4, 
-                  'name': 'other_attachment_name'
-                }
-              ]
-          }
-        ]
-      """
+        {
+          'record': 
+            {
+              'id': 2, 
+              'record_name': 'myname'
+            }, 
 
-      @user_records_with_attachments = []
+           'attachments': 
+            [
+              {
+                'id': 3, 
+                'name': 'attachment_name'
+              },
+              {
+                'id': 4, 
+                'name': 'other_attachment_name'
+              }
+            ]
+        }
+      ]
+    """
 
-      @combined_results.each do |r|
-        @record_attachments = RecordAttachment.where(record_id: r.id)
-        @record_with_attachments = {record: r, attachments: @record_attachments}
-        @user_records_with_attachments << @record_with_attachments
-      end
+    @user_records_with_attachments = []
 
+    @records_to_display.each do |r|
+      @record_attachments = RecordAttachment.where(record_id: r.id)
+      @record_with_attachments = {record: r, attachments: @record_attachments}
+      @user_records_with_attachments << @record_with_attachments
     end
 
     # provide json endpoint that angular can access
