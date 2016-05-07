@@ -132,16 +132,15 @@ VoicesApp.controller("FormController", [
     // this requires that $scope.form be defined, and that all elements
     // be tied to the form element
 
-
     // specify the url endpoint to which we'll submit the files
     var uploadUrl = "/record_attachments";
 
     // retrieve the CSRF token to we can make the POST request without getting 422'd
     var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-    // specify the function we'll call to upload files
+    // function called by button click and drag and drop behavior to
+    // upload files to server
     var requestFileUpload = function(file) {
-
 
       if ($scope.recordId) {
           var formData = {"file_upload": file, 
@@ -186,7 +185,6 @@ VoicesApp.controller("FormController", [
     };
 
     
-
     var uploadAllFiles = function(files) {
       // iterate over files, upload and set progress bar for each
       for (i=0; i < files.length; i++)  {
@@ -200,7 +198,6 @@ VoicesApp.controller("FormController", [
     }
     
 
-
     // fire call when user interacts with file upload button
     $scope.uploadFiles = function(event){
       // files = all files the user selected on button click
@@ -209,16 +206,12 @@ VoicesApp.controller("FormController", [
     }; // closes uploadFiles function
     
 
-
-
     // when user drags file onto screen, call function
     $scope.$watch('draggedFiles', function () {
       if ($scope.draggedFiles) {
         uploadAllFiles($scope.draggedFiles);
       }
     });
-
-
 
 
   }
