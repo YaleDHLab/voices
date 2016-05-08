@@ -4,7 +4,9 @@
        data-class="drop-box" 
        data-ngf-drag-over-class="dragover" 
        data-ngf-multiple="true" 
-       data-ngf-allow-dir="true">
+       data-ngf-allow-dir="true"
+       accept="image/*, video/*, audio/*, .pdf, .doc, .docx, .xls, .xlt, .xla, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam, .csv, .tsv, .pptx, .ppt, .potx, .pot, .ppsx, .pps, .pptm, .potm, .ppsm, .ppam"
+       data-ngf-pattern="image/*, video/*, audio/*, .pdf, .doc, .docx, .xls, .xlt, .xla, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam, .csv, .tsv, .pptx, .ppt, .potx, .pot, .ppsx, .pps, .pptm, .potm, .ppsm, .ppam">
 
     <% if @record.errors.any? %>
       <div class="alert alert-danger">
@@ -26,7 +28,8 @@
         style="display:none"
         data-ng-model="form.files"
         data-on-file-input-change="uploadFiles"
-        novalidate
+        accept="image/*, video/*, audio/*, .pdf, .doc, .docx, .xls, .xlt, .xla, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam, .csv, .tsv, .pptx, .ppt, .potx, .pot, .ppsx, .pps, .pptm, .potm, .ppsm, .ppam"
+        data-ngf-pattern="image/*, video/*, audio/*, .pdf, .doc, .docx, .xls, .xlt, .xla, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam, .csv, .tsv, .pptx, .ppt, .potx, .pot, .ppsx, .pps, .pptm, .potm, .ppsm, .ppam"
       >
 
       <span class="btn btn-small btn-default btn-inverse" id="file-upload-button" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
