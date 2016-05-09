@@ -1,7 +1,7 @@
 <div class="container">
   <div class="padding-sides padding-bottom"> 
     <div class="over-image-row">
-      <h3 class="record-title">{{ data.record.title }}</h3>  
+      <h3 class="record-title"><%= @record.title %></h3>  
       <div class="edit-delete-button-container">
         <div class="btn-group modify-record-button margin-right">
           <%= link_to "Save", record_path(@record), 

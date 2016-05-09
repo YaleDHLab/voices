@@ -13,7 +13,7 @@
 <div class="container" data-ng-app="VoicesApp" data-ng-controller="GalleryController">
   <div class="padding-sides padding-bottom"> 
     <div class="over-image-row">
-      <h3 class="record-title">{{ data.record.title }}</h3>  
+      <h3 class="record-title"><%= @record.title %></h3>  
       <div class="btn-group modify-record-button">
         <% if session[:cas_user] == @record.cas_user_name %>
           <%= link_to "Edit", edit_record_path(@record), 
@@ -24,7 +24,6 @@
         <% end %>
       </div>
     </div>
-
 
     <% if @relevant_attachments.length == 1 %>
       <%= render 'single_attachment_show' %>
