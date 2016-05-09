@@ -11,12 +11,31 @@
 <!-- Render the attachment(s) -->
 
 <div class="container" data-ng-app="VoicesApp" data-ng-controller="GalleryController">
-  <% if @relevant_attachments.length == 1 %>
-    <%= render 'single_attachment_show' %>
-  <% elsif @relevant_attachments.length > 1 %>
-    <%= render 'multiple_attachments_show' %>
-  <% end %>
+  <div class="padding-sides padding-bottom"> 
+    <div class="over-image-row">
+      <h3 class="record-title">{{ data.record.title }}</h3>  
+      <div class="btn-group modify-record-button">
+        <% if session[:cas_user] == @record.cas_user_name %>
+          <%= link_to "Edit", edit_record_path(@record), 
+            :class => "btn btn-primary blue-button modify-record-button", :id => "edit-record-button" %>
+        <% else %>
+          <%= link_to "Report Record", {:controller => "report_record", :action => "create", :id => @record.id, :reporting_agent => session[:cas_user] }, 
+            :class => "btn btn-primary blue-button modify-record-button", :id => "report-record-button" %>
+        <% end %>
+      </div>
+    </div>
 
-  <!-- Render the record-level metadata -->
-  <%= render 'record_metadata' %>
+
+    <% if @relevant_attachments.length == 1 %>
+      <%= render 'single_attachment_show' %>
+    
+    <% elsif @relevant_attachments.length > 1 %>
+      <%= render 'attachment_gallery' %>
+      <%= render 'pagination_controls' %>
+      <hr class="clear-floats">
+    <% end %>
+
+    <!-- Render the record-level metadata -->
+    <%= render 'record_metadata' %>
+
 </div>

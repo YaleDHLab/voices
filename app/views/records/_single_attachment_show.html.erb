@@ -1,23 +1,3 @@
-<div class="padding-sides padding-bottom"> 
-  <div class="over-image-row">
-    <h3 class="record-title">
-        {{ data.record.title }}
-    </h3>  
-    <div class="edit-delete-button-container">
-      <% if session[:cas_user] == @record.cas_user_name %>
-        <div class="btn-group modify-record-button margin-right">
-          <%= link_to "Edit", edit_record_path(@record), 
-            :class => "btn btn-primary blue-button", :id => "edit-record-button" %>
-        </div>
-      <% else %>
-        <div class="btn-group modify-record-button margin-right">
-          <%= link_to "Report Record", {:controller => "report_record", :action => "create", :id => @record.id, :reporting_agent => session[:cas_user] }, 
-            :class => "btn btn-primary blue-button", :id => "flag-record-button" %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-
   <hr>
 
   <div class="record-display-container" data-ng-repeat="attachment in data.attachments">
