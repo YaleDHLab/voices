@@ -1,0 +1,185 @@
+<%= form_for @record, html: { multipart: true } do |f| %>
+  <div data-ngf-drop 
+       data-ng-model="draggedFiles" 
+       data-class="drop-box" 
+       data-ngf-drag-over-class="dragover" 
+       data-ngf-multiple="true" 
+       data-ngf-allow-dir="true"
+       accept="image/*, video/*, audio/*, .pdf, .doc, .docx, .xls, .xlt, .xla, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam, .csv, .tsv, .pptx, .ppt, .potx, .pot, .ppsx, .pps, .pptm, .potm, .ppsm, .ppam"
+       data-ngf-pattern="image/*, video/*, audio/*, .pdf, .doc, .docx, .xls, .xlt, .xla, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam, .csv, .tsv, .pptx, .ppt, .potx, .pot, .ppsx, .pps, .pptm, .potm, .ppsm, .ppam">
+
+    <% if @record.errors.any? %>
+      <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <ul>
+           <% @record.errors.full_messages.each do |msg| %>
+           <li><%= msg %></li>
+           <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div id="file-upload-container" class="field">
+      <%= f.label :file_upload, "Add Files<sup>*</sup>".html_safe %>
+      <input 
+        multiple
+        type="file"
+        id="custom-file-upload"
+        style="display:none"
+        data-ng-model="form.files"
+        data-on-file-input-change="uploadFiles"
+        accept="image/*, video/*, audio/*, .pdf, .doc, .docx, .xls, .xlt, .xla, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam, .csv, .tsv, .pptx, .ppt, .potx, .pot, .ppsx, .pps, .pptm, .potm, .ppsm, .ppam"
+        data-ngf-pattern="image/*, video/*, audio/*, .pdf, .doc, .docx, .xls, .xlt, .xla, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam, .csv, .tsv, .pptx, .ppt, .potx, .pot, .ppsx, .pps, .pptm, .potm, .ppsm, .ppam"
+      >
+
+      <span class="btn btn-small btn-default btn-inverse" id="file-upload-button" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
+    </div>
+
+    <!-- Append progress-bars of uploading files -->
+    <div id="progress-bar-table-container" data-ng-if="filesToSend.length > 0" data-ng-cloak>
+      <div class="panel panel-default" id="round-table-edges">
+        <table id="progress-bar-table" class="table table-striped table-bordered">
+          <tbody>
+            <tr data-ng-repeat="f in filesToSend">
+              <td class="file-name-container">
+                <div class="file-name">{{f.name}}</div>
+              </td>
+              <td>
+                <span class="progress" data-ng-if="f.progress >= 0" data-ng-cloak>
+                  <div style="width:{{f.progress}}%"></div>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= f.label :title, "Title of Material<sup>*</sup>".html_safe %>
+      <input 
+        type="text" 
+        name="record[title]" 
+        id="record_title"
+        required
+        data-ng-model="form.title">
+    </div>
+
+    <div class="field">
+      <%= f.label :description, "Description<sup>*</sup>".html_safe %>
+      
+      <textarea 
+        id="record-description" 
+        name="record[description]" 
+        cols="4" 
+        rows="5"
+        placeholder="Add a description of your material (for example, who, what, where and why) to enhance searchability within the archive. Don't forget to credit authors, creators, photographers, etc."
+        required
+        data-ng-model="form.description">
+      </textarea>
+    </div>
+
+    <div class="field">
+      <%= f.label :date, "Date of Event" %>
+      <div class="form-group date-container">
+        <div class='input-group date' id='datetimepicker1'>
+          <input 
+            type='text' 
+            class="form-control" 
+            name="record[date]"
+            id="date-selector-input"
+            data-ng-model="form.date">
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= f.label :location, "Location" %>
+      <input 
+        type="text" 
+        name="record[location]" 
+        id="record_location"
+        data-ng-model="form.location">
+    </div>
+
+    <div class="field">
+      <%= f.label :source_url, "Source URL" %>
+      <input 
+        type="text" 
+        name="record[source_url]" 
+        id="record_source_url"
+        data-ng-model="form.source_url">
+    </div>
+
+    <div class="field">
+      <%= f.label :hashtag, "Hashtags<sup>*</sup>".html_safe %>
+      <input 
+      type="text" 
+      name="record[hashtag]" 
+      id="record_hashtag"
+      placeholder="Add social media hashtags here, e.g. #WeAreYale"
+      required
+      data-ng-model="form.hashtag">
+    </div>
+
+    <div class="field" id="make-private-container">
+      <%= f.label :make_private, "Make this record private so only I can see it.".html_safe, :class => "long-label" %>
+      
+      <!-- field for make private field -->
+      <div class="hidden">
+        <input 
+          name="record[make_private]"
+          data-ng-value="form.make_private">
+      </div>
+
+      <div id="switch-container">
+        <div class="onoffswitch">
+          <switch 
+            id="record_make_private" 
+            data-ng-model="form.make_private" 
+            class="blue">
+          </switch>
+          <br>
+        </div>
+
+        <div id="boolean-slider-text" data-ng-cloak>
+          <div data-ng-if="form.make_private != true && form.make_private != false" style="float:left">NO</div>
+          <div data-ng-if="form.make_private == true" style="float:left">YES</div>
+          <div data-ng-if="form.make_private == false" style="float:left">NO</div>
+        </div>
+      </div>
+    </div>
+
+    <% if controller?("records") && action?("new") %>
+
+      <div class="field">
+        <%= f.label :release_checked, "Terms & Conditions<sup>*</sup>".html_safe %>
+        
+        <input 
+          class="custom-checkbox" 
+          type="checkbox" 
+          value="1" 
+          name="record[release_checked]" 
+          id="record_release_checked"
+          required
+          data-ng-model="form.release_checked">
+
+        <div class="terms-and-conditions">If my contribution is accepted, I agree to donate this material to the Community Voices Archive at Yale University Library for preservation and distribution for research and educational purposes. I understand that I will not receive financial compensation for this material.</div>
+      </div>
+
+    <% end %>
+
+    <div class="clear-floats"></div>
+
+    <button 
+      name="button" 
+      type="submit" 
+      class="btn btn-primary blue-button submit-button"
+      data-ng-disabled="filesSent.length == 0 || filesToSend.length != filesSent.length">SUBMIT
+    </button>
+
+  </div>
+<% end %>
