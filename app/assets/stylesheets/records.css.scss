@@ -291,7 +291,6 @@ span.btn.btn-small.btn-default.btn-inverse {
 }
 
 .edit-delete-button-container {
-  width: 82px;
   margin-top: 31px;
   display: inline-block;
   float: right;
@@ -299,6 +298,8 @@ span.btn.btn-small.btn-default.btn-inverse {
 
 .modify-record-button {
   display: inline-block;
+  float: right;
+  margin-top: 15px;
 }
 
 .record-display-container {
@@ -633,7 +634,10 @@ hr.clear-floats {
 
 #delete-record-button {
   width: 90px;
-  margin-left: -8px;
+}
+
+#report-record-button {
+  width: 160px;
 }
 
 .edit-record-title {
