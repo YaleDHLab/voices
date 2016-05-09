@@ -22,36 +22,45 @@ $(window).ready(function() {
   ***/
 
   // store element widths, as these wont' change
-  var recordTitle = $("h3");
-  var editDeleteButtonContainer = $(".edit-delete-button-container");
-
-  var recordTitleWidth = recordTitle.width();
-  var editDeleteButtonContainerWidth = editDeleteButtonContainer.width();
+  var recordTitleWidth = $("h3").width();
+  var modifyRecordButtonWidth = $(".modify-record-button").width();
 
   var restyleRecordShow = function() {
     var overImageRowWidth = $(".over-image-row").width();
 
-    if (recordTitleWidth + editDeleteButtonContainerWidth + 40 >= overImageRowWidth) {
-      // center both the record title and the edit and delete buttons
-      $(".record-title").css("width", "100%");
-      $(".record-title").css("text-align", "center");
+    console.log(recordTitleWidth, modifyRecordButtonWidth, overImageRowWidth);
 
-      $(".edit-delete-button-container").css("margin-top", "0px");
-      $(".edit-delete-button-container").css("float", "none");
-      $(".edit-delete-button-container").css("display", "block");
-      $(".edit-delete-button-container").css("margin", "0 auto");
-      $(".edit-delete-button-container").css("margin-bottom", "12px");
+    if (recordTitleWidth + modifyRecordButtonWidth + 40 >= overImageRowWidth) {
+      // center both the record title and the edit/delete/report record buttons
+      $(".record-title").css({
+        "width": "100%", 
+        "text-align": "center"
+      });
+
+      $(".modify-record-button").css({
+        "margin-top": "0px",
+        "float": "none",
+        "display": "block",
+        "margin": "0 auto",
+        "margin-bottom": "12px"
+      });
+
     } else {
       // restore original styles
-      $(".record-title").css("padding-left", "");
-      $(".record-title").css("display", "inline-block");
-      $(".record-title").css("width", "");
-      $(".record-title").css("text-align", "left");
+      $(".record-title").css({
+        "padding-left": "",
+        "display": "inline-block",
+        "width": "",
+        "text-align": "left"
+      });
 
-      $(".edit-delete-button-container").css("margin-top", "31px");
-      $(".edit-delete-button-container").css("float", "right");
-      $(".edit-delete-button-container").css("display", "inline-block");
-      $(".edit-delete-button-container").css("margin-bottom", "0px");
+      $(".modify-record-button").css({
+        "margin": "",
+        "margin-top": "15px",
+        "float": "right",
+        "display": "inline-block",
+      });
+
     }
   };
 
