@@ -17,10 +17,10 @@
       <div class="btn-group modify-record-button">
         <% if session[:cas_user] == @record.cas_user_name %>
           <%= link_to "Edit", edit_record_path(@record), 
-            :class => "btn btn-primary blue-button modify-record-button", :id => "edit-record-button" %>
+            :class => "btn btn-primary blue-button", :id => "edit-record-button" %>
         <% else %>
           <%= link_to "Report Record", {:controller => "report_record", :action => "create", :id => @record.id, :reporting_agent => session[:cas_user] }, 
-            :class => "btn btn-primary blue-button modify-record-button", :id => "report-record-button" %>
+            :class => "btn btn-primary blue-button", :id => "report-record-button" %>
         <% end %>
       </div>
     </div>
