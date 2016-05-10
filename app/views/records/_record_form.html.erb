@@ -74,7 +74,8 @@
 
     <span class="btn btn-small btn-default btn-inverse" 
           id="cancel-all-uploads"
-          data-ng-click="cancelAll()">Cancel All</span>
+          data-ng-click="cancelAll()"
+          data-ng-if="filesToSend.length > 0">Cancel All</span>
 
     <div class="field">
       <%= f.label :title, "Title of Material<sup>*</sup>".html_safe %>
@@ -199,7 +200,16 @@
       name="button" 
       type="submit" 
       class="btn btn-primary blue-button submit-button"
-      data-ng-disabled="filesSent.length == 0 || filesToSend.length != filesSent.length">SUBMIT
+      data-ng-disabled="filesSent.length == 0 || filesToSend.length != filesSent.length"
+      data-ng-if="currentPageClass == 'new'">SUBMIT
+    </button>
+
+    <button 
+      name="button" 
+      type="submit" 
+      class="btn btn-primary blue-button submit-button"
+      data-ng-disabled="filesToSend.length != filesSent.length"
+      data-ng-if="currentPageClass == 'edit'">SUBMIT
     </button>
 
   </div>
