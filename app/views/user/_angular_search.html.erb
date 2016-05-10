@@ -1,12 +1,16 @@
-
 <div class="gray-background">
   <div class="container">
     <!-- Angular search box -->
     <section class="search-form">
       <form>
-        <div class="input-group input-group-lg">
+        <div class="input-group input-group-lg search-box-container">
           <label for="search.keywords" class="sr-only">Keywords</label>
-          <input type="text"
+            
+          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        
+          <input 
+            id="search-box"
+            type="text"
             name="keywords"
             class="form-control input-lg"
             placeholder="Search"
