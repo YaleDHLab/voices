@@ -12,6 +12,63 @@ VoicesApp.directive('onFileInputChange', function() {
 });
 
 
+
+// config to allow location dependency injection
+VoicesApp.config(['$locationProvider', function($locationProvider) {
+  $locationProvider.html5Mode({
+    enabled: false,
+    requireBase: false
+  });
+}]);
+
+
+// service to return the current page class (record, annotatate, edit)
+VoicesApp.service('pageClassService', [
+      '$location',
+  function ($location) {
+    this.getPageClass = function() {
+      var url = $location.url();
+      var currentPageClass = ''
+      if (url.indexOf("/edit") > -1) {
+        currentPageClass = "edit";
+      }
+      if (url.indexOf("/annotate") > -1) {
+        currentPageClass = "annotate";
+      }
+      if (url.indexOf("/records") > -1) {
+        currentPageClass = "new";
+      }
+      return currentPageClass;
+    };
+  }
+]);
+
+
+/***
+* general service for placing http requests. Results may be fetched like this:
+*
+* var config = {"method": "get", "url": "/user/show.json"};
+*
+* httpService.placeRequest(config).then(
+*      function(d) {
+*        console.log(d);
+*     }
+*  );
+*
+***/
+VoicesApp.factory('httpService', [
+      '$http',
+  function ($http) {
+    return {
+      placeRequest: function(config) {
+        // this function returns a promise
+        return $http(config);  
+      }
+    };
+  }
+]);
+
+
 // service to POST a new record form with user params
 VoicesApp.service('postRecordForm', [
       '$http',
@@ -151,7 +208,7 @@ VoicesApp.controller("FormController", [
                  "file": "in file_upload"}
         };
 
-      $scope.upload = Upload.upload({
+      file.upload = Upload.upload({
         url: uploadUrl,
         method: 'POST',
         // pass in a hash that provides the requisite hash key (file_upload) and dummy file key
@@ -168,7 +225,9 @@ VoicesApp.controller("FormController", [
               fda.append('record_attachment['+key+']', val);
           }
         }
-      }).then(function (resp) {
+      });
+
+      file.upload.then(function (resp) {
             // log the success then store the fact we received a response for this file
             console.log('Success ' + resp.config.data.file_upload.name + 'uploaded. Response: ' + resp.data);
             $scope.filesSent.push(resp.config.data.file_upload.name);
@@ -182,7 +241,16 @@ VoicesApp.controller("FormController", [
             // tie a progress value to this file; Math.min fixes an IE bug (otherwise progress can go to 200%)
             file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
       });
-    };
+
+    
+      // expose function that allows user to cancel the upload of a file
+      $scope.abort = function(file) {
+        console.log("abort requested", file);
+        file.upload.abort();
+      };
+
+      
+    }; // closes requestFileUpload();
 
     
     var uploadAllFiles = function(files) {
