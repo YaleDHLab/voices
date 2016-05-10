@@ -22,6 +22,7 @@ VoicesApp.config(['$locationProvider', function($locationProvider) {
 }]);
 
 
+
 // service to return the current page class (record, annotatate, edit)
 VoicesApp.service('pageClassService', [
       '$location',
@@ -249,8 +250,15 @@ VoicesApp.controller("FormController", [
         file.upload.abort();
       };
 
-      
     }; // closes requestFileUpload();
+
+
+    // expose function that cancels all pending user uploads
+    $scope.cancelAll = function() {
+      for (i=0; i < $scope.filesToSend.length; i++) {
+        $scope.abort($scope.filesToSend[i]);
+      }
+    };
 
     
     var uploadAllFiles = function(files) {
