@@ -13,36 +13,31 @@ VoicesApp.directive('onFileInputChange', function() {
 
 
 
-// config to allow location dependency injection
-VoicesApp.config(['$locationProvider', function($locationProvider) {
-  $locationProvider.html5Mode({
-    enabled: false,
-    requireBase: false
-  });
-}]);
+
 
 
 
 // service to return the current page class (record, annotatate, edit)
-VoicesApp.service('pageClassService', [
-      '$location',
-  function ($location) {
+VoicesApp.service('pageClassService', 
+  function () {
     this.getPageClass = function() {
-      var url = $location.url();
+      var url = window.location.href;
+
       var currentPageClass = ''
-      if (url.indexOf("/edit") > -1) {
-        currentPageClass = "edit";
-      }
       if (url.indexOf("/annotate") > -1) {
         currentPageClass = "annotate";
       }
       if (url.indexOf("/records") > -1) {
         currentPageClass = "new";
       }
+      if (url.indexOf("/edit") > -1) {
+        currentPageClass = "edit";
+      }
+
       return currentPageClass;
     };
   }
-]);
+);
 
 
 /***
@@ -146,6 +141,9 @@ VoicesApp.controller("FormController", [
 
     // initialize privacy settings to keep records private
     $scope.form.make_private = $scope.form.make_private? $scope.form.make_private: true;
+
+    // transmit page class so we can distinguish between record#new and record#edit forms
+    $scope.currentPageClass = pageClassService.getPageClass();
 
     // setter for form elements; only to be called when user is editing record
     // TODO: Make into a service that returns response.data.record
@@ -285,6 +283,8 @@ VoicesApp.controller("FormController", [
     // when user drags file onto screen, call function
     $scope.$watch('draggedFiles', function () {
       if ($scope.draggedFiles) {
+        console.log("user dragged", $scope.draggedFiles);
+
         uploadAllFiles($scope.draggedFiles);
       }
     });
@@ -608,12 +608,16 @@ VoicesApp.controller("GalleryController", [
     // call an additional function to make current page available to client
     $scope.getCurrentPageClass();
 
+
+
     // initialize the view with multi-record view
     $scope.multipleRecordView = true;
 
 
   }
 ]);
+
+
 
 
 VoicesApp.controller("userController", [
