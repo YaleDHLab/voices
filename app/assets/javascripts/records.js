@@ -41,8 +41,9 @@ $(window).ready(function() {
         "margin-top": "0px",
         "float": "none",
         "display": "block",
-        "margin": "0 auto",
-        "margin-bottom": "12px"
+        "margin-bottom": "12px",
+        "left": "50%",
+        "margin-left": 0 - (modifyRecordButtonWidth / 2)
       });
 
     } else {
@@ -56,9 +57,12 @@ $(window).ready(function() {
 
       $(".modify-record-button").css({
         "margin": "",
-        "margin-top": "15px",
+        "margin-top": "30px",
         "float": "right",
         "display": "inline-block",
+        "margin-left": "0px",
+        "margin-bottom": "0px",
+        "left": "0px"
       });
 
     }
