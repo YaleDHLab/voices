@@ -44,16 +44,37 @@
               <td class="file-name-container">
                 <div class="file-name">{{f.name}}</div>
               </td>
-              <td>
+              <td class="progress-bar-container">
                 <span class="progress" data-ng-if="f.progress >= 0" data-ng-cloak>
                   <div style="width:{{f.progress}}%"></div>
                 </span>
+              </td>
+              <td class="progress-image-container">
+                <div class="progress-image">
+                  
+                  <div data-ng-if="f.progress < 100">
+                    <img 
+                      src="/assets/x-cancel-blue.svg" 
+                      alt="Cancel file upload"
+                      data-ng-click="abort(f)"
+                      class="cancel-upload">
+                  </div>
+
+                  <div data-ng-if="f.progress == 100">
+                    <img src="/assets/check-box-orange.svg" alt="Check box orange">
+                  </div>
+
+                </div>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
+
+    <span class="btn btn-small btn-default btn-inverse" 
+          id="cancel-all-uploads"
+          data-ng-click="cancelAll()">Cancel All</span>
 
     <div class="field">
       <%= f.label :title, "Title of Material<sup>*</sup>".html_safe %>
