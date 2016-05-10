@@ -130,6 +130,43 @@ sup {
   font-weight: 100; 
 }
 
+/*********************
+* file upload styles *
+*********************/
+
+span.btn.btn-small.btn-default.btn-inverse {
+  padding: 4px 14px;
+  float: left;
+  color: #555;
+}
+
+#file-upload-button .btn {
+  border-radius: 4px;
+  margin-left: 4px;
+}
+
+#file-upload-button .form-control {
+  box-shadow: none;
+}
+
+#placeholder-box {
+  overflow: hidden;
+  float: left;
+  height: 30px;
+  -webkit-rtl-ordering: logical;
+  -webkit-user-select: text;
+  cursor: auto;
+  padding: 5px 7px;
+  border: 1px solid lightgray;
+  font-style: italic;
+  border-radius: 4px;
+}
+
+/* set height of container */
+#file-upload-container {
+  padding-bottom: 30px;
+}
+
 /**********************
 * progress bar styles *
 **********************/
@@ -195,6 +232,21 @@ span.progress {
   height: 100%;
 }
 
+/* styles for the progress bar images */
+.progress-image-container {
+  width: 20px;
+}
+
+.progress-image {
+  height: 20px;
+  width: 14px;
+}
+
+.cancel-upload {
+  cursor: pointer;
+}
+
+
 /* styles for filename rows */
 .file-name {
   height: 20px;
@@ -205,41 +257,10 @@ span.progress {
   padding-top: 3px;
 }
 
-/*********************
-* file upload styles *
-*********************/
-
-span.btn.btn-small.btn-default.btn-inverse {
-  padding: 4px 14px;
-  float: left;
-  color: #555;
-}
-
-#file-upload-button .btn {
-  border-radius: 4px;
-  margin-left: 4px;
-}
-
-#file-upload-button .form-control {
-  box-shadow: none;
-}
-
-#placeholder-box {
-  overflow: hidden;
-  float: left;
-  height: 30px;
-  -webkit-rtl-ordering: logical;
-  -webkit-user-select: text;
-  cursor: auto;
-  padding: 5px 7px;
-  border: 1px solid lightgray;
-  font-style: italic;
-  border-radius: 4px;
-}
-
-/* set height of container */
-#file-upload-container {
-  padding-bottom: 30px;
+/* cancel all button */
+#cancel-all-uploads {
+  float: right;
+  margin-top: 20px;
 }
 
 /****************
@@ -291,7 +312,6 @@ span.btn.btn-small.btn-default.btn-inverse {
 }
 
 .edit-delete-button-container {
-  margin-top: 31px;
   display: inline-block;
   float: right;
 }
@@ -299,7 +319,8 @@ span.btn.btn-small.btn-default.btn-inverse {
 .modify-record-button {
   display: inline-block;
   float: right;
-  margin-top: 15px;
+  margin-top: 30px;
+  height: 34px;
 }
 
 .record-display-container {
@@ -402,6 +423,7 @@ span.btn.btn-small.btn-default.btn-inverse {
 
 .pagination-hr {
   margin-top: 8px;
+  clear: both;
 }
 
 .view-mode-toggle-container {
@@ -818,6 +840,8 @@ hr.clear-floats {
     margin-top: 30px;
     padding-left: 0px;
     padding-right: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
   }
 
 }
