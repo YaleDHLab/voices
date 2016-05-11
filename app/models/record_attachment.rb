@@ -32,6 +32,7 @@ class RecordAttachment < ActiveRecord::Base
       "image/jpeg", 
       "image/png", 
       "image/gif",
+      "image/svg+xml",
       "application/pdf",
 
       "audio/mpeg", 
@@ -108,6 +109,10 @@ class RecordAttachment < ActiveRecord::Base
 
   def is_pdf?
     self.file_upload_file_name =~ %r{\.(pdf)$}i
+  end
+
+  def is_svg?
+    self.file_upload_file_name =~ %r{\.(svg)$}i
   end
 
   def has_default_image?
@@ -287,6 +292,30 @@ class RecordAttachment < ActiveRecord::Base
           :square_thumb_url => ActionController::Base.helpers.asset_path("square_thumb_url_xls.png")
         )
       end
+
+
+
+
+    # svg
+    elsif self.is_svg?
+      if self.medium_image_url != ActionController::Base.helpers.asset_path("medium_image_url_eps.png")
+        self.update_attributes(
+          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_eps.png")
+        )
+      end
+
+      if self.annotation_thumb_url != ActionController::Base.helpers.asset_path("annotation_thumb_url_eps.png")
+        self.update_attributes(
+          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_eps.png")
+        )
+      end
+
+      if self.square_thumb_url != ActionController::Base.helpers.asset_path("square_thumb_url_eps.png")
+        self.update_attributes(
+          :square_thumb_url => ActionController::Base.helpers.asset_path("square_thumb_url_eps.png")
+        )
+      end
+
 
     # other
     else
