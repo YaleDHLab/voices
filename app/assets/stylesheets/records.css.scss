@@ -697,9 +697,12 @@ hr.clear-floats {
 .edit-attachment-icon,
 .delete-attachment-icon {
   background-color: #fff;
-  width: 24px;
-  height: 23px;
+  width: 27px;
+  height: 28px;
   padding: 3px;
+  border: 2px solid darkgray;
+  border-style: outset;
+  border-radius: 3px;
 }
 
 .delete-icon-container {
