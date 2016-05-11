@@ -13,7 +13,7 @@ class ReportRecordController < ApplicationController
     if @record_flagged.save
       # send an email to our inbox on save of a contact form
       ContactMailer.report_record(@reported_record, @reporting_agent).deliver
-      flash[:success] = "<strong>Success</strong>".html_safe + ": Thank you for contacting us."
+      flash[:info] = "<strong>CONFIRMATION</strong>".html_safe + ": Thank you for reporting this record."
       redirect_to user_show_path
     
     else
