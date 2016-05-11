@@ -10,9 +10,11 @@
 # seed each admin's database
 ENV["VOICES_ADMINS"].split("#").each do |username|
 
+    '''
     if username == "ded34"
         next
     end
+    '''
 
     7.times do |r|
 
