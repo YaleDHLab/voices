@@ -8,6 +8,14 @@
            class="record-display-text"
            data-ng-cloak>{{ data.record.description }}
       </div>
+      <div data-ng-if="data.record.cas_user_name" 
+           class="record-display-label"
+           data-ng-cloak>Contributor
+      </div>
+      <div data-ng-if="data.record.cas_user_name" 
+           class="record-display-text"
+           data-ng-cloak>{{ data.record.cas_user_name }}
+      </div>
     </div>
 
     <div class="record-display-right">
