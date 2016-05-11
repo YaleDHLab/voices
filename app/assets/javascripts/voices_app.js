@@ -65,6 +65,7 @@ VoicesApp.factory('httpService', [
 ]);
 
 
+
 // service to POST a new record form with user params
 VoicesApp.service('postRecordForm', [
       '$http',
@@ -126,8 +127,8 @@ VoicesApp.service('saveAnnotationService', [
 
 
 VoicesApp.controller("FormController", [
-        "$scope", "$http", "$location", "Upload", "postRecordForm",
-  function($scope, $http, $location, Upload, postRecordForm ) {
+        "$scope", "$http", "$location", "Upload", "postRecordForm", "pageClassService",
+  function($scope, $http, $location, Upload, postRecordForm, pageClassService ) {
 
 
     // define the array to which we'll append all user uploaded files
@@ -309,14 +310,19 @@ VoicesApp.filter('trusted', [
 // this controller allows us to display record attachments
 // and requires a close method 
 VoicesApp.controller('ModalController', [
-    "$scope", "$http", "close", "attachment", "saveAnnotationService",
-  function($scope, $http, close, attachment, saveAnnotationService) {
+    "$scope", "$http", "$element", "close", "attachment", "saveAnnotationService",
+  function($scope, $http, $element, close, attachment, saveAnnotationService) {
     
     // make the attachment available to the view
     $scope.attachment = attachment;
 
     // close the modal with a 500 ms fade
     $scope.close = function(result) {
+      // because we use bootstrap, manually hide the backdrop
+      $element.modal('hide');
+
+      // then close the modal, sending the attachmentId back to the function
+      // that called the modal
       close(result, 500); 
     }; 
 
@@ -326,33 +332,18 @@ VoicesApp.controller('ModalController', [
       saveAnnotationService.saveAnnotation(annotation, attachmentId);
     };
 
-    // on record#edit, allow users to delete an attachment on click of button
-    $scope.deleteAttachment = function(attachmentId) {
-      console.log("called");
-
-      // need to pass this attachmentId to a global state object 
-      
-
-
-      // add the attachment id to the array of attachments to hide
-      $scope.hiddenAttachments.push(attachmentId);
-
-      $.ajax({ url: "/record_attachments/" + attachmentId,
-        type: 'DELETE',
-        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-        data: {},
-        success: function(response) {}
-      });
-    };
-
   }
 ]);
 
 
 
+
+
+
+
 VoicesApp.controller("GalleryController", [
-        "$scope", "$http", "$location", "ModalService", "saveAnnotationService",
-  function($scope, $http, $location, ModalService, saveAnnotationService) {
+        "$scope", "$http", "$location", "ModalService", "saveAnnotationService", "pageClassService",
+  function($scope, $http, $location, ModalService, saveAnnotationService, pageClassService) {
     var self = this;
 
     // always start user on page 0
@@ -362,7 +353,7 @@ VoicesApp.controller("GalleryController", [
     // break into the superuser pagination
     $scope.superUserBreakpoint = 20;
 
-    // array of elements to hide (in case user deletes attachment)
+    // create an array in which we'll store attachments that shouldn't be shown
     $scope.hiddenAttachments = [];
 
     // array of elements over which user is hovering
@@ -388,18 +379,6 @@ VoicesApp.controller("GalleryController", [
     
       // once the recordId is available, fetch json detailing the record and its attachments
       $scope.getAttachments($scope.recordId, $scope.currentPage);
-    };
-
-
-    // function to expose the current site to the client
-    $scope.getCurrentPageClass = function() {
-      var url = window.location.href;
-      if (url.indexOf("/edit") > -1) {
-        $scope.currentPageClass = "edit";
-      }
-      if (url.indexOf("/annotate") > -1) {
-        $scope.currentPageClass = "annotate";
-      }
     };
 
 
@@ -436,7 +415,7 @@ VoicesApp.controller("GalleryController", [
     // returns json with 'record' and 'attachments' keys
     // the value of the attachment key is an array of attachments,
     // each of which is a hashtable
-    $scope.getAttachments = function(recordId) {
+    $scope.getAttachments = function(recordId, pageToFetch) {
       console.log("getting attachments");
 
       if (recordId) {
@@ -449,7 +428,7 @@ VoicesApp.controller("GalleryController", [
           $scope.setAttachmentsPerPage();
 
           // fetch the first page of results
-          $scope.getPageOfAttachments(0);
+          $scope.getPageOfAttachments(pageToFetch);
 
           // call function to make total number of pages available to functions
           $scope.setTotalNumberOfPages()
@@ -576,13 +555,41 @@ VoicesApp.controller("GalleryController", [
     };
 
 
+
+    // on record#edit, allow users to delete an attachment on click of button
+    $scope.deleteAttachment = function(attachmentId) {
+      console.log("called delete attachment", attachmentId);
+
+      // add the attachmentId to the array in the hidden attachment service 
+      $scope.hiddenAttachments.push(attachmentId);
+
+      // place the delete request to destroy this attachment
+      $.ajax({ url: "/record_attachments/" + attachmentId,
+        type: 'DELETE',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        data: {},
+        success: function(response) {
+          
+          // to fetch new data we need to update $scope.data
+          // so call getAttachments
+          $scope.getAttachments($scope.recordId, $scope.currentPage);
+
+          // if the delete succeeded, fetch new attachments
+          $scope.getPageOfAttachments($scope.currentPage);
+        }
+      });
+    };
+
+
+
+
     $scope.showAttachmentModal = function(attachment) {
-      console.log(attachment);
 
       /***
       * templateUrl: the template to be rendered (this is inlined)
       * controller: the controller that will handle the modal
       * inputs: data to be passed to the specified controller
+      *         attachment here is a full attachment json object
       ***/
                     
       ModalService.showModal({
@@ -591,12 +598,18 @@ VoicesApp.controller("GalleryController", [
         inputs: {
           attachment: attachment
         }
-      }).then(function(modal) {
+      }).then(function(modal) {  // success callback
 
-        //it's a bootstrap element, use 'modal' to show it
+        // the modal is a bootstrap element, so we can use the modal() method to show it
         modal.element.modal();
         modal.close.then(function(result) {
-          console.log(result);
+          
+          // if the modal returned a value, that value
+          // represents the id of an attachment that should 
+          // be deleted --> pass the result as an input to 
+          // delete the recordattachment
+          $scope.deleteAttachment(result);
+
         });
       });
     };
@@ -605,14 +618,11 @@ VoicesApp.controller("GalleryController", [
     // initialize the function chain
     $scope.getRecordId();
 
-    // call an additional function to make current page available to client
-    $scope.getCurrentPageClass();
-
-
+    // make the current page available to client
+    $scope.currentPageClass = pageClassService.getPageClass();
 
     // initialize the view with multi-record view
     $scope.multipleRecordView = true;
-
 
   }
 ]);
