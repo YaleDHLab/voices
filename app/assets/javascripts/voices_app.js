@@ -26,11 +26,11 @@ VoicesApp.service('pageClassService',
       if (url.indexOf("/annotate") > -1) {
         currentPageClass = "annotate";
       }
-      if (url.indexOf("/new") > -1) {
-        currentPageClass = "new";
-      }
       if (url.indexOf("/records") > -1) {
         currentPageClass = "show";
+      }
+      if (url.indexOf("/new") > -1) {
+        currentPageClass = "new";
       }
       if (url.indexOf("/edit") > -1) {
         currentPageClass = "edit";
