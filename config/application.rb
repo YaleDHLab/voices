@@ -23,7 +23,12 @@ module VoicesRails
     # Add bootstrap fonts to the asset path (see also static_pages.css.scss, which overrides bootstrap's
     # default path for requested glyphicon assets in order to point to the asset_path())
     config.assets.enabled = true
-    config.assets.paths << "#{Rails}/vendor/assets/fonts"
+
+    # recursively add font elements to asset path
+    Dir.glob("#{Rails.root}/vendor/assets/fonts/**").each do |path|
+      config.assets.paths << path
+    end
+
 
     # One can now to reference glyphicons/glyphicons-halflings-regular.woff; see
     # static_pages.css.scss for the implementation there

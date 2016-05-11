@@ -483,11 +483,11 @@ html, body {
 /* override the bootstrap path to the glyphicons */
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url(asset_path('Glyphicons/glyphicons-halflings-regular.eot'));
-  src: url(asset_path('Glyphicons/glyphicons-halflings-regular.eot?#iefix')) format('embedded-opentype'), 
-       url(asset_path('Glyphicons/glyphicons-halflings-regular.woff')) format('woff'), 
-       url(asset_path('Glyphicons/glyphicons-halflings-regular.ttf')) format('truetype'), 
-       url(asset_path('Glyphicons/glyphicons-halflings-regular.svg#glyphicons_halflingsregular')) format('svg');
+  src: url(asset_path('glyphicons-halflings-regular.eot'));
+  src: url(asset_path('glyphicons-halflings-regular.eot?#iefix')) format('embedded-opentype'), 
+       url(asset_path('glyphicons-halflings-regular.woff')) format('woff'), 
+       url(asset_path('glyphicons-halflings-regular.ttf')) format('truetype'), 
+       url(asset_path('glyphicons-halflings-regular.svg#glyphicons_halflingsregular')) format('svg');
 }
 
 /* add YaleNew font */
@@ -495,7 +495,7 @@ html, body {
   font-family: YaleNew;
   font-style: normal;
   font-weight: normal;
-  src: url(asset_path('YaleNew/yaledesign-medium-webfont.ttf')) format('truetype')
+  src: url(asset_path('yaledesign-medium-webfont.ttf')) format('truetype')
 }
 
 .center-text {
