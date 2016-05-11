@@ -26,6 +26,9 @@ class RecordSearchTerm
     @where_clause << " OR #{case_insensitive_search(:hashtag)}"
     @where_args[:hashtag] = starts_or_ends_with(search_term)
 
+    @where_clause << " OR #{case_insensitive_search(:cas_user_name)}"
+    @where_args[:cas_user_name] = starts_or_ends_with(search_term)
+
     @order = "title asc"
   end
 
