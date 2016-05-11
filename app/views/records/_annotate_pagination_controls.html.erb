@@ -1,0 +1,99 @@
+<div data-ng-if="data.attachments.length > 1" data-ng-cloak>
+  <div class="pagination-controls"
+       data-ng-show="data.attachments.length > 4">
+    
+    <hr>
+
+    <div class="pagination-lower-row clear-floats">
+
+      <div data-ng-if="currentPage > 0"> <!-- Previous page link -->
+        <a href="" data-ng-click="previousPage()">
+          <div class="previous-page">
+            
+            <button type="button" 
+                    class="btn" 
+                    id="previous-page-button" 
+                    aria-label="Left Align"
+                    data-ng-class="currentPageClass == 'edit' && 'mobile-gray'">
+              <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+            </button>
+
+          </div>
+        </a>
+      </div>
+      
+      <!-- spacer in case we're on the first page -->
+      <div data-ng-if="currentPage == 0">
+        <div class="previous-page"></div>
+      </div>
+
+
+      <!-- Next page link -->
+      <div data-ng-if="currentPage + 1 < totalNumberOfPages">
+        <a href="" data-ng-click="nextPage()">
+          <div class="next-page">
+            
+            <button type="button" 
+                    class="btn" 
+                    id="next-page-button" 
+                    aria-label="Left Align"
+                    data-ng-class="currentPageClass == 'edit' && 'mobile-gray'">
+              <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+            </button>
+
+          </div>
+        </a>
+      </div>
+
+      <!-- spacer in case we're on the last page -->
+      <div data-ng-if="currentPage == totalNumberOfPages">
+        <div class="next-page"></div>
+      </div>
+
+      <!-- Page toggle buttons --> 
+      <div class="view-mode-toggle-container"
+           data-ng-if="currentPageClass != 'annotate'">
+        <div class="view-mode-toggle-outer">
+          <div class="view-mode-toggle-inner">
+            <div class="multiple-record-view-container">
+              <button 
+                type="button" 
+                class="btn btn-default multiple-record-view-button" 
+                aria-label="Multiple Record View"
+                ng-click="multipleRecordViewClicked()"
+                ng-class="{true: '', false: 'active'}[!multipleRecordView]">
+                <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+              </button>
+            </div>
+       
+            <div class="single-record-view-container">
+              <button 
+                type="button" 
+                class="btn btn-default single-record-view-button" 
+                aria-label="Single Record View"
+                ng-click="singleRecordViewClicked()"
+                ng-class="{true: 'active', false: ''}[!multipleRecordView]">
+                <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page toggle circles --> 
+      <div data-ng-show="currentPageClass == 'annotate' && totalNumberOfPages > 1"
+           class="page-toggles bottom-row-page-circles"> <!-- Page toggle circles -->
+        <div class="circle-outer-container">
+          <div class="circle-inner-container" 
+               data-ng-repeat="i in getPageArray( totalNumberOfPages ) track by $index">
+            <a href="" data-ng-click="getPageOfAttachments($index)">
+              <div data-ng-if="currentPage === $index" class="circle active"></div>
+              <div data-ng-if="currentPage != $index" class="circle"></div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- ./ pagination-lower-row -->
+  </div>
+</div>
