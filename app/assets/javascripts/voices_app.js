@@ -1,6 +1,9 @@
 // compile all required controllers into one app to expose to views
 var VoicesApp = angular.module('VoicesApp', ['ngFileUpload', 'uiSwitch', 'angularModalService']);
 
+
+
+// directive that listens for changes to the file upload button
 VoicesApp.directive('onFileInputChange', function() {
   return {
     restrict: 'A',
@@ -10,8 +13,6 @@ VoicesApp.directive('onFileInputChange', function() {
     }
   };
 });
-
-
 
 
 
@@ -279,6 +280,9 @@ VoicesApp.controller("FormController", [
     $scope.uploadFiles = function(event){
       // files = all files the user selected on button click
       var files = event.target.files;
+
+      console.log(files);
+
       uploadAllFiles(files);
     }; // closes uploadFiles function
     
@@ -390,7 +394,14 @@ VoicesApp.controller("GalleryController", [
       // the gallery view should hold 20 images per page for all views except annotate, iff
       // there are more than n attachments for the record 
       if (url.indexOf("/annotate") > -1) {
-        $scope.attachmentsPerPage = 4;
+        // if the user has only one record, push 1 attachment per page to client
+        // nb: this should never happen through normal operations, as users are only
+        // requested to annotate a record's annotations if that record has > 4 attachments,
+        // but if a user requests ROOTURL/annotate/Record-with-1-attachment-id, 
+        // we want to serve them with a nice looking page
+        if ($scope.data.attachments.length == 1) {
+          $scope.attachmentsPerPage = 1;
+        } else { $scope.attachmentsPerPage = 4; }
       }
 
       if ($scope.data.attachments.length > $scope.superUserBreakpoint) {
