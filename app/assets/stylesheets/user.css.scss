@@ -26,6 +26,7 @@
   margin: 0 0 14px 0;
   width:  100%; 
   background:  #efefef;
+  border-right: none !important;
   box-shadow: 1px 1px 1px 0 #7b7b7b;
 }
 
@@ -56,10 +57,10 @@
 
 /* search box */
 input#search-box {
-  width: 222px;
+  width: 50%;
   position: relative;
   left: 50%;
-  margin-left: -111px;
+  margin-left: -25%;
   border-radius: 4px;
   padding-left: 32px;
 }
@@ -67,7 +68,8 @@ input#search-box {
 /* search magnifying glass */
 span.glyphicon.glyphicon-search {
   left: 50%;
-  margin-left: -211px;
+  margin-left: -50%;
+  padding-left: 10px;
   margin-top: 15px;
   z-index: 15;
   color: #9F9F9F;
