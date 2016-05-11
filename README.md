@@ -47,6 +47,7 @@ heroku config:set GMAIL_PASSWORD={gmail_password_for_account_above}
 heroku config:set AWS_S3_BUCKET_NAME={your_aws_s3_bucket_name}  
 heroku config:set AWS_ACCESS_KEY_ID={your_aws_access_key_id}  
 heroku config:set AWS_SECRET_ACCESS_KEY={your_aws_access_key}  
+heroku config:set VOICES_SECRET_KEY={your_rails_app_secret_key}
   
 # drop the heroku db  
 heroku pg:reset DATABASE  
