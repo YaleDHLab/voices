@@ -22,13 +22,15 @@ VoicesApp.service('pageClassService',
   function () {
     this.getPageClass = function() {
       var url = window.location.href;
-
       var currentPageClass = ''
       if (url.indexOf("/annotate") > -1) {
         currentPageClass = "annotate";
       }
-      if (url.indexOf("/records") > -1) {
+      if (url.indexOf("/new") > -1) {
         currentPageClass = "new";
+      }
+      if (url.indexOf("/records") > -1) {
+        currentPageClass = "show";
       }
       if (url.indexOf("/edit") > -1) {
         currentPageClass = "edit";
