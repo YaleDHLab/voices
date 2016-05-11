@@ -1,5 +1,6 @@
-<div data-ng-if="data.attachments.length > attachmentsPerPage" data-ng-cloak>
-  <div class="pagination-controls">  
+<div data-ng-if="data.attachments.length > 1" data-ng-cloak>
+  <div class="pagination-controls"
+       data-ng-class="data.attachments.length < 5 && 'few-attachments'">
     <div class="pagination-upper-row"
          data-ng-if="currentPageClass != 'annotate'">
 
@@ -8,7 +9,8 @@
         <div>
           <div class="previous-page"></div> <!-- spacer -->
         </div>
-        <div class="page-toggles"> <!-- Page toggle circles -->
+        <div class="page-toggles"
+             data-ng-if="data.attachments.length > attachmentsPerPage"> <!-- Page toggle circles -->
           <div class="circle-outer-container">
             <div class="circle-inner-container" 
                  data-ng-repeat="i in getPageArray( totalNumberOfPages ) track by $index">
