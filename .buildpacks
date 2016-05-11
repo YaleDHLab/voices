@@ -1,4 +1,5 @@
 https://github.com/HYPERHYPER/heroku-buildpack-ffmpeg.git
 https://github.com/heroku/heroku-buildpack-ruby.git
 https://github.com/elbongurk/heroku-buildpack-ghostscript.git
-https://github.com/heroku/heroku-buildpack-nodejs
+https://github.com/qnyp/heroku-buildpack-ruby-bower.git
+https://github.com/heroku/heroku-buildpack-nodejs.git
