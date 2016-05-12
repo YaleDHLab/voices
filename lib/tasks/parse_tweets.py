@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # usage: python parse_tweets.py; cat good_words.txt | pbcopy # copies word array into buffer
+# todo: should autoremove emoji using unicode codepoints (e.g. http://unicode.org/emoji/charts/full-emoji-list.html)
 
 from collections import Counter
 from nltk.corpus import stopwords
