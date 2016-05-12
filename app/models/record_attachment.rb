@@ -19,7 +19,10 @@ class RecordAttachment < ActiveRecord::Base
 
     processors: lambda { 
       |a| a.is_video? ? [ :ffmpeg ] : [ :thumbnail ] 
-    }
+    },
+
+    # upload files to https
+    :s3_protocol => :https
 
   # Validate that we accept the type of file the user is uploading
   # by explicitly listing the mimetypes we are willing to accept
