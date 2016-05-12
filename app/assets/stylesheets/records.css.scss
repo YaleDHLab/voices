@@ -872,6 +872,11 @@ hr.clear-floats {
     margin-right: 0px;
   }
 
+  /* don't display upper row of pagination on mobile */
+  .pagination-upper-row {
+    display: none;
+  }
+
 }
 
 
