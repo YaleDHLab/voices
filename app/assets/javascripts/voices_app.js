@@ -663,7 +663,7 @@ VoicesApp.controller("userController", [
 
       // retreives an array of hashes, each of which has record and attachment keys
       var getUserRecords = function() {
-        $http.get("/user/show.json")
+        $http.get( "/user/show.json", {cache: true} )
         .then(function(response) {
           $scope.userRecords = response.data;
         }, function(response) {
@@ -678,7 +678,7 @@ VoicesApp.controller("userController", [
 
       // define and call function to serve all user records
       var allUserRecords = function() {
-        $http.get("/user/show.json")
+        $http.get("/user/show.json", {cache: true})
         .then(function(response) {
           $scope.records = response.data;
         }, function(response) {
@@ -698,7 +698,7 @@ VoicesApp.controller("userController", [
         if (searchTerm) {
             $scope.userRanSearch = 1;
             $http.get("/user/show.json",
-              {"params": {"keywords": searchTerm} }  
+              {"params": {"keywords": searchTerm}, cache: true }  
             ).then(function(response) {
               $scope.records = response.data;
 
