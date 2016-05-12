@@ -14,7 +14,7 @@ punct = set(string.punctuation)
 d = Counter()
 
 do_not_type = 'g'
-bad_words = ["shit", "fuck", "ni"+do_not_type+do_not_type+"er"]
+bad_words = [u"shit", u"fuck", u"ni"+do_not_type+do_not_type+"er", "fucked", "cunts"]
 good_words = []
 
 for i in glob.glob("tweets/wrong_move*"):
@@ -29,19 +29,27 @@ for i in glob.glob("tweets/wrong_move*"):
           print "skipping", w
           continue
 
-        if w not in stops:
-          if "http" in w:
-            continue
+        if w in stops:
+          continue
 
-          # remove punc
-          w = ''.join(c for c in w if c not in punct)
+        if "http" in w:
+          continue
 
-          # remove shorts
-          if len(w) > 3:
+        # remove punc
+        w = ''.join(c for c in w if c not in punct)
 
-            w = w.lower().replace("\u2019s","'").replace("\u201C",'')
-            d[w] += 1
-     
+        # remove shorts
+        if len(w) < 4:
+          continue
+
+        w = w.lower().replace("\u2019s","'").replace("\u201C",'')
+ 
+        if w in bad_words:
+          print w
+          continue
+
+        d[w] += 1
+   
 
 with codecs.open("good_words.txt", "w", "utf-8") as out:
   for c, w in enumerate(d):
