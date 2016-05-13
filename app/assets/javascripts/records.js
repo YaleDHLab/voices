@@ -23,7 +23,7 @@ $(window).ready(function() {
 
   // store element widths, as these wont' change
   var recordTitleWidth = $("h3").width();
-  var modifyRecordButtonWidth = $(".modify-record-button").width();
+  var modifyRecordButtonWidth = $(".edit-delete-button-container").width();
 
   var restyleRecordShow = function() {
     var overImageRowWidth = $(".over-image-row").width();
@@ -39,17 +39,13 @@ $(window).ready(function() {
       });
 
       $(".edit-delete-button-container").css({
-        "float": "none",
-        "display": "block"
-      });
-
-      $(".modify-record-button").css({
-        "margin-top": "0px",
+        "position": "relative",
         "float": "none",
         "display": "block",
-        "margin-bottom": "12px",
+        "margin-top": "0px",
         "left": "50%",
-        "margin-left": 0 - (modifyRecordButtonWidth / 2)
+        "margin-left": 0 - (modifyRecordButtonWidth / 2),
+        "margin-bottom": "12px",
       });
 
     } else {
@@ -62,18 +58,11 @@ $(window).ready(function() {
       });
 
       $(".edit-delete-button-container").css({
-        "float": "right",
-        "display": "inline-block"
-      });
-
-      $(".modify-record-button").css({
-        "margin": "",
-        "margin-top": "30px",
-        "float": "right",
         "display": "inline-block",
-        "margin-left": "0px",
-        "margin-bottom": "0px",
-        "left": "0px"
+        "float": "right",
+        "margin-top": "30px",
+        "left": "0px",
+        "margin-left": "0px"
       });
 
     }

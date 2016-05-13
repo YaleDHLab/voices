@@ -13,8 +13,8 @@
 <div class="container" data-ng-app="VoicesApp" data-ng-controller="GalleryController">
   <div class="padding-sides padding-bottom"> 
     <div class="over-image-row">
-      <h3 class="record-title"><%= @record.title %></h3>  
-      <div class="btn-group modify-record-button">
+      <h3 class="record-title"><%= @record.title %></h3>
+      <div class="edit-delete-button-container">
         <% if session[:cas_user] == @record.cas_user_name %>
           <%= link_to "Edit", edit_record_path(@record), 
             :class => "btn btn-primary blue-button", :id => "edit-record-button" %>
@@ -36,5 +36,5 @@
 
     <!-- Render the record-level metadata -->
     <%= render 'record_metadata' %>
-
-</div>
+  </div> <!-- /.padding-sides padding-bottom -->
+</div> <!-- /.container -->

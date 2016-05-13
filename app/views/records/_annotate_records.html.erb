@@ -3,10 +3,8 @@
     <div class="over-image-row">
       <h3 class="record-title"><%= @record.title %></h3>  
       <div class="edit-delete-button-container">
-        <div class="btn-group modify-record-button">
-          <%= link_to "Save", record_path(@record), 
-            :class => "btn btn-primary blue-button", :id => "edit-record-button" %>
-        </div>
+        <%= link_to "Save", record_path(@record), 
+          :class => "btn btn-primary blue-button", :id => "edit-record-button" %>
       </div>
     </div>
 
