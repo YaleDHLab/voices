@@ -31,10 +31,16 @@ $(window).ready(function() {
     console.log(recordTitleWidth, modifyRecordButtonWidth, overImageRowWidth);
 
     if (recordTitleWidth + modifyRecordButtonWidth + 40 >= overImageRowWidth) {
+      
       // center both the record title and the edit/delete/report record buttons
       $(".record-title").css({
         "width": "100%", 
         "text-align": "center"
+      });
+
+      $(".edit-delete-button-container").css({
+        "float": "none",
+        "display": "block"
       });
 
       $(".modify-record-button").css({
@@ -53,6 +59,11 @@ $(window).ready(function() {
         "display": "inline-block",
         "width": "",
         "text-align": "left"
+      });
+
+      $(".edit-delete-button-container").css({
+        "float": "right",
+        "display": "inline-block"
       });
 
       $(".modify-record-button").css({
