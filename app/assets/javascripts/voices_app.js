@@ -263,15 +263,38 @@ VoicesApp.controller("FormController", [
     };
 
     
+    // function to ensure that an uploaded file
+    // is below the max file size
+    $scope.fileTooLarge = function(file) {
+      // create 100mb file with the following command:
+      // dd if=/dev/random of=bigfile bs=1024 count=102400
+      // then use that byte size as max for uploaded files
+      if (file.size > 104857600) {
+        $('#file-too-large-modal').modal();
+        return true;
+      };
+      return false;
+    };
+
+
     var uploadAllFiles = function(files) {
       // iterate over files, upload and set progress bar for each
       for (i=0; i < files.length; i++)  {
-        // append the file to our array of files to send
-        $scope.filesToSend.push(files[i]);
+        
+        // for each file, if it's too large, show the client a modal
+        // else upload the file
+        if ( $scope.fileTooLarge(files[i]) ) {
+        } else {
 
-        // request that this file be uploaded
-        var fileToUpload = files[i];
-        requestFileUpload(fileToUpload);
+          // append the file to our array of files to send
+          $scope.filesToSend.push(files[i]);
+
+          // request that this file be uploaded
+          var fileToUpload = files[i];
+          requestFileUpload(fileToUpload);
+        }
+
+        
       }; // closes file upload for loop
     }
     
@@ -281,8 +304,6 @@ VoicesApp.controller("FormController", [
       // files = all files the user selected on button click
       var files = event.target.files;
 
-      console.log(files);
-
       uploadAllFiles(files);
     }; // closes uploadFiles function
     
@@ -290,8 +311,6 @@ VoicesApp.controller("FormController", [
     // when user drags file onto screen, call function
     $scope.$watch('draggedFiles', function () {
       if ($scope.draggedFiles) {
-        console.log("user dragged", $scope.draggedFiles);
-
         uploadAllFiles($scope.draggedFiles);
       }
     });
