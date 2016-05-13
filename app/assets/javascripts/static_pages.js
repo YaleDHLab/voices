@@ -25,8 +25,8 @@ $(document).on('ready', function() {
   $("#text-overlay").children().on("click", function(el) {
     var clickedWord = el.target.innerText;
 
-    // send user to twitter using the clicked word as a query
-    location.href = 'https://twitter.com/search?q=' + clickedWord;
+    // open a new twitter window using the clicked word as a query
+    window.open('https://twitter.com/search?q=' + clickedWord);
   });
 
 
