@@ -8,9 +8,9 @@ class UserController < ApplicationController
     # others have uploaded and marked non-private. If showAllRecords == 0,
     # only return the user's records
     if params[:viewAll] == "0"
-      @user_records = Record.where(cas_user_name: session[:cas_user])
+      @user_records = Record.includes(:record_attachments).where(cas_user_name: session[:cas_user])
     else
-      @user_records = Record.where("make_private = ? OR cas_user_name = ?", false, session[:cas_user])
+      @user_records = Record.includes(:record_attachments).where("make_private = ? OR cas_user_name = ?", false, session[:cas_user])
     end
 
 
@@ -84,7 +84,7 @@ class UserController < ApplicationController
     @user_records_with_attachments = []
 
     @records_to_display.each do |r|
-      @record_attachments = RecordAttachment.where(record_id: r.id)
+      @record_attachments = r.record_attachments
       @record_with_attachments = {record: r, attachments: @record_attachments}
       @user_records_with_attachments << @record_with_attachments
     end
