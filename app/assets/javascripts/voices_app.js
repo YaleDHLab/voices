@@ -665,59 +665,39 @@ VoicesApp.controller("GalleryController", [
 VoicesApp.controller("userController", [
         "$scope", "$http", "$timeout",
     function($scope, $http, $timeout) {
-      var self = this;
-
-      // variable to set the index of the attachment that should be shown
-      $scope.displayIndex = 0;
-
-      // variable that indicates the index of the image to display
-      var incrementDisplayIndex = function() {
-        // increment the counter, then call the function again with a timeout
-        $scope.displayIndex++;        
-        $timeout(incrementDisplayIndex, 2000);
-      };
-
-      // initialize the function below to allow the displayIndex to change
-      //incrementDisplayIndex();
-
-      // retreives an array of hashes, each of which has record and attachment keys
-      var getUserRecords = function() {
-        $http.get( "/user/show.json", {cache: true} )
-        .then(function(response) {
-          $scope.userRecords = response.data;
-        }, function(response) {
-          console.log(response.status);
-        }
-      )};
-
-      getUserRecords();
-
-      // initialize a variable that keeps track of whether a user has run a search
-      $scope.userRanSearch = 0;
-
-      // define and call function to serve all user records
-      var allUserRecords = function() {
-        $http.get("/user/show.json", {cache: true})
-        .then(function(response) {
-          $scope.records = response.data;
-        }, function(response) {
-          console.log(response.status);
-        }
-      )};
-
-      allUserRecords();
-
       
-      // define function that places get request with user-specified query
-      // when user interacts with the search input field
-      $scope.search = function(searchTerm) {
+    /***
+    * Search functionality 
+    ***/
+
+    // define and call function to serve all user records
+    var getAllRecords = function() {
+      $http.get("/user/show.json", 
+        {"params": 
+          {"viewAll": $scope.viewAll,
+           "sortMethod": $scope.sortMethod
+         }, cache: true } 
+      ).then(function(response) {
+        $scope.records = response.data;
+      }, function(response) {
+        console.log(response.status);
+      }
+    )};
+
+    // define function that places get request with user-specified query
+    // when user interacts with the search input field
+    $scope.search = function(searchTerm) {
         // if the user deletes all text in the input,
         // restore all their records by setting the userRanSearch
         // value back to 0
         if (searchTerm) {
             $scope.userRanSearch = 1;
             $http.get("/user/show.json",
-              {"params": {"keywords": searchTerm}, cache: true }  
+              {"params": 
+                {"keywords": searchTerm,
+                 "viewAll": $scope.viewAll,
+                 "sortMethod": $scope.sortMethod
+               }, cache: true }  
             ).then(function(response) {
               $scope.records = response.data;
 
@@ -726,8 +706,73 @@ VoicesApp.controller("userController", [
             }
           );
       } else {
-        allUserRecords();
+        getAllRecords();
+      };
+    } // closes $scope.search()
+
+    // initialize a variable that keeps track of whether a user has run a search
+    $scope.userRanSearch = 0;
+
+    
+    /***
+    * Tab functionality 
+    ***/
+
+    // when user clicks a tab, pass a val {0,1}
+    // if that val is not identical to the current
+    // value of showAllRecords, create a new get request
+    // for the appropriate records
+    $scope.toggleViewAll = function(val) {
+      if (val != $scope.viewAll) {
+        $scope.viewAll = val;
+        $scope.search($scope.keywords);
       };
     }
+
+    // create a boolean that controls whether we're
+    // showing all submissions or only the user's submissions
+    // initialize to 1
+    $scope.viewAll = 1;
+
+
+    /***
+    * Sort by functionality
+    ***/
+
+    // create an array of options users can select to change sort order
+    // of search results
+    $scope.sortOptions = [
+      {"label": "Title", "val": "title"},
+      {"label": "Date of Event", "val": "date"},
+      {"label": "Date submitted", "val": "created_at"},
+      {"label": "Contributor", "val": "cas_user_name"},
+      {"label": "Source Url", "val": "source_url"},
+      {"label": "Location", "val": "location"}
+    ];
+
+    $scope.setSortMethod = function() {
+      $scope.requestedSortMethod = $scope.sortOption.val;
+
+      // if the requested sort method != current sort method
+      // run a new request for the user
+      if ($scope.requestedSortMethod != $scope.sortMethod) {
+        $scope.sortMethod = $scope.requestedSortMethod;
+        $scope.search($scope.keywords);
+      }
+
+    };
+
+    // initialize the page with sort by date
+    $scope.sortMethod = $scope.sortOptions[0].val;
+
+
+    /***
+    * Initialize search results 
+    ***/
+
+    // initialize the page with all records available to user
+    getAllRecords();
+
+
   }]
 );
