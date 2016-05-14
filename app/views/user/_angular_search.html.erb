@@ -1,7 +1,7 @@
-<div class="gray-background">
-  <div class="container">
-    <!-- Angular search box -->
-    <section class="search-form">
+<section class="search-form">
+  <div class="white-background">
+    <div class="container">
+      <!-- Angular search box -->
       <form>
         <div class="input-group input-group-lg search-box-container">
           <label for="search.keywords" class="sr-only">Keywords</label>
@@ -19,6 +19,33 @@
 
         </div>
       </form>
+    </div>
+  </div>
+
+  <div class="gray-background">
+    <div class="container">
+      <ul class="nav nav-tabs" id="userShowTabs">
+        
+        <li role="presentation" 
+            data-ng-class="viewAll == 1 && 'active'"
+            data-ng-click="toggleViewAll(1)"><a href="#allRecords">View All</a></li>
+
+        <li role="presentation" 
+            data-ng-class="viewAll == 0 && 'active'"
+            data-ng-click="toggleViewAll(0)"><a href="#myRecords">My Records</a></li>
+
+        <li id="sortOrderSelect">
+          <select 
+            data-ng-options="sortOption as sortOption.label for sortOption in sortOptions" 
+            data-ng-model="sortOption"
+            data-ng-change="setSortMethod()"
+            data-ng-init="sortOption=sortOptions[0]" >
+          </select>
+        </li>
+
+        <li id="sortOrderLabel">Sort by:</li>
+
+      </ul>
 
       <!-- If user doesn't have records, prompt them to contribute -->
       <div ng-if="records.length === 0 && userRanSearch === 0">
@@ -38,19 +65,19 @@
               <div class="masonry-item">
                 <div class="section">
                   <a ng-href="/records/{{record.record.id}}">
-                    <img data-ng-if="record.attachments[ displayIndex % record.attachments.length ].media_type === 'image'"
-                         data-ng-src="{{ record.attachments[ displayIndex % record.attachments.length ].medium_image_url }}" 
+                    <img data-ng-src="{{ record.attachments[0].medium_image_url }}" 
                          alt="{{ record.record.title }}">
 
                     <div class="masonry-item-title">{{record.record.title}}</div>
                   </a>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
       </div>
-    </section>
+
+    </div>
   </div>
-</div>
+
+</section>
