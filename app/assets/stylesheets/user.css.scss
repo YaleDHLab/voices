@@ -86,7 +86,7 @@ input.btn.btn-primary.btn-lg {
 
 /* set margins for search box */
 .input-group.input-group-lg {
-  margin: 40px 0px 10px;
+  margin: 20px 0px 20px;
 }
 
 input#keywords {
@@ -98,3 +98,51 @@ input#keywords {
 a:link{
   text-decoration: none!important;
 }
+
+/*****************
+* user#show tabs *
+*****************/
+
+.nav-tabs a {
+  color: #939393;
+  background-color: transparent !important;
+  margin-right: 0px !important;
+}
+
+/* active tab styles */
+.nav-tabs > li.active > a, 
+.nav-tabs > li.active > a:hover, 
+.nav-tabs > li.active > a:focus {
+  color: #000;
+  border-bottom: 1px solid #eee !important;
+}
+
+#userShowTabs {
+  padding-top: 20px;
+}
+
+/*******************
+* Sort by dropdown *
+*******************/
+
+li#sortOrderLabel {
+  padding: 10px 15px;
+  float: right;
+}
+
+li#sortOrderSelect {
+  padding-top: 5px;
+  float: right;
+}
+
+li#sortOrderSelect select {
+  outline: none;
+}
+
+@media (max-width: 461px) {
+  li#sortOrderLabel, li#sortOrderSelect {
+    display: none;
+  }
+}
+
+
