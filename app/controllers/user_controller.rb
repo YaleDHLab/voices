@@ -2,9 +2,17 @@ class UserController < ApplicationController
   before_filter CASClient::Frameworks::Rails::Filter
 
   def show
-    # users have access to records they've uploaded and non-private records
-    # populate a collection of searchable records
-    @user_records = Record.where("make_private = ? OR cas_user_name = ?", false, session[:cas_user])
+    # The incoming request contains a showAllRecords boolean {0,1}.
+    # If showAllRecords == 1, then this function should return all 
+    # records the user themselves have uploaded as well as all records
+    # others have uploaded and marked non-private. If showAllRecords == 0,
+    # only return the user's records
+    if params[:viewAll] == "0"
+      @user_records = Record.where(cas_user_name: session[:cas_user])
+    else
+      @user_records = Record.where("make_private = ? OR cas_user_name = ?", false, session[:cas_user])
+    end
+
 
     if params[:keywords].present?
       @keywords = params[:keywords]
@@ -22,6 +30,10 @@ class UserController < ApplicationController
       # otherwise retrieve all records that belong to this user
       @records_to_display = @user_records 
     end
+
+
+    # sort the records according to the user's request
+    @records_to_display = @records_to_display.order(params[:sortMethod])
 
 
     """expose json of the following form:
@@ -76,6 +88,7 @@ class UserController < ApplicationController
       @record_with_attachments = {record: r, attachments: @record_attachments}
       @user_records_with_attachments << @record_with_attachments
     end
+
 
     # provide json endpoint that angular can access
     respond_to do |format|
