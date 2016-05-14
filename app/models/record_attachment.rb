@@ -156,17 +156,17 @@ class RecordAttachment < ActiveRecord::Base
         :square_thumb => { 
           :geometry => "200x200#", 
           :format => 'jpg', 
-          :time => 0
+          :time => 1
         }, 
         :annotation_thumb => {
-          :geometry => "300x200#",
+          :geometry => "300x200!",
           :format => 'jpg',
-          :time => 0
+          :time => 1
         },
         :medium => { 
           :geometry => "500x500>", 
           :format => 'jpg', 
-          :time => 0
+          :time => 1
         }
       }
     elsif self.is_audio?
@@ -198,39 +198,19 @@ class RecordAttachment < ActiveRecord::Base
     if self.is_audio?
       if self.medium_image_url != ActionController::Base.helpers.asset_path("medium_image_url_mp3.png")
         self.update_attributes(
-          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_mp3.png")
-        )
-      end
-
-      if self.annotation_thumb_url != ActionController::Base.helpers.asset_path("annotation_thumb_url_mp3.png")
-        self.update_attributes(
-          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_mp3.png")
-        )
-      end
-
-      if self.square_thumb_url != ActionController::Base.helpers.asset_path("square_thumb_url_mp3.png")
-        self.update_attributes(
+          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_mp3.png"),
+          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_mp3.png"),
           :square_thumb_url => ActionController::Base.helpers.asset_path("square_thumb_url_mp3.png")
         )
       end
+
 
     # plain text
     elsif self.is_plain_text?
       if self.medium_image_url != ActionController::Base.helpers.asset_path("medium_image_url_txt.png")
         self.update_attributes(
-          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_txt.png")
-        )
-      end
-
-      if self.annotation_thumb_url != ActionController::Base.helpers.asset_path("annotation_thumb_url_txt.png")
-        self.update_attributes(
-          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_txt.png")
-        )
-      end
-
-
-      if self.square_thumb_url != ActionController::Base.helpers.asset_path("square_thumb_url_txt.png")
-        self.update_attributes(
+          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_txt.png"),
+          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_txt.png"),
           :square_thumb_url => ActionController::Base.helpers.asset_path("square_thumb_url_txt.png")
         )
       end
@@ -240,82 +220,42 @@ class RecordAttachment < ActiveRecord::Base
     elsif self.is_word_document?
       if self.medium_image_url != ActionController::Base.helpers.asset_path("medium_image_url_doc.png")
         self.update_attributes(
-          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_doc.png")
-        )
-      end
-
-      if self.annotation_thumb_url != ActionController::Base.helpers.asset_path("annotation_thumb_url_doc.png")
-        self.update_attributes(
-          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_doc.png")
-        )
-      end
-
-      if self.square_thumb_url != ActionController::Base.helpers.asset_path("square_thumb_url_doc.png")
-        self.update_attributes(
+          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_doc.png"),
+          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_doc.png"),
           :square_thumb_url => ActionController::Base.helpers.asset_path("square_thumb_url_doc.png")
         )
       end
+
 
     # powerpoint 
     elsif self.is_powerpoint?
       if self.medium_image_url != ActionController::Base.helpers.asset_path("medium_image_url_ppt.png")
         self.update_attributes(
-          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_ppt.png")
-        )
-      end
-
-      if self.annotation_thumb_url != ActionController::Base.helpers.asset_path("annotation_thumb_url_ppt.png")
-        self.update_attributes(
-          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_ppt.png")
-        )
-      end
-
-      if self.square_thumb_url != ActionController::Base.helpers.asset_path("square_thumb_url_ppt.png")
-        self.update_attributes(
+          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_ppt.png"),
+          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_ppt.png"),
           :square_thumb_url => ActionController::Base.helpers.asset_path("square_thumb_url_ppt.png")
         )
       end
+
 
     # excel
     elsif self.is_excel?
       if self.medium_image_url != ActionController::Base.helpers.asset_path("medium_image_url_xls.png")
         self.update_attributes(
-          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_xls.png")
-        )
-      end
-
-      if self.annotation_thumb_url != ActionController::Base.helpers.asset_path("annotation_thumb_url_xls.png")
-        self.update_attributes(
-          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_xls.png")
-        )
-      end
-
-      if self.square_thumb_url != ActionController::Base.helpers.asset_path("square_thumb_url_xls.png")
-        self.update_attributes(
+          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_xls.png"),
+          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_xls.png"),
           :square_thumb_url => ActionController::Base.helpers.asset_path("square_thumb_url_xls.png")
         )
       end
 
 
-
-
     # svg
     elsif self.is_svg?
-      if self.medium_image_url != ActionController::Base.helpers.asset_path("medium_image_url_eps.png")
+      if self.medium_image_url != ActionController::Base.helpers.asset_path("medium_image_url_svg.png")
         self.update_attributes(
-          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_eps.png")
-        )
-      end
-
-      if self.annotation_thumb_url != ActionController::Base.helpers.asset_path("annotation_thumb_url_eps.png")
-        self.update_attributes(
-          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_eps.png")
-        )
-      end
-
-      if self.square_thumb_url != ActionController::Base.helpers.asset_path("square_thumb_url_eps.png")
-        self.update_attributes(
-          :square_thumb_url => ActionController::Base.helpers.asset_path("square_thumb_url_eps.png")
+          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_svg.png"),
+          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_svg.png"),
+          :square_thumb_url => ActionController::Base.helpers.asset_path("square_thumb_url_svg.png")
         )
       end
 
@@ -335,19 +275,9 @@ class RecordAttachment < ActiveRecord::Base
       # use that sequence to identify the full path to the asset
       if self.medium_image_url != self.file_upload.url(:medium).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/") 
         self.update_attributes(
-          :medium_image_url => self.file_upload.url(:medium).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/") 
-        )
-      end
-
-      if self.annotation_thumb_url != self.file_upload.url(:annotation_thumb).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/") 
-        self.update_attributes(
-          :annotation_thumb_url => self.file_upload.url(:annotation_thumb).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/") 
-        )
-      end
-
-      if self.square_thumb_url != self.file_upload.url(:square_thumb).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/") 
-        self.update_attributes(
-          :square_thumb_url => self.file_upload.url(:square_thumb).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/") 
+          :medium_image_url => self.file_upload.url(:medium).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/"),
+          :annotation_thumb_url => self.file_upload.url(:annotation_thumb).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/"),
+          :square_thumb_url => self.file_upload.url(:square_thumb).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/")  
         )
       end
 
