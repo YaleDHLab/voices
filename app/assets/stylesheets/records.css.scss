@@ -54,6 +54,11 @@ textarea#record-description {
   padding-top: 30px;
 }
 
+/* FF form styles */
+:-moz-ui-invalid:not(output) {
+  box-shadow: none;
+}
+
 /************************
 * boolean slider styles *
 ************************/
