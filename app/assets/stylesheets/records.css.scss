@@ -36,7 +36,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 input {
-  padding: 6px;
+  padding: 8px 6px 7px 10px;
 }
 
 textarea#record-description {
@@ -75,7 +75,8 @@ textarea#record-description {
 .switch {
   height: 11px;
   width: 32px;
-  background: rgb(181, 181, 181);
+  background: rgb(51, 153, 204);
+  border-color: rgb(51, 153, 204);
 }
 
 /* switch track set as true */
@@ -92,6 +93,7 @@ textarea#record-description {
   height: 18px;
   width: 18px;
   margin-top: -4px;
+  left: -2px;
   border: 1px solid darkgray;
 }
 
@@ -140,10 +142,11 @@ sup {
 *********************/
 
 span.btn.btn-small.btn-default.btn-inverse {
-  padding: 4px 14px;
+  padding: 6px 14px 4px 14px;
   float: left;
-  color: #555;
+  color: #333;
   margin-top: -4px;
+  font-family: "acumin-pro", "helvetica", "sans-serif";
 }
 
 #file-upload-button .btn {
@@ -295,6 +298,11 @@ span.progress {
   position: relative;
   margin-left: -60px;
   left: 50%;
+}
+
+/* submit button in disabled state */
+.btn.disabled, .btn[disabled], fieldset[disabled] .btn {
+  opacity: .5;
 }
 
 
@@ -470,6 +478,7 @@ span.progress {
   color: #5B5B5B;
   height: 30px;
   width: 38px;
+  padding: 5px 3px 5px 4px;
 }
 
 .single-record-view-button,
@@ -680,7 +689,7 @@ hr.clear-floats {
 }
 
 #report-record-button {
-  width: 160px;
+  width: 90px;
 }
 
 .edit-record-title {
@@ -906,11 +915,13 @@ hr.clear-floats {
   input {
     /* fallback for browsers without calc support */
     width: 64%;
+    height: 32px;
     width: calc(100% - 185px);
   }
 
   #datetimepicker1 {
-    width: 295px;
+    height: 32px;
+    width: 277px;
   }
 
   #placeholder-box {

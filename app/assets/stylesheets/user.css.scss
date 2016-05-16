@@ -27,7 +27,7 @@
   width:  100%; 
   background:  #efefef;
   border-right: none !important;
-  box-shadow: 1px 1px 1px 0 #7b7b7b;
+  box-shadow: 1px 1px 1px 0px #7b7b7b;
 }
 
 .masonry-item img {
@@ -63,6 +63,7 @@ input#search-box {
   margin-left: -25%;
   border-radius: 4px;
   padding-left: 32px;
+  height: 36px;
 }
 
 /* search magnifying glass */
@@ -70,7 +71,7 @@ span.glyphicon.glyphicon-search {
   left: 50%;
   margin-left: -50%;
   padding-left: 10px;
-  margin-top: 15px;
+  margin-top: 10px;
   z-index: 15;
   color: #9F9F9F;
 }
