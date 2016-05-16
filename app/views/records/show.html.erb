@@ -19,8 +19,8 @@
           <%= link_to "Edit", edit_record_path(@record), 
             :class => "btn btn-primary blue-button", :id => "edit-record-button" %>
         <% else %>
-          <%= link_to "Report Record", {:controller => "report_record", :action => "create", :id => @record.id, :reporting_agent => session[:cas_user] }, 
-            :class => "btn btn-primary blue-button", :id => "report-record-button" %>
+          <%= link_to "Report", {:controller => "report_record", :action => "create", :id => @record.id, :reporting_agent => session[:cas_user] }, 
+            :class => "btn btn-primary gray-button", :id => "report-record-button" %>
         <% end %>
       </div>
     </div>
