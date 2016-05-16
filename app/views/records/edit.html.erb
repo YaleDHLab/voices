@@ -13,7 +13,9 @@
 <!-- Render the attachment(s) -->
 <div class="container" data-ng-app="VoicesApp">
   <div data-ng-controller="GalleryController">
-    <% if @relevant_attachments.length == 1 %>
+    <% if @relevant_attachments.length == 0 %>
+      <%= render 'no_attachment_edit' %>
+    <% elsif @relevant_attachments.length == 1 %>
       <%= render 'single_attachment_edit' %>
     <% elsif @relevant_attachments.length > 1 %>
       <%= render 'multiple_attachments_edit' %>
