@@ -9,7 +9,8 @@
 
 html, body {
   height: 100%;
-  font-size: 1em;
+  font-size: .95em;
+  font-family: "Acumin Pro", Helvetica, Arial, sans-serif;
 }
 
 /************************************************
@@ -116,7 +117,7 @@ html, body {
 * expanded navbar *
 ******************/
 
-@media (min-width: 768px) and (max-width: 989px) {
+@media (min-width: 768px) and (max-width: 991px) {
   .navbar .nav li > a {
     width: 120px;
     padding-top: 20px;
@@ -130,9 +131,9 @@ html, body {
   }
 }
 
-@media (min-width: 990px) {
+@media (min-width: 992px) {
   .navbar .nav li > a {
-    width: 150px;
+    width: 170px;
     padding-top: 20px;
     padding-bottom: 21px;
     border: none;
@@ -216,6 +217,11 @@ html, body {
   color: #333;
   font-weight: 700;
   letter-spacing: .05em;
+}
+
+/* remove active state from FF */
+#header a:focus {
+  outline: none;
 }
 
 /* make the currently selected page text a different color */
@@ -523,11 +529,12 @@ h1 {
 ***************/
 
 .btn {
-  font-family: "acumin-pro";
+  font-family: "acumin-pro", "helvetica", "sans-serif";
   font-weight: 700;
   text-transform: uppercase;
   color: #fff;
   letter-spacing: .065em;
+  padding: 8px 12px 6px 12px;
 }
 
 .blue-button {
@@ -650,7 +657,12 @@ hr {
   color: #ff3333;
   background-color: #FFF1F5;
   border-color: #FF989A;
-  }
+}
+
+.alert-info {
+  color: #3399cc;
+  background-color: #f0feff; 
+}
 
 /*********
 * footer *
@@ -791,62 +803,39 @@ hr {
 
   /* CSS transitions only for larger viewports */
   .speed-0 {
-    -webkit-animation: text-scroll 100s infinite,
-                       fade-out 10s infinite;
-    -moz-animation: text-scroll 100s infinite,
-                   fade-out 10s infinite;
-    -o-animation: text-scroll 100s infinite,
-                   fade-out 10s infinite;
+    -webkit-animation: fade-out 10s infinite;       
+    -moz-animation: fade-out 10s infinite;   
+    -o-animation: fade-out 10s infinite;
   }
 
   .speed-1 {
-    -webkit-animation: text-scroll 100s infinite,
-                       fade-out 20s infinite;
-    -moz-animation: text-scroll 100s infinite,
-                       fade-out 20s infinite;
-    -o-animation: text-scroll 100s infinite,
-                       fade-out 20s infinite;
+    -webkit-animation: fade-out 20s infinite;
+    -moz-animation: fade-out 20s infinite;
+    -o-animation: fade-out 20s infinite;
   }
 
   .speed-2 {
-    -webkit-animation: text-scroll 100s infinite,
-                       fade-out 30s infinite;
-    -moz-animation: text-scroll 100s infinite,
-                       fade-out 30s infinite;
-    -o-animation: text-scroll 100s infinite,
-                       fade-out 30s infinite;
+    -webkit-animation: fade-out 30s infinite;                
+    -moz-animation: fade-out 30s infinite;
+    -o-animation: fade-out 30s infinite;
   }
 
   .speed-3 {
-    -webkit-animation: text-scroll 100s infinite,
-                       fade-out 40s infinite;
-    -moz-animation: text-scroll 100s infinite,
-                       fade-out 40s infinite;
-    -o-animation: text-scroll 100s infinite,
-                       fade-out 40s infinite;
+    -webkit-animation: fade-out 40s infinite;           
+    -moz-animation: fade-out 40s infinite;
+    -o-animation: fade-out 40s infinite;
   }
 
   .speed-4 {
-    -webkit-animation: text-scroll 100s infinite,
-                       fade-out 50s infinite;
-    -moz-animation: text-scroll 100s infinite,
-                       fade-out 50s infinite;
-    -o-animation: text-scroll 100s infinite,
-                       fade-out 50s infinite;
+    -webkit-animation: fade-out 50s infinite;
+    -moz-animation: fade-out 50s infinite;
+    -o-animation: fade-out 50s infinite;
   }
 
   .speed-5 {
-    -webkit-animation: text-scroll 100s infinite,
-                       fade-out 60s infinite;
-    -moz-animation: text-scroll 100s infinite,
-                       fade-out 60s infinite;
-    -o-animation: text-scroll 100s infinite,
-                       fade-out 60s infinite;
-  }
-
-  @-webkit-keyframes text-scroll {
-    0% { -webkit-transform: translateY(100%); }
-    100% { -webkit-transform: translateY(-200%); }
+    -webkit-animation: fade-out 60s infinite;
+    -moz-animation: fade-out 60s infinite;
+    -o-animation: fade-out 60s infinite;
   }
 
   @-webkit-keyframes fade-out {
@@ -854,19 +843,9 @@ hr {
     50% { opacity: 1; }
   }
 
-  @-moz-keyframes text-scroll {
-    0% { -moz-transform: translateY(100%); }
-    100% { -moz-transform: translateY(-200%); }
-  }
-
   @-moz-keyframes fade-out {
     0%, 100% { opacity: 0; }
     50% { opacity: 1; }
-  }
-
-  @-o-keyframes text-scroll {
-    0% { -o-transform: translateY(100%); }
-    100% { -o-transform: translateY(-200%); }
   }
 
   @-o-keyframes fade-out {
