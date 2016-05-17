@@ -706,7 +706,7 @@ hr.clear-floats {
   position: relative;
 }
 
-.pointer-cursor:hover {
+.pointerCursor:hover {
   cursor: pointer;
 }
 
@@ -720,8 +720,6 @@ hr.clear-floats {
   width: 100%;
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
-  border: 1px solid #fff;
-  border-bottom: none;
 }
 
 .edit-attachment-icon-container,
