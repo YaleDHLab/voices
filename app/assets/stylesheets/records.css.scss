@@ -223,6 +223,13 @@ span.btn.btn-small.btn-default.btn-inverse {
 #progress-bar-table .file-name-container {
   max-width: 40%;
   width: 40%;
+  height: 36px !important;
+  max-height: 36px !important;
+}
+
+#progress-bar-table .progress-bar-container {
+  height: 28px;
+  padding-bottom: 0px;
 }
 
 .progress {
@@ -241,10 +248,6 @@ span.btn.btn-small.btn-default.btn-inverse {
 .progress div {
   font-size: smaller;
   background: #4BB0D3;
-  height: 100%;
-}
-
-span.progress {
   height: 100%;
 }
 
