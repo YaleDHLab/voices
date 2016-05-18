@@ -268,7 +268,7 @@ span.progress {
   height: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 0.8em;
+  font-size: 0.9em;
   word-break: break-all;
   padding-top: 3px;
 }
@@ -394,6 +394,14 @@ span.progress {
 
 .record-display-text {
   margin-bottom: 20px;
+}
+
+/* placeholder image styles on record#show */
+.record-display-container .placeholderImage {
+  max-width: 400px;
+  padding: 30px 120px;
+  background: #f8f8f8;
+  border: 1px solid lightgray;
 }
 
 /**********************************
@@ -536,6 +544,46 @@ span.progress {
   margin-top: -10px !important;
 }
 
+
+/***************************
+* placeholder image styles *
+***************************/
+
+.single-masonry-item .placeholderImage {
+  padding-top: 10%;
+  padding-bottom: 10%;
+}
+
+.single-masonry-item .placeholderImageContainer img {
+  width: 40% !important;
+  position: relative;
+  left: 30%;
+}
+
+.two-column-masonry .placeholderImageContainer {
+  height: 0px;
+  padding-bottom: 66.666%;
+}
+
+.two-column-masonry .placeholderImageContainer img {
+  width: 40% !important;
+  position: relative;
+  left: 30%;
+  padding-top: 5.5%;
+}
+
+.five-column-masonry .placeholderImageContainer {
+  height: 0px;
+  padding-bottom: 100%;
+}
+
+.five-column-masonry .placeholderImageContainer img {
+  width: 60% !important;
+  position: relative;
+  left: 20%;
+  padding-top: 7.5%;
+}
+
 /***********************************
 * multiple uploads in records#show *
 ***********************************/
@@ -544,8 +592,8 @@ span.progress {
   display: inline-block;
   margin: 0 0 14px 0;
   width: 60%;
-  background: #efefef;
-  border: 1px solid #a7a7a7;
+  background: #f8f8f8;
+  border: 1px solid lightgray;
   margin-left: 20%;
 }
 
@@ -553,8 +601,8 @@ span.progress {
   display: inline-block;
   margin: 0 0 14px 0;
   width:  100%; 
-  background:  #efefef;
-  border: 1px solid #a7a7a7;
+  background:  #f8f8f8;
+  border: 1px solid lightgray;
 }
 
 .masonry-item img, .single-masonry-item img {
@@ -567,7 +615,8 @@ span.progress {
   height: 30px;
   background-color: #fff;
   width: 100%;
-  border-radius: 0px;
+  border: none;
+  border-top: 1px solid lightgray;
 }
 
 .pagination-controls {
@@ -666,6 +715,10 @@ hr.clear-floats {
   width: 120px;
 }
 
+.placeholderImageModal {
+  background: #fff;
+}
+
 /*******************
 * attachment modal *
 *******************/
@@ -711,9 +764,10 @@ hr.clear-floats {
 }
 
 .attachment-modal-content {
-  width: 50%;
+  width: 40%;
+  max-width: 350px;
   margin: 0 auto;
-  margin-top: 25%;
+  margin-top: 10%;
 }
 
 .attachment-modal-content img {
@@ -797,8 +851,6 @@ hr.clear-floats {
   .modal-content .modal-button {
     width: initial;
   }
-
-
 }
 
 /*********************
