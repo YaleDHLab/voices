@@ -357,12 +357,46 @@ VoicesApp.controller('ModalController', [
       saveAnnotationService.saveAnnotation(annotation, attachmentId);
     };
 
+
+
+
+    // function that informs client whether a file has a placeholder image
+    var hasPlaceholderImage = function(attachment) {
+      console.log("calling function");
+      if (attachment.placeholder_image_path !== null) {
+        return attachment.placeholder_image_path;
+      } else { 
+        return false; 
+      };
+    };
+    
+
+    // function to determine which image url to serve to the client
+    $scope.getImageUrl = function(attachment) {
+      var placeholderPath = hasPlaceholderImage(attachment);
+      if (placeholderPath) {
+        return placeholderPath;
+      } else {
+        
+        var assetPath = attachment.image_upload_url.replace("/original/","/annotation_thumb/");
+        
+        // if the upload is a video file, return the image asset, not the video file
+        if (attachment.media_type == "video") {
+          // replace the user-provided filetype with the image filetype we persist in the db
+          var splitUserFileName = attachment.file_upload_file_name.split(".");
+          var userFileType = splitUserFileName[splitUserFileName.length - 1];
+          return assetPath.replace(userFileType, "jpg");
+        
+        } else {
+          return assetPath;
+        }
+
+      }; // closes else
+    }; // closes function
+
+
   }
 ]);
-
-
-
-
 
 
 
@@ -474,17 +508,41 @@ VoicesApp.controller("GalleryController", [
     };
 
 
+    // function that informs client whether a file has a placeholder image
+    $scope.hasPlaceholderImage = function(attachment) {
+      if (attachment.placeholder_image_path !== null) {
+        return attachment.placeholder_image_path;
+      } else { 
+        return false; 
+      };
+    };
+
     // function to determine which image url to serve to the client
     $scope.getImageUrl = function(attachment) {
-      if ($scope.attachmentsPerPage == 1) {
-        return attachment.medium_image_url;
-      }
-      if ($scope.attachmentsPerPage == 4) {
-        return attachment.annotation_thumb_url;
-      }
-      if ($scope.attachmentsPerPage == 20) {
-        return attachment.square_thumb_url;
-      }
+      var placeholderPath = $scope.hasPlaceholderImage(attachment);
+      if (placeholderPath) {
+        return placeholderPath;
+      } else {
+        var assetPath = '';
+        if ($scope.attachmentsPerPage == 1) {
+          var assetPath = attachment.image_upload_url;
+        }
+        if ($scope.attachmentsPerPage == 4) {
+          var assetPath = attachment.image_upload_url.replace("/medium/","/annotation_thumb/");
+        }
+        if ($scope.attachmentsPerPage == 20) {
+          var assetPath = attachment.image_upload_url.replace("/medium/","/square_thumb/");
+        }
+        
+        return assetPath;
+
+      }; // closes else
+    }; // closes function
+
+    
+    // function to provide image file name for alt tag
+    $scope.getFileName = function(attachment) {
+      return attachment.file_upload_url.split('/').pop().split('?')[0];
     };
 
 
@@ -613,8 +671,6 @@ VoicesApp.controller("GalleryController", [
     };
 
 
-
-
     $scope.showAttachmentModal = function(attachment) {
 
       /***
@@ -666,6 +722,32 @@ VoicesApp.controller("userController", [
         "$scope", "$http", "$timeout",
     function($scope, $http, $timeout) {
       
+    /***
+    * Helper functions to provide client with path to asset image
+    ***/
+
+    // function that informs client whether a file has a placeholder image
+    $scope.hasPlaceholderImage = function(attachment) {
+      if (attachment.placeholder_image_path !== null) {
+        return attachment.placeholder_image_path;
+      } else { 
+        return false; 
+      };
+    };
+
+
+    // function to determine which image url to serve to the client
+    $scope.getImageUrl = function(attachment) {
+      var placeholderPath = $scope.hasPlaceholderImage(attachment);
+      if (placeholderPath) {
+        return placeholderPath;
+      } else {
+        return attachment.image_upload_url;
+      }; // closes else
+    }; // closes function
+
+
+
     /***
     * Search functionality 
     ***/
