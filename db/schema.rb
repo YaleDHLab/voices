@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507144823) do
+ActiveRecord::Schema.define(version: 20160518144759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,10 +40,9 @@ ActiveRecord::Schema.define(version: 20160507144823) do
     t.datetime "file_upload_updated_at"
     t.text     "file_upload_url"
     t.string   "media_type"
-    t.text     "medium_image_url"
-    t.text     "annotation_thumb_url"
-    t.text     "square_thumb_url"
     t.text     "cas_user_name"
+    t.string   "placeholder_image_path"
+    t.text     "image_upload_url"
   end
 
   create_table "records", force: :cascade do |t|
