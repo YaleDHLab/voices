@@ -123,7 +123,10 @@ class RecordAttachment < ActiveRecord::Base
     is_plain_text?
     is_excel?
     is_word_document?
+    is_powerpoint?
+    is_svg?
   end
+  
 
   # If the uploaded content type is an audio file,
   # return false so that we'll skip audio post processing
@@ -192,75 +195,62 @@ class RecordAttachment < ActiveRecord::Base
       )
     end
 
-    # then, for each asset type, store a link to the appropriate image assets
+
+    # then, for each asset type, store a link to the appropriate placeholder image path
 
     # audio
     if self.is_audio?
-      if self.medium_image_url != ActionController::Base.helpers.asset_path("medium_image_url_mp3.png")
+      if self.placeholder_image_path != ActionController::Base.helpers.asset_path("mp3.png")
         self.update_attributes(
-          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_mp3.png"),
-          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_mp3.png"),
-          :square_thumb_url => ActionController::Base.helpers.asset_path("square_thumb_url_mp3.png")
+          :placeholder_image_path => ActionController::Base.helpers.asset_path("mp3.png")
         )
       end
 
 
     # plain text
     elsif self.is_plain_text?
-      if self.medium_image_url != ActionController::Base.helpers.asset_path("medium_image_url_txt.png")
+      if self.placeholder_image_path != ActionController::Base.helpers.asset_path("txt.png")
         self.update_attributes(
-          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_txt.png"),
-          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_txt.png"),
-          :square_thumb_url => ActionController::Base.helpers.asset_path("square_thumb_url_txt.png")
+          :placeholder_image_path => ActionController::Base.helpers.asset_path("txt.png")
         )
       end
 
 
     # word doc
     elsif self.is_word_document?
-      if self.medium_image_url != ActionController::Base.helpers.asset_path("medium_image_url_doc.png")
+      if self.placeholder_image_path != ActionController::Base.helpers.asset_path("doc.png")
         self.update_attributes(
-          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_doc.png"),
-          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_doc.png"),
-          :square_thumb_url => ActionController::Base.helpers.asset_path("square_thumb_url_doc.png")
+          :placeholder_image_path => ActionController::Base.helpers.asset_path("doc.png")
         )
       end
 
 
     # powerpoint 
     elsif self.is_powerpoint?
-      if self.medium_image_url != ActionController::Base.helpers.asset_path("medium_image_url_ppt.png")
+      if self.placeholder_image_path!= ActionController::Base.helpers.asset_path("ppt.png")
         self.update_attributes(
-          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_ppt.png"),
-          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_ppt.png"),
-          :square_thumb_url => ActionController::Base.helpers.asset_path("square_thumb_url_ppt.png")
+          :placeholder_image_path => ActionController::Base.helpers.asset_path("ppt.png")
         )
       end
 
 
     # excel
     elsif self.is_excel?
-      if self.medium_image_url != ActionController::Base.helpers.asset_path("medium_image_url_xls.png")
+      if self.placeholder_image_path != ActionController::Base.helpers.asset_path("xls.png")
         self.update_attributes(
-          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_xls.png"),
-          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_xls.png"),
-          :square_thumb_url => ActionController::Base.helpers.asset_path("square_thumb_url_xls.png")
+          :placeholder_image_path => ActionController::Base.helpers.asset_path("xls.png")
         )
       end
 
 
     # svg
     elsif self.is_svg?
-      if self.medium_image_url != ActionController::Base.helpers.asset_path("medium_image_url_svg.png")
+      if self.placeholder_image_path!= ActionController::Base.helpers.asset_path("svg.png")
         self.update_attributes(
-          :medium_image_url => ActionController::Base.helpers.asset_path("medium_image_url_svg.png"),
-          :annotation_thumb_url => ActionController::Base.helpers.asset_path("annotation_thumb_url_svg.png"),
-          :square_thumb_url => ActionController::Base.helpers.asset_path("square_thumb_url_svg.png")
+          :placeholder_image_path => ActionController::Base.helpers.asset_path("svg.png")
         )
       end
 
-
-    # other
     else
       record_id_string = self.id.to_s
 
@@ -269,15 +259,13 @@ class RecordAttachment < ActiveRecord::Base
         record_id_string = "0" + record_id_string
       end
 
-      # partition the 9 character string into 3 3-digit strings joined by "/"
+      # partition the 9 character string into 3 3digit strings joined by "/"
       id_path = record_id_string.chars.each_slice(3).map(&:join).join("/")
 
       # use that sequence to identify the full path to the asset
-      if self.medium_image_url != self.file_upload.url(:medium).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/") 
+      if self.image_upload_url != self.file_upload.url(:medium).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/")
         self.update_attributes(
-          :medium_image_url => self.file_upload.url(:medium).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/"),
-          :annotation_thumb_url => self.file_upload.url(:annotation_thumb).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/"),
-          :square_thumb_url => self.file_upload.url(:square_thumb).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/")  
+          :image_upload_url => self.file_upload.url(:medium).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/")
         )
       end
 

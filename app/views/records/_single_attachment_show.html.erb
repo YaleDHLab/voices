@@ -1,66 +1,16 @@
-  <hr class="pagination-hr">
+<hr class="pagination-hr">
 
-  <div class="record-display-container" data-ng-repeat="attachment in data.attachments">
-    <a data-ng-if="currentPageClass == 'show'"
-       data-ng-href="{{attachment.file_upload_url}}">
+<div class="record-display-container" 
+     data-ng-repeat="attachment in data.attachments"
+     data-ng-class="{placeholderImageContainer: attachment.placeholder_image_path !== null}">
+  <a data-ng-if="currentPageClass == 'show'"
+     data-ng-href="{{attachment.file_upload_url}}">
+     <%= render 'asset_view' %>
+  </a>
 
-      <img data-ng-show="attachment.media_type == 'image'" 
-           data-ng-src="{{ attachment.medium_image_url }}" 
-           alt="{{ data.record.title }}" 
-           data-ng-cloak>
-
-      <video data-ng-show="attachment.media_type == 'video'" 
-             controls
-             data-ng-attr-poster="{{ attachment.medium_image_url }}"
-             class="loaded-media loaded-video"
-             data-ng-cloak> 
-        <source data-ng-show="attachment.media_type == 'video'"
-                data-ng-src="{{ attachment.file_upload_url | trusted }}"
-                data-ng-cloak>
-        Sorry! Your browser does not recognize video tags.
-      </video>
-
-      <audio data-ng-show="attachment.media_type == 'audio'" 
-             controls
-             data-ng-attr-poster="{{ attachment.medium_image_url }}"
-             class="loaded-media loaded-audio"
-             data-ng-cloak>
-        <source data-ng-show="attachment.media_type == 'audio'"
-                data-ng-src="{{ attachment.file_upload_url | trusted }}"
-                data-ng-cloak>
-        Sorry! Your browser does not recognize audio tags.
-      </audio>
-    </a>
-
-    
-    <div data-ng-if="currentPageClass != 'show'">
-      <img data-ng-show="attachment.media_type == 'image'" 
-           data-ng-src="{{ attachment.medium_image_url }}" 
-           alt="{{ data.record.title }}" 
-           data-ng-cloak>
-
-      <video data-ng-show="attachment.media_type == 'video'" 
-             controls
-             data-ng-attr-poster="{{ attachment.medium_image_url }}"
-             class="loaded-media loaded-video"
-             data-ng-cloak> 
-        <source data-ng-show="attachment.media_type == 'video'"
-                data-ng-src="{{ attachment.file_upload_url | trusted }}"
-                data-ng-cloak>
-        Sorry! Your browser does not recognize video tags.
-      </video>
-
-      <audio data-ng-show="attachment.media_type == 'audio'" 
-             controls
-             data-ng-attr-poster="{{ attachment.medium_image_url }}"
-             class="loaded-media loaded-audio"
-             data-ng-cloak>
-        <source data-ng-show="attachment.media_type == 'audio'"
-                data-ng-src="{{ attachment.file_upload_url | trusted }}"
-                data-ng-cloak>
-        Sorry! Your browser does not recognize audio tags.
-      </audio>
-    </div>
+  <div data-ng-if="currentPageClass != 'show'">
+    <%= render 'asset_view' %>
   </div>
+</div>
 
-  <hr>
+<hr>

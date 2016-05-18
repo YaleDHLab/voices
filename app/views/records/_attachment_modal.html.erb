@@ -2,7 +2,8 @@
 <script type="text/ng-template" id="attachmentModal.html">
   <div class="modal fade" role="dialog">
     <!-- Modal content-->
-    <div class="attachment-modal-content">
+    <div class="attachment-modal-content"
+      data-ng-class="{placeholderImageModal: attachment.placeholder_image_path !== null}">
 
       <div class="delete-icon-container">
         <div class="delete-attachment-icon-container"
@@ -16,7 +17,7 @@
       </div>
 
       <div class="attachment-modal-image-container">
-        <img data-ng-src="{{ attachment.annotation_thumb_url }}"
+        <img data-ng-src="{{ getImageUrl(attachment) }}"
              alt="{{ attachment.file_upload_url.split('/').pop().split('?')[0] }}">
 
         <input data-ng-model="attachment.annotation" 
