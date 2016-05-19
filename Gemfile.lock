@@ -116,6 +116,7 @@ GEM
     puma (2.11.1)
       rack (>= 1.1, < 2.0)
     rack (1.6.4)
+    rack-cors (0.4.0)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.0)
@@ -207,6 +208,7 @@ DEPENDENCIES
   paperclip-ffmpeg (~> 1.0.1)
   pg
   puma (= 2.11.1)
+  rack-cors
   rails (= 4.2.0)
   rails_12factor
   responders (~> 2.0)

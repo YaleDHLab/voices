@@ -72,6 +72,9 @@ gem 'responders', '~> 2.0'
 # add mimetypes gem to support mimetype extensions
 gem 'mime-types'
 
+# add support for cors headers
+gem 'rack-cors', :require => 'rack/cors'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
