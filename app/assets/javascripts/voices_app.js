@@ -198,6 +198,12 @@ VoicesApp.controller("FormController", [
     // retrieve the CSRF token to we can make the POST request without getting 422'd
     var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
+    // specify encrypted policy and signature for file uploads
+    $scope.policy = "eyJleHBpcmF0aW9uIjoiMjAyMC0wMS0wMVQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJ2b2ljZXMtdXNlci11cGxvYWRzIn0sWyJzdGFydHMtd2l0aCIsIiRrZXkiLCIiXSxbInN0YXJ0cy13aXRoIiwiJGZpbGVuYW1lIiwiIl0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW50LVR5cGUiLCIiXSx7ImFjbCI6InByaXZhdGUifV19Cg==";
+    $scope.signature = "0qCrxEVqaKB7/gwL3Talc4Gm318=";
+
+    
+
     // function called by button click and drag and drop behavior to
     // upload files to server
     var requestFileUpload = function(file) {
@@ -211,6 +217,8 @@ VoicesApp.controller("FormController", [
                  "file": "in file_upload"}
         };
 
+
+      /*
       file.upload = Upload.upload({
         url: uploadUrl,
         method: 'POST',
@@ -229,16 +237,35 @@ VoicesApp.controller("FormController", [
           }
         }
       });
+      */
+
+
+      file.upload = Upload.upload({
+        url: 'https://voices-user-uploads.s3.amazonaws.com/', //S3 upload url including bucket name
+        method: 'POST',
+        data: {
+            key: file.name + String(Date.now()), // the key to store the file on S3, could be file name or customized
+            AWSAccessKeyId: "AKIAJ56CZLFX4U3V7ISQ",
+            acl: 'private', // sets the access to the uploaded file in the bucket: private, public-read, ...
+            policy: $scope.policy, // base64-encoded json policy (see article below)
+            signature: $scope.signature, // base64-encoded signature based on policy string (see article below)
+            "Content-Type": file.type != '' ? file.type : 'application/octet-stream', // content type of the file (NotEmpty)
+            filename: file.name, // this is needed for Flash polyfill IE8-9
+            file: file
+        }
+      });
+
+
 
       file.upload.then(function (resp) {
             // log the success then store the fact we received a response for this file
-            console.log('Success ' + resp.config.data.file_upload.name + 'uploaded. Response: ' + resp.data);
-            $scope.filesSent.push(resp.config.data.file_upload.name);
+            console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+            $scope.filesSent.push(resp.config.data.file.name);
 
         }, function (resp) {
             // log the error then store the fact that we received a response for this file
             console.log('Error status: ' + resp.status);
-            $scope.filesSent.push(resp.config.data.file_upload.name);
+            $scope.filesSent.push(resp.config.data.file.name);
 
         }, function (evt) {
             // tie a progress value to this file; Math.min fixes an IE bug (otherwise progress can go to 200%)
