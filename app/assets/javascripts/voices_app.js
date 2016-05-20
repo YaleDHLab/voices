@@ -133,7 +133,6 @@ VoicesApp.controller("FormController", [
         "$scope", "$http", "$location", "Upload", "postRecordForm", "pageClassService",
   function($scope, $http, $location, Upload, postRecordForm, pageClassService ) {
 
-
     // define the array to which we'll append all user uploaded files
     // and the array in which we'll store the files for which we've received
     // success or error messages from the server
@@ -255,8 +254,6 @@ VoicesApp.controller("FormController", [
         }
       });
 
-
-
       file.upload.then(function (resp) {
             // log the success then store the fact we received a response for this file
             console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
@@ -328,17 +325,37 @@ VoicesApp.controller("FormController", [
 
     // fire call when user interacts with file upload button
     $scope.uploadFiles = function(event){
+
       // files = all files the user selected on button click
       var files = event.target.files;
+
+      // add all selected files to the scope form.files
+      for (i = 0; i < files.length; i++) {
+        console.log(files[i]);
+        $scope.browsedFiles.push(files[i]);
+      };
 
       uploadAllFiles(files);
     }; // closes uploadFiles function
     
 
-    // when user drags file onto screen, call function
+    // initialize browsedfiles as an empty array
+    $scope.browsedFiles = [];
+
+    // function to call when user drags file onto screen
     $scope.$watch('draggedFiles', function () {
       if ($scope.draggedFiles) {
+        console.log($scope.draggedFiles);
         uploadAllFiles($scope.draggedFiles);
+      }
+    });
+
+    // function to call when user selects files with the Browse button
+    $scope.$watch('browsedFiles', function () {
+      console.log("a");
+      if ($scope.browsedFiles) {
+        console.log($scope.browsedFiles);
+        uploadAllFiles($scope.browsedFiles);
       }
     });
 
