@@ -201,20 +201,19 @@ VoicesApp.controller("FormController", [
     $scope.policy = "eyJleHBpcmF0aW9uIjoiMjAyMC0wMS0wMVQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJ2b2ljZXMtdXNlci11cGxvYWRzIn0sWyJzdGFydHMtd2l0aCIsIiRrZXkiLCIiXSxbInN0YXJ0cy13aXRoIiwiJGZpbGVuYW1lIiwiIl0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW50LVR5cGUiLCIiXSx7ImFjbCI6InByaXZhdGUifV19Cg==";
     $scope.signature = "0qCrxEVqaKB7/gwL3Talc4Gm318=";
 
-    
 
     // function called by button click and drag and drop behavior to
     // upload files to server
-    var requestFileUpload = function(file) {
-
+    var requestFileUpload = function(file, sizeKey) {
+      
       if ($scope.recordId) {
           var formData = {"file_upload": file, 
                  "file_upload[record_id]": $scope.recordId, 
                  "file": "in file_upload"}
-        } else {
-          var formData = {"file_upload": file, 
-                 "file": "in file_upload"}
-        };
+      } else {
+        var formData = {"file_upload": file, 
+               "file": "in file_upload"}
+      };
 
 
       /*
@@ -238,12 +237,14 @@ VoicesApp.controller("FormController", [
       });
       */
 
+      
+
 
       file.upload = Upload.upload({
         url: 'https://voices-user-uploads.s3.amazonaws.com/', //S3 upload url including bucket name
         method: 'POST',
         data: {
-            key: file.name + String(Date.now()), // the key to store the file on S3, could be file name or customized
+            key: sizeKey + "/" + file.name + String(Date.now()), // the key to store the file on S3, could be file name or customized
             AWSAccessKeyId: "AKIAJ56CZLFX4U3V7ISQ",
             acl: 'private', // sets the access to the uploaded file in the bucket: private, public-read, ...
             policy: $scope.policy, // base64-encoded json policy (see article below)
@@ -301,7 +302,16 @@ VoicesApp.controller("FormController", [
     };
 
 
+    // define the array of desired image sizes 
+    $scope.imageSizes = [
+      {"width": 500, "height": 100, "sizeKey": "medium"}, 
+      {"width": 300, "height": 200, "centerCrop": true, "sizeKey": "annotation_thumb"},
+      {"width": 100, "height": 100, "centerCrop": true, "sizeKey": "square_thumb"}, 
+    ];
+
+    // function called by both dragged files and browsed files for uploading files
     var uploadAllFiles = function(files) {
+      
       // iterate over files, upload and set progress bar for each
       for (i=0; i < files.length; i++)  {
         
@@ -310,17 +320,31 @@ VoicesApp.controller("FormController", [
         if ( $scope.fileTooLarge(files[i]) ) {
         } else {
 
+          // upload the original file regardless of file type
+          requestFileUpload(files[i], "original");
+
+          // then, if the file is an image, upload the file in each of the desired sizes
+          for (j = 0; j < $scope.imageSizes.length; j++) {
+
+            // resize the image using the current resize specs            
+            $scope.uploadResizedImage(files[i], $scope.imageSizes[j]);
+          };
+
           // append the file to our array of files to send
           $scope.filesToSend.push(files[i]);
-
-          // request that this file be uploaded
-          var fileToUpload = files[i];
-          requestFileUpload(fileToUpload);
         }
-
-        
       }; // closes file upload for loop
     }
+    
+
+    $scope.uploadResizedImage = function(file, resizeParams) {
+      Upload.resize(file, resizeParams.width, resizeParams.height, 1)
+      .then(
+        function(resizedImage) {
+          requestFileUpload(resizedImage, resizeParams.sizeKey);
+        }
+      );
+    };
     
 
     // fire call when user interacts with file upload button
