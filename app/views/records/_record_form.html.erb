@@ -5,6 +5,7 @@
        data-ngf-drag-over-class="dragover" 
        data-ngf-multiple="true" 
        data-ngf-allow-dir="true"
+       data-ngf-resize="{width: 100, height: 100}"
        accept="image/*, video/*, audio/*, .pdf, .doc, .docx, .xls, .xlt, .xla, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam, .csv, .tsv, .pptx, .ppt, .potx, .pot, .ppsx, .pps, .pptm, .potm, .ppsm, .ppam"
        data-ngf-pattern="'image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlt,.xla,.xlsx,.xlsm,.xltx,.xltm,.xlsb,.xlam,.csv,.tsv,.pptx,.ppt,.potx,.pot,.ppsx,.pps,.pptm,.potm,.ppsm,.ppam'">
 
@@ -19,19 +20,21 @@
       </div>
     <% end %>
 
+    <div>{{form}}</div>
+
     <div id="file-upload-container" class="field">
       <%= f.label :file_upload, "Add Files<sup>*</sup>".html_safe %>
-      <input 
-        multiple
-        type="file"
-        id="custom-file-upload"
-        style="display:none"
-        data-ng-model="form.files"
-        data-on-file-input-change="uploadFiles"
-        accept="image/*, video/*, audio/*, .pdf, .doc, .docx, .xls, .xlt, .xla, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam, .csv, .tsv, .pptx, .ppt, .potx, .pot, .ppsx, .pps, .pptm, .potm, .ppsm, .ppam"
-        data-ngf-pattern="'image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlt,.xla,.xlsx,.xlsm,.xltx,.xltm,.xlsb,.xlam,.csv,.tsv,.pptx,.ppt,.potx,.pot,.ppsx,.pps,.pptm,.potm,.ppsm,.ppam'">
 
-      <span class="btn btn-small btn-default btn-inverse" id="file-upload-button" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
+      <span class="btn btn-small btn-default btn-inverse" id="file-upload-button"
+        data-ngf-select
+        data-ng-model="browsedFiles"
+        data-ngf-multiple="true" 
+        data-ngf-allow-dir="true"
+        id="custom-file-upload"
+        data-on-file-input-change="uploadFiles"
+        data-ngf-resize="{width: 100, height: 100}"
+        accept="image/*, video/*, audio/*, .pdf, .doc, .docx, .xls, .xlt, .xla, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam, .csv, .tsv, .pptx, .ppt, .potx, .pot, .ppsx, .pps, .pptm, .potm, .ppsm, .ppam"
+        data-ngf-pattern="'image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlt,.xla,.xlsx,.xlsm,.xltx,.xltm,.xlsb,.xlam,.csv,.tsv,.pptx,.ppt,.potx,.pot,.ppsx,.pps,.pptm,.potm,.ppsm,.ppam'">Browse</span>
       <div class="max-file-size">Each file is limited to 100MB.</div>
     </div>
 
