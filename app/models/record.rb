@@ -1,7 +1,6 @@
 class Record < ActiveRecord::Base
   print self
 
-  #belongs_to :user
   has_many :record_attachments
   accepts_nested_attributes_for :record_attachments
   
