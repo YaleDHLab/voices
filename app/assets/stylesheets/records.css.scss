@@ -355,18 +355,25 @@ span.btn.btn-small.btn-default.btn-inverse {
   padding: 30px 0px;
 }
 
-.loaded-media {
-  width: 300px;
+video {
+  object-fit: fill;
 }
 
 .loaded-video {
   position: relative;
-  margin-left: -150px;
-  left: 50%;
+  width: 80%;
+  left: 10%;
+  margin-top: 3.3%;
+}
+
+.single-masonry-item .loaded-video {
+  padding-top: 4%;
+  padding-bottom: 4%;
 }
 
 .loaded-audio {
   position: relative;
+  width: 300px;
   margin-left: -150px;
   left: 50%;
 }
@@ -777,6 +784,12 @@ hr.clear-floats {
   width: 100%;
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
+  border: 1px solid #fff;
+  border-bottom: none;
+}
+
+.attachment-modal-content input {
+  border: none;
 }
 
 .edit-attachment-icon-container,
@@ -785,6 +798,7 @@ hr.clear-floats {
   right: 7px;
   top: 7px;
   cursor: pointer;
+  z-index: 2;
 }
 
 .edit-attachment-icon,
@@ -825,12 +839,6 @@ hr.clear-floats {
 }
 
 @media (max-width: 458px) {
-  .loaded-media {
-    width: 200px;
-    max-height: 240px;
-    margin-left: -100px;
-  }
-
   .record-display-left {
     width: 100%;
     padding-right: 0px;
@@ -946,6 +954,10 @@ hr.clear-floats {
   .max-file-size {
     display: block;
     padding-left: 0px;
+  }
+
+  #cancel-all-uploads {
+    margin-right: 0px;
   }
 
 }
