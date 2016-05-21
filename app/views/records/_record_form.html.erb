@@ -19,8 +19,6 @@
       </div>
     <% end %>
 
-    <div>{{form}}</div>
-
     <div id="file-upload-container" class="field">
       <%= f.label :file_upload, "Add Files<sup>*</sup>".html_safe %>
 
@@ -30,38 +28,37 @@
         data-ngf-multiple="true" 
         data-ngf-capture="'camera'"
         id="custom-file-upload"
-        data-on-file-input-change="uploadFiles"
         accept="image/*, video/*, audio/*, .pdf, .doc, .docx, .xls, .xlt, .xla, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam, .csv, .tsv, .pptx, .ppt, .potx, .pot, .ppsx, .pps, .pptm, .potm, .ppsm, .ppam"
         data-ngf-pattern="'image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlt,.xla,.xlsx,.xlsm,.xltx,.xltm,.xlsb,.xlam,.csv,.tsv,.pptx,.ppt,.potx,.pot,.ppsx,.pps,.pptm,.potm,.ppsm,.ppam'">Browse</span>
       <div class="max-file-size">Each file is limited to 100MB.</div>
     </div>
 
     <!-- Append progress-bars of uploading files -->
-    <div id="progress-bar-table-container" data-ng-if="filesToSend.length > 0" data-ng-cloak>
+    <div id="progress-bar-table-container" data-ng-if="isNotEmpty(filesInTransit)" data-ng-cloak>
       <div class="panel panel-default" id="round-table-edges">
         <table id="progress-bar-table" class="table table-striped table-bordered">
           <tbody>
-            <tr data-ng-repeat="f in filesToSend">
+            <tr data-ng-repeat="(filekey, f) in filesInTransit">
               <td class="file-name-container">
                 <div class="file-name">{{f.name}}</div>
               </td>
               <td class="progress-bar-container">
-                <span class="progress" data-ng-if="f.progress >= 0" data-ng-cloak>
-                  <div style="width:{{f.progress}}%"></div>
+                <span class="progress" data-ng-if="f.progress.original >= 0" data-ng-cloak>
+                  <div style="width:{{getProgress(f)}}%"></div>
                 </span>
               </td>
               <td class="progress-image-container">
                 <div class="progress-image">
                   
-                  <div data-ng-if="f.progress < 100">
+                  <div data-ng-if="getProgress(f) < 100">
                     <img 
                       src="/assets/x-cancel-blue.svg" 
                       alt="Cancel file upload"
-                      data-ng-click="abort(f)"
+                      data-ng-click="abort(f.file)"
                       class="cancel-upload">
                   </div>
 
-                  <div data-ng-if="f.progress == 100">
+                  <div data-ng-if="getProgress(f) == 100">
                     <img src="/assets/check-box-orange.svg" alt="Check box orange">
                   </div>
 
@@ -76,7 +73,7 @@
     <span class="btn btn-small btn-default btn-inverse" 
           id="cancel-all-uploads"
           data-ng-click="cancelAll()"
-          data-ng-if="filesToSend.length > 0">Cancel All</span>
+          data-ng-if="isNotEmpty(filesInTransit)">Cancel All</span>
 
     <div class="field">
       <%= f.label :title, "Title of Material<sup>*</sup>".html_safe %>
@@ -197,11 +194,13 @@
 
     <div class="clear-floats"></div>
 
+    <div>To Send:{{filesToSend}} Sent:{{filesSent}}</div>
+
     <button 
       name="button" 
       type="submit" 
       class="btn btn-primary blue-button submit-button"
-      data-ng-disabled="filesSent.length == 0 || filesToSend.length != filesSent.length"
+      data-ng-disabled="filesSent == 0 || filesToSend != filesSent"
       data-ng-if="currentPageClass == 'new'">SUBMIT
     </button>
 
@@ -209,7 +208,7 @@
       name="button" 
       type="submit" 
       class="btn btn-primary blue-button submit-button"
-      data-ng-disabled="filesToSend.length != filesSent.length"
+      data-ng-disabled="filesToSend != filesSent"
       data-ng-if="currentPageClass == 'edit'">SUBMIT
     </button>
 

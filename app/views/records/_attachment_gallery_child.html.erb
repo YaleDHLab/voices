@@ -1,6 +1,7 @@
 <div class="record-attachment-container"
      data-ng-class="{pointerCursor: currentPageClass == 'edit',
-                     placeholderImageContainer: attachment.placeholder_image_path !== null}"
+                     placeholderImageContainer: attachment.placeholder_image_path !== null ||
+                     attachment.media_type == 'video'}"
      data-ng-mouseenter="currentPageClass == 'edit' && addHoveredAttachment(attachment)"
      data-ng-mouseleave="currentPageClass == 'edit' && removeHoveredAttachment(attachment)"
      data-ng-click="currentPageClass == 'edit' && showAttachmentModal(attachment)">
@@ -12,11 +13,7 @@
     </div>
   </div>
 
-  <img data-ng-src="{{ getImageUrl(attachment) }}"
-       data-ng-class="{attachmentHover: hover,
-                       placeholderImage: attachment.placeholder_image_path !== null}" 
-       alt="{{ data.record.title }}" 
-       data-ng-cloak>
+  <%= render 'asset_view' %>
 
 </div>
 <input data-ng-if="currentPageClass == 'annotate'"
