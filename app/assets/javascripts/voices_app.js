@@ -2,22 +2,6 @@
 var VoicesApp = angular.module('VoicesApp', ['ngFileUpload', 'uiSwitch', 'angularModalService']);
 
 
-
-// directive that listens for changes to the file upload button
-VoicesApp.directive('onFileInputChange', function() {
-  return {
-    restrict: 'A',
-    link: function (scope, element, attrs) {
-      var onChangeHandler = scope.$eval(attrs.onFileInputChange);
-      element.bind('change', onChangeHandler);
-    }
-  };
-});
-
-
-
-
-
 // service to return the current page class (record, annotatate, edit)
 VoicesApp.service('pageClassService', 
   function () {
@@ -133,11 +117,9 @@ VoicesApp.controller("FormController", [
         "$scope", "$http", "$location", "Upload", "postRecordForm", "pageClassService",
   function($scope, $http, $location, Upload, postRecordForm, pageClassService ) {
 
-    // define the array to which we'll append all user uploaded files
-    // and the array in which we'll store the files for which we've received
-    // success or error messages from the server
-    $scope.filesToSend = [];
-    $scope.filesSent = [];
+    $scope.filesToSend = 0;
+    $scope.filesSent = 0;
+    $scope.filesInTransit = {};
 
     // create empty form
     $scope.form = {};
@@ -147,6 +129,12 @@ VoicesApp.controller("FormController", [
 
     // transmit page class so we can distinguish between record#new and record#edit forms
     $scope.currentPageClass = pageClassService.getPageClass();
+
+    // function to be called by view to determine if filesToUpload is populated
+    $scope.isNotEmpty = function (obj) {
+      for (var i in obj) if (obj.hasOwnProperty(i)) return true;
+      return false;
+    };
 
     // setter for form elements; only to be called when user is editing record
     // TODO: Make into a service that returns response.data.record
@@ -204,8 +192,10 @@ VoicesApp.controller("FormController", [
 
     // function called by button click and drag and drop behavior to
     // upload files to server
-    var requestFileUpload = function(file, sizeKey) {
+    var requestFileUpload = function(file, filesize, timestamp) {
       
+      $scope.filesToSend += 1;
+
       if ($scope.recordId) {
           var formData = {"file_upload": file, 
                  "file_upload[record_id]": $scope.recordId, 
@@ -214,7 +204,6 @@ VoicesApp.controller("FormController", [
         var formData = {"file_upload": file, 
                "file": "in file_upload"}
       };
-
 
       /*
       file.upload = Upload.upload({
@@ -237,14 +226,11 @@ VoicesApp.controller("FormController", [
       });
       */
 
-      
-
-
       file.upload = Upload.upload({
         url: 'https://voices-user-uploads.s3.amazonaws.com/', //S3 upload url including bucket name
         method: 'POST',
         data: {
-            key: sizeKey + "/" + file.name + String(Date.now()), // the key to store the file on S3, could be file name or customized
+            key: filesize + "/" + file.name + timestamp, // the key to store the file on S3, could be file name or customized
             AWSAccessKeyId: "AKIAJ56CZLFX4U3V7ISQ",
             acl: 'private', // sets the access to the uploaded file in the bucket: private, public-read, ...
             policy: $scope.policy, // base64-encoded json policy (see article below)
@@ -258,19 +244,19 @@ VoicesApp.controller("FormController", [
       file.upload.then(function (resp) {
             // log the success then store the fact we received a response for this file
             console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
-            $scope.filesSent.push(resp.config.data.file.name);
+            $scope.filesSent += 1;
 
         }, function (resp) {
             // log the error then store the fact that we received a response for this file
             console.log('Error status: ' + resp.status);
-            $scope.filesSent.push(resp.config.data.file.name);
+            $scope.filesSent += 1;
 
         }, function (evt) {
-            // tie a progress value to this file; Math.min fixes an IE bug (otherwise progress can go to 200%)
-            file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+            // tie a progress value to this size of this file; 
+            // Math.min fixes an IE bug (otherwise progress can go to 200%)
+            $scope.filesInTransit[file.name + timestamp]["progress"][filesize] = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
       });
 
-    
       // expose function that allows user to cancel the upload of a file
       $scope.abort = function(file) {
         console.log("abort requested", file);
@@ -282,8 +268,8 @@ VoicesApp.controller("FormController", [
 
     // expose function that cancels all pending user uploads
     $scope.cancelAll = function() {
-      for (i=0; i < $scope.filesToSend.length; i++) {
-        $scope.abort($scope.filesToSend[i]);
+      for (var f in $scope.filesInTransit) {
+        $scope.abort($scope.filesInTransit[f].file);
       }
     };
 
@@ -304,9 +290,9 @@ VoicesApp.controller("FormController", [
 
     // define the array of desired image sizes 
     $scope.imageSizes = [
-      {"width": 500, "height": 100, "sizeKey": "medium"}, 
-      {"width": 300, "height": 200, "centerCrop": true, "sizeKey": "annotation_thumb"},
-      {"width": 100, "height": 100, "centerCrop": true, "sizeKey": "square_thumb"}, 
+      {"width": 500, "height": 100, "filesize": "medium"}, 
+      {"width": 300, "height": 200, "centerCrop": true, "filesize": "annotation_thumb"},
+      {"width": 100, "height": 100, "centerCrop": true, "filesize": "square_thumb"} 
     ];
 
     // function called by both dragged files and browsed files for uploading files
@@ -320,69 +306,79 @@ VoicesApp.controller("FormController", [
         if ( $scope.fileTooLarge(files[i]) ) {
         } else {
 
+          // generate a timestamp to associate with the current file
+          var timestamp = String(Date.now());
+
           // upload the original file regardless of file type
-          requestFileUpload(files[i], "original");
+          requestFileUpload(files[i], "original", timestamp);
 
-          // then, if the file is an image, upload the file in each of the desired sizes
-          for (j = 0; j < $scope.imageSizes.length; j++) {
-
-            // resize the image using the current resize specs            
-            $scope.uploadResizedImage(files[i], $scope.imageSizes[j]);
+          // use the uploaded file's name and current timestamp as a unique
+          // key in the filesInTransit object (in case user uploads multiple files
+          // with the same name), and create a progress object that will store
+          // the upload progress of each size format for the current file
+          $scope.filesInTransit[files[i].name + timestamp] = {
+            "name": files[i].name, 
+            "progress": {},
+            "file": files[i],
           };
 
-          // append the file to our array of files to send
-          $scope.filesToSend.push(files[i]);
-        }
-      }; // closes file upload for loop
-    }
-    
+          // if the file is an image, upload the image in each of the desired sizes
+          if (files[i].type.indexOf("image") > -1) {
+            for (j = 0; j < $scope.imageSizes.length; j++) {
 
-    $scope.uploadResizedImage = function(file, resizeParams) {
-      Upload.resize(file, resizeParams.width, resizeParams.height, 1)
-      .then(
-        function(resizedImage) {
-          requestFileUpload(resizedImage, resizeParams.sizeKey);
-        }
-      );
+              // resize the image using the current resize specs            
+              $scope.uploadResizedImage(files[i], $scope.imageSizes[j], timestamp);
+            }; // closes file sizes loop
+          }; // closes image conditional
+        }; // closes file too large conditional
+      }; // closes file upload for loop
     };
     
 
-    // fire call when user interacts with file upload button
-    $scope.uploadFiles = function(event){
+    $scope.uploadResizedImage = function(file, sizeParams, timestamp) {
+      Upload.resize(file, sizeParams.width, sizeParams.height, 1)
+      .then(
+        function(resizedImage) {
+          requestFileUpload(resizedImage, sizeParams.filesize, timestamp);
+        }
+      );
+    };
 
-      // files = all files the user selected on button click
-      var files = event.target.files;
-
-      // add all selected files to the scope form.files
-      for (i = 0; i < files.length; i++) {
-        console.log(files[i]);
-        $scope.browsedFiles.push(files[i]);
-      };
-
-      uploadAllFiles(files);
-    }; // closes uploadFiles function
     
+    // function to return the aggregate progress of a file upload
+    $scope.getProgress = function(f) {
+      var progress = 0;
+      if(f.progress.original) {
+        progress += f.progress.original;
+      };
+      // if the file is an image, sum the progress of other file sizes
+      if (f.file.type.indexOf("image") > -1) {
+        for (i=0; i<$scope.imageSizes.length; i++) {
+          var sizeProgress = f.progress[$scope.imageSizes[i].filesize];
+          if (sizeProgress) {
+            progress += sizeProgress;
+          };
+        };
+        return (progress/4);
+      } else { 
+        return progress;
+      };
+    }; // closes getProgress
 
-    // initialize browsedfiles as an empty array
-    $scope.browsedFiles = [];
 
     // function to call when user drags file onto screen
     $scope.$watch('draggedFiles', function () {
       if ($scope.draggedFiles) {
-        console.log($scope.draggedFiles);
         uploadAllFiles($scope.draggedFiles);
       }
     });
 
     // function to call when user selects files with the Browse button
     $scope.$watch('browsedFiles', function () {
-      console.log("a");
       if ($scope.browsedFiles) {
-        console.log($scope.browsedFiles);
         uploadAllFiles($scope.browsedFiles);
       }
     });
-
 
   }
 ]);
@@ -426,8 +422,6 @@ VoicesApp.controller('ModalController', [
     };
 
 
-
-
     // function that informs client whether a file has a placeholder image
     var hasPlaceholderImage = function(attachment) {
       console.log("calling function");
@@ -459,11 +453,9 @@ VoicesApp.controller('ModalController', [
           return assetPath;
         }
 
-      }; // closes else
-    }; // closes function
-
-
-  }
+      }; // closes else clause for attachments without placeholderpath
+    }; // closes getImageUrl
+  } // closes controller function
 ]);
 
 
@@ -550,8 +542,6 @@ VoicesApp.controller("GalleryController", [
     // the value of the attachment key is an array of attachments,
     // each of which is a hashtable
     $scope.getAttachments = function(recordId, pageToFetch) {
-      console.log("getting attachments");
-
       if (recordId) {
           $http.get("/records/" + recordId + ".json")
         .then(function(response) {
@@ -692,24 +682,17 @@ VoicesApp.controller("GalleryController", [
 
       // restore the 0th page of attachments
       $scope.getPageOfAttachments(0);
-
-      console.log("multiple records clicked", $scope.attachmentsPerPage);
     };
 
 
     $scope.singleRecordViewClicked = function() {
       $scope.multipleRecordView = false;
       
-      // set things so that we can only have one record per page
-      // and start us off on the 0th page
+      // reset records per page to 1, broadcast the new number of pages
+      // to the view, and start users on the 0th page 
       $scope.attachmentsPerPage = 1;
-
-      // reset the total number of pages
       $scope.setTotalNumberOfPages();
-
       $scope.getPageOfAttachments(0);
-
-      console.log("single record clicked", $scope.attachmentsPerPage);
     };
 
 
