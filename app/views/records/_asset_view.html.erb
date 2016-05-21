@@ -9,7 +9,7 @@
        data-ng-attr-poster="{{ getImageUrl(attachment) }}"
        data-ng-class="{attachmentHover: hover}"
        controls
-       class="loaded-media loaded-video"
+       class="loaded-video"
        data-ng-cloak> 
   <source data-ng-if="attachment.media_type == 'video'"
           data-ng-src="{{ attachment.file_upload_url | trusted }}"
@@ -21,7 +21,7 @@
        data-ng-attr-poster="{{ getImageUrl(attachment) }}"
        data-ng-class="{attachmentHover: hover}"
        controls
-       class="loaded-media loaded-audio"
+       class="loaded-audio"
        data-ng-cloak>
   <source data-ng-if="attachment.media_type == 'audio'"
           data-ng-src="{{ attachment.file_upload_url | trusted }}"
