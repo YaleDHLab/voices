@@ -43,7 +43,7 @@
                 <div class="file-name">{{f.name}}</div>
               </td>
               <td class="progress-bar-container">
-                <span class="progress" data-ng-if="f.progress.original >= 0" data-ng-cloak>
+                <span class="progress" data-ng-cloak>
                   <div style="width:{{getProgress(f)}}%"></div>
                 </span>
               </td>
@@ -69,6 +69,15 @@
         </table>
       </div>
     </div>
+
+    <div class="attachment-array" style="display:none;">
+      <div data-ng-repeat="r in recordAttachments">
+        <input type="text" 
+               name="{{r.name}}" 
+               value="{{r.value}}">
+      </div>
+    </div>
+
 
     <span class="btn btn-small btn-default btn-inverse" 
           id="cancel-all-uploads"
@@ -194,18 +203,14 @@
 
     <div class="clear-floats"></div>
 
-    <div>To Send:{{filesToSend}} Sent:{{filesSent}}</div>
-
-    <button 
-      name="button" 
+    <button  
       type="submit" 
       class="btn btn-primary blue-button submit-button"
       data-ng-disabled="filesSent == 0 || filesToSend != filesSent"
       data-ng-if="currentPageClass == 'new'">SUBMIT
     </button>
 
-    <button 
-      name="button" 
+    <button  
       type="submit" 
       class="btn btn-primary blue-button submit-button"
       data-ng-disabled="filesToSend != filesSent"
