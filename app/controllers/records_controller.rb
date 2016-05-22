@@ -179,9 +179,10 @@ class RecordsController < ApplicationController
       params[:record][:cas_user_name] = session[:cas_user]
       params[:record][:flagged_for_removal] = false
 
-      # set the record attachment cas username and make the attributes an array
-      params[:record][:record_attachments_attributes][:cas_user_name] = session[:cas_user]
-      params[:record][:record_attachments_attributes] = [params[:record][:record_attachments_attributes]]
+      # set the cas username for each record attachment 
+      params[:record][:record_attachments_attributes].each do |p|
+        p[:cas_user_name] = session[:cas_user]
+      end
 
       params.require(:record).permit(
         :cas_user_name, :make_private, :title,
