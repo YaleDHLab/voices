@@ -79,8 +79,6 @@ class RecordsController < ApplicationController
   def create
     # retrieve the current cas user name from the session hash
     @form_params = record_params()
-    @form_params[:cas_user_name] = session[:cas_user]
-    @form_params[:flagged_for_removal] = false
     @record = Record.create( @form_params )
 
     # if the user just uploaded multiple attachments, send special flash
@@ -177,12 +175,20 @@ class RecordsController < ApplicationController
     # Never trust parameters from the scary internet, 
     # only allow the white list through.
     def record_params
+      # set the cas user and initialize the record as not being flagged for removal
+      params[:record][:cas_user_name] = session[:cas_user]
+      params[:record][:flagged_for_removal] = false
+
+      # set the record attachment cas username and make the attributes an array
+      params[:record][:record_attachments_attributes][:cas_user_name] = session[:cas_user]
+      params[:record][:record_attachments_attributes] = [params[:record][:record_attachments_attributes]]
+
       params.require(:record).permit(
         :cas_user_name, :make_private, :title,
         :description, :date, :location, :source_url, 
-        :hashtag, :release_checked,
-        :record_attachments
+        :hashtag, :release_checked, :flagged_for_removal,
+
+        record_attachments_attributes: [:record_id, :file_upload_url, :image_upload_url, :cas_user_name, :filename, :mimetype]
       )
     end
-
 end
