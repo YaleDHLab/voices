@@ -189,7 +189,10 @@ class RecordsController < ApplicationController
         :description, :date, :location, :source_url, 
         :hashtag, :release_checked, :flagged_for_removal,
 
-        record_attachments_attributes: [:record_id, :file_upload_url, :image_upload_url, :cas_user_name, :filename, :mimetype]
+        record_attachments_attributes: [
+          :record_id, :file_upload_url, :image_upload_url, 
+          :cas_user_name, :filename, :mimetype
+        ]
       )
     end
 end
