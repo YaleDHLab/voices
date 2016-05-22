@@ -133,25 +133,48 @@ VoicesApp.controller("FormController", [
 
 
     $scope.recordAttachments = [
-
       {
-        "name":"record[record_attachments_attributes][file_upload_url]", 
+        "name":"record[record_attachments_attributes][][file_upload_url]", 
         "value": "www.hey.com"
       },
 
       {
-        "name":"record[record_attachments_attributes][image_upload_url]", 
+        "name":"record[record_attachments_attributes][][image_upload_url]", 
         "value": "www.imageurl.com"
       },
 
       {
-        "name":"record[record_attachments_attributes][mimetype]", 
+        "name":"record[record_attachments_attributes][][mimetype]", 
         "value": "image/jpeg"
       },
 
       {
-        "name":"record[record_attachments_attributes][filename]", 
+        "name":"record[record_attachments_attributes][][filename]", 
         "value": "myfile.jpg"
+      },
+
+
+
+
+
+      {
+        "name":"record[record_attachments_attributes][][file_upload_url]", 
+        "value": "www.222hey.com"
+      },
+
+      {
+        "name":"record[record_attachments_attributes][][image_upload_url]", 
+        "value": "www.222imageurl.com"
+      },
+
+      {
+        "name":"record[record_attachments_attributes][][mimetype]", 
+        "value": "222image/jpeg"
+      },
+
+      {
+        "name":"record[record_attachments_attributes][][filename]", 
+        "value": "222myfile.jpg"
       }
 
     ];
