@@ -64,14 +64,13 @@ VoicesApp.service('postRecordForm', [
       var myRecordUrl = "/records";
 
       /*
-      // manually build up form. nb. cas username is set by the controller
+      // to manually build up form:
       var fd = new FormData();
       fd.append('record[title]', form.title );
       fd.append('record[make_private]', form.make_private );
       fd.append('record[description]', form.description );
       fd.append('record[hashtag]', form.hashtag );
       fd.append('record[release_checked]', form.release_checked == true? "1" : "0" );
-
       fd.append('record_attachments[files]', form.release_checked == true? "1" : "0" );
       */
 
@@ -130,62 +129,11 @@ VoicesApp.controller("FormController", [
         "$scope", "$http", "$location", "Upload", "postRecordForm", "pageClassService",
   function($scope, $http, $location, Upload, postRecordForm, pageClassService ) {
 
-
-
-    $scope.recordAttachments = [
-      {
-        "name":"record[record_attachments_attributes][][file_upload_url]", 
-        "value": "www.hey.com"
-      },
-
-      {
-        "name":"record[record_attachments_attributes][][image_upload_url]", 
-        "value": "www.imageurl.com"
-      },
-
-      {
-        "name":"record[record_attachments_attributes][][mimetype]", 
-        "value": "image/jpeg"
-      },
-
-      {
-        "name":"record[record_attachments_attributes][][filename]", 
-        "value": "myfile.jpg"
-      },
-
-
-
-
-
-      {
-        "name":"record[record_attachments_attributes][][file_upload_url]", 
-        "value": "www.222hey.com"
-      },
-
-      {
-        "name":"record[record_attachments_attributes][][image_upload_url]", 
-        "value": "www.222imageurl.com"
-      },
-
-      {
-        "name":"record[record_attachments_attributes][][mimetype]", 
-        "value": "222image/jpeg"
-      },
-
-      {
-        "name":"record[record_attachments_attributes][][filename]", 
-        "value": "222myfile.jpg"
-      }
-
-    ];
-
-
-    $scope.filesToSend = 0;
-    $scope.filesSent = 0;
-    $scope.filesInTransit = {};
-
-    // create empty form
-    $scope.form = $scope.form ? $scope.form : {};
+    $scope.filesToSend = 0; // number of files to send for the current session
+    $scope.filesSent = 0; // number of files sent in the current session
+    $scope.filesInTransit = {}; // object to store progress of files in transmission
+    $scope.recordAttachments = []; // array of objects to populate record attachments in form
+    $scope.form = $scope.form ? $scope.form : {}; // record form
 
     // initialize privacy settings to keep records private
     $scope.form.make_private = $scope.form.make_private? $scope.form.make_private: false;
@@ -237,54 +185,72 @@ VoicesApp.controller("FormController", [
     $scope.recordId = recordId;
     $scope.getAttachments($scope.recordId);
    
-
-    
-
-    $scope.submitForm = function() {
-      postRecordForm.uploadForm($scope.form);
-    };
-
-
-
     // nb: to submit a record form with current params, we can call:
     //postRecordForm.uploadForm($scope.form);
     // this requires that $scope.form be defined, and that all elements
     // be tied to the form element
 
-    // specify the url endpoint to which we'll submit the files
-    var uploadUrl = "/record_attachments";
 
-    // retrieve the CSRF token to we can make the POST request without getting 422'd
-    var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-    // specify encrypted policy and signature for file uploads
-    $scope.policy = "eyJleHBpcmF0aW9uIjoiMjAyMC0wMS0wMVQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJ2b2ljZXMtdXNlci11cGxvYWRzIn0sWyJzdGFydHMtd2l0aCIsIiRrZXkiLCIiXSxbInN0YXJ0cy13aXRoIiwiJGZpbGVuYW1lIiwiIl0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW50LVR5cGUiLCIiXSx7ImFjbCI6InByaXZhdGUifV19Cg==";
-    $scope.signature = "0qCrxEVqaKB7/gwL3Talc4Gm318=";
+    // function for adding record attachment attributes to the form
+    $scope.buildRecordAttachments = function(file, size, url) {
+      var fileAttributes = {
+        "filename": file.name,
+        "mimetype": file.type,
+        "file_upload_url": $scope.aws.rooturl + size + "/" + encodeURIComponent(url),
+        "image_upload_url": $scope.aws.rooturl + size + "/" + encodeURIComponent(url)
+      };
+
+      for (var k in fileAttributes) {
+        $scope.recordAttachments.push(
+          {
+            "name": "record[record_attachments_attributes][][" + k + "]",
+            "value": fileAttributes[k]
+          }
+        );
+      };
+    } // closes buildRecordAttachments
+
+
+    // specify aws file upload params
+    $scope.aws = {
+      "AWSAccessKeyId": "AKIAJ56CZLFX4U3V7ISQ",
+      "policy": "eyJleHBpcmF0aW9uIjoiMjAyMC0wMS0wMVQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJ2b2ljZXMtdXNlci11cGxvYWRzIn0sWyJzdGFydHMtd2l0aCIsIiRrZXkiLCIiXSxbInN0YXJ0cy13aXRoIiwiJGZpbGVuYW1lIiwiIl0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW50LVR5cGUiLCIiXSx7ImFjbCI6InB1YmxpYy1yZWFkIn1dfQo=",
+      "signature": "nitsVMbBmAnDcBClrp6QTS3VmdI=",
+      "acl": "public-read",
+      "rooturl": 'https://voices-user-uploads.s3.amazonaws.com/'
+    };
 
     // function called by button click and drag and drop behavior to
     // upload files to server
     var requestFileUpload = function(file, filesize, timestamp) {
-      
       $scope.filesToSend += 1;
 
       file.upload = Upload.upload({
-        url: 'https://voices-user-uploads.s3.amazonaws.com/', //S3 upload url including bucket name
+        url: $scope.aws.rooturl, //S3 upload url including bucket name
         method: 'POST',
         data: {
-            key: filesize + "/" + file.name + timestamp, // the key to store the file on S3, could be file name or customized
-            AWSAccessKeyId: "AKIAJ56CZLFX4U3V7ISQ",
-            acl: 'private', // sets the access to the uploaded file in the bucket: private, public-read, ...
-            policy: $scope.policy, // base64-encoded json policy (see article below)
-            signature: $scope.signature, // base64-encoded signature based on policy string (see article below)
-            "Content-Type": file.type != '' ? file.type : 'application/octet-stream', // content type of the file (NotEmpty)
-            filename: file.name, // this is needed for Flash polyfill IE8-9
-            file: file
+            key: filesize + "/" + file.name + timestamp, // the key used for the current upload file
+            AWSAccessKeyId: $scope.aws.AWSAccessKeyId, // AWS Access Key
+            acl: $scope.aws.acl, // sets the access to the uploaded file in the bucket: private, public-read, ...
+            policy: $scope.aws.policy, // the base64 policy generated from the python utility in this repo
+            signature: $scope.aws.signature, // base64-encoded signature based on policy string 
+            "Content-Type": file.type != '' ? file.type : 'application/octet-stream', // mimetype of the file (NotEmpty)
+            filename: file.name, // needed for Flash polyfill IE8-9
+            file: file // the file to be uploaded
         }
       });
 
       file.upload.then(function (resp) {
-            // log the success then store the fact we received a response for this file
+            // log the successful response
             console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+
+            // add the original upload file information to the record attachments hash
+            if (filesize === "original") {
+              $scope.buildRecordAttachments(file, filesize, file.name + timestamp);
+            };
+
+            // store the fact we received a response for this file
             $scope.filesSent += 1;
 
         }, function (resp) {
@@ -331,7 +297,7 @@ VoicesApp.controller("FormController", [
 
     // define the array of desired image sizes 
     $scope.imageSizes = [
-      {"width": 500, "height": 100, "filesize": "medium"}, 
+      {"width": 500, "filesize": "medium"}, 
       {"width": 300, "height": 200, "centerCrop": true, "filesize": "annotation_thumb"},
       {"width": 100, "height": 100, "centerCrop": true, "filesize": "square_thumb"} 
     ];
@@ -377,7 +343,16 @@ VoicesApp.controller("FormController", [
     
 
     $scope.uploadResizedImage = function(file, sizeParams, timestamp) {
-      Upload.resize(file, sizeParams.width, sizeParams.height, 1)
+      Upload.resize(
+        file, // file to resize
+        sizeParams.width ? sizeParams.width : null, // cropped width
+        sizeParams.height, // cropped height
+        1, // crop quality
+        null, // file type
+        null, // cropped image ratio
+        sizeParams.centerCrop == true ? true : null, // center crop?
+        null // resize conditional
+      )
       .then(
         function(resizedImage) {
           requestFileUpload(resizedImage, sizeParams.filesize, timestamp);
@@ -627,10 +602,10 @@ VoicesApp.controller("GalleryController", [
           var assetPath = attachment.image_upload_url;
         }
         if ($scope.attachmentsPerPage == 4) {
-          var assetPath = attachment.image_upload_url.replace("/medium/","/annotation_thumb/");
+          var assetPath = attachment.image_upload_url.replace("/original/","/annotation_thumb/");
         }
         if ($scope.attachmentsPerPage == 20) {
-          var assetPath = attachment.image_upload_url.replace("/medium/","/square_thumb/");
+          var assetPath = attachment.image_upload_url.replace("/original/","/square_thumb/");
         }
         
         return assetPath;
