@@ -63,13 +63,26 @@ VoicesApp.service('postRecordForm', [
       var csrfToken = $('meta[name="csrf-token"]').attr('content');
       var myRecordUrl = "/records";
 
+      /*
       // manually build up form. nb. cas username is set by the controller
       var fd = new FormData();
       fd.append('record[title]', form.title );
       fd.append('record[make_private]', form.make_private );
       fd.append('record[description]', form.description );
       fd.append('record[hashtag]', form.hashtag );
-      fd.append('record[release_checked]', form.release_checked );
+      fd.append('record[release_checked]', form.release_checked == true? "1" : "0" );
+
+      fd.append('record_attachments[files]', form.release_checked == true? "1" : "0" );
+      */
+
+      fd = new FormData;
+
+      for (var k in form) {
+        fd.append('record[' + k + ']', form[k]);
+      };
+
+      console.log(fd);
+      
 
       var req = {
         method: 'POST',
@@ -117,12 +130,39 @@ VoicesApp.controller("FormController", [
         "$scope", "$http", "$location", "Upload", "postRecordForm", "pageClassService",
   function($scope, $http, $location, Upload, postRecordForm, pageClassService ) {
 
+
+
+    $scope.recordAttachments = [
+
+      {
+        "name":"record[record_attachments_attributes][file_upload_url]", 
+        "value": "www.hey.com"
+      },
+
+      {
+        "name":"record[record_attachments_attributes][image_upload_url]", 
+        "value": "www.imageurl.com"
+      },
+
+      {
+        "name":"record[record_attachments_attributes][mimetype]", 
+        "value": "image/jpeg"
+      },
+
+      {
+        "name":"record[record_attachments_attributes][filename]", 
+        "value": "myfile.jpg"
+      }
+
+    ];
+
+
     $scope.filesToSend = 0;
     $scope.filesSent = 0;
     $scope.filesInTransit = {};
 
     // create empty form
-    $scope.form = {};
+    $scope.form = $scope.form ? $scope.form : {};
 
     // initialize privacy settings to keep records private
     $scope.form.make_private = $scope.form.make_private? $scope.form.make_private: false;
@@ -173,6 +213,15 @@ VoicesApp.controller("FormController", [
     // save the recordId for future requests
     $scope.recordId = recordId;
     $scope.getAttachments($scope.recordId);
+   
+
+    
+
+    $scope.submitForm = function() {
+      postRecordForm.uploadForm($scope.form);
+    };
+
+
 
     // nb: to submit a record form with current params, we can call:
     //postRecordForm.uploadForm($scope.form);
@@ -189,42 +238,11 @@ VoicesApp.controller("FormController", [
     $scope.policy = "eyJleHBpcmF0aW9uIjoiMjAyMC0wMS0wMVQwMDowMDowMFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJ2b2ljZXMtdXNlci11cGxvYWRzIn0sWyJzdGFydHMtd2l0aCIsIiRrZXkiLCIiXSxbInN0YXJ0cy13aXRoIiwiJGZpbGVuYW1lIiwiIl0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW50LVR5cGUiLCIiXSx7ImFjbCI6InByaXZhdGUifV19Cg==";
     $scope.signature = "0qCrxEVqaKB7/gwL3Talc4Gm318=";
 
-
     // function called by button click and drag and drop behavior to
     // upload files to server
     var requestFileUpload = function(file, filesize, timestamp) {
       
       $scope.filesToSend += 1;
-
-      if ($scope.recordId) {
-          var formData = {"file_upload": file, 
-                 "file_upload[record_id]": $scope.recordId, 
-                 "file": "in file_upload"}
-      } else {
-        var formData = {"file_upload": file, 
-               "file": "in file_upload"}
-      };
-
-      /*
-      file.upload = Upload.upload({
-        url: uploadUrl,
-        method: 'POST',
-        // pass in a hash that provides the requisite hash key (file_upload) and dummy file key
-        data: formData,
-        headers: {'X-CSRF-Token': csrfToken},
-        // specify below the model and database column in which we'll store uploads
-        fileFormDataName: 'record_attachment[file_upload]', 
-        formDataAppender: function(fda, key, val) {
-          if (angular.isArray(val)) {
-                angular.forEach(val, function(v) {
-                  fda.append('record_attachment['+key+']', v);
-              });
-          } else {
-              fda.append('record_attachment['+key+']', val);
-          }
-        }
-      });
-      */
 
       file.upload = Upload.upload({
         url: 'https://voices-user-uploads.s3.amazonaws.com/', //S3 upload url including bucket name
