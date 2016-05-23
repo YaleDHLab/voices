@@ -5,8 +5,8 @@
        data-ngf-drag-over-class="dragover" 
        data-ngf-multiple="true" 
        data-ngf-allow-dir="true"
-       accept="image/*, video/*, audio/*, .pdf, .doc, .docx, .xls, .xlt, .xla, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam, .csv, .tsv, .pptx, .ppt, .potx, .pot, .ppsx, .pps, .pptm, .potm, .ppsm, .ppam"
-       data-ngf-pattern="'image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlt,.xla,.xlsx,.xlsm,.xltx,.xltm,.xlsb,.xlam,.csv,.tsv,.pptx,.ppt,.potx,.pot,.ppsx,.pps,.pptm,.potm,.ppsm,.ppam'">
+       accept="image/*, video/*, audio/*, .3gpp, .flv, .pdf, .doc, .docx, .xls, .xlt, .xla, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam, .csv, .tsv, .pptx, .ppt, .potx, .pot, .ppsx, .pps, .pptm, .potm, .ppsm, .ppam"
+       data-ngf-pattern="'image/*,video/*,audio/*,.3gpp,.flv,.pdf,.doc,.docx,.xls,.xlt,.xla,.xlsx,.xlsm,.xltx,.xltm,.xlsb,.xlam,.csv,.tsv,.pptx,.ppt,.potx,.pot,.ppsx,.pps,.pptm,.potm,.ppsm,.ppam'">
 
     <% if @record.errors.any? %>
       <div class="alert alert-danger">
@@ -28,8 +28,10 @@
         data-ngf-multiple="true" 
         data-ngf-capture="'camera'"
         id="custom-file-upload"
-        accept="image/*, video/*, audio/*, .pdf, .doc, .docx, .xls, .xlt, .xla, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam, .csv, .tsv, .pptx, .ppt, .potx, .pot, .ppsx, .pps, .pptm, .potm, .ppsm, .ppam"
-        data-ngf-pattern="'image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlt,.xla,.xlsx,.xlsm,.xltx,.xltm,.xlsb,.xlam,.csv,.tsv,.pptx,.ppt,.potx,.pot,.ppsx,.pps,.pptm,.potm,.ppsm,.ppam'">Browse</span>
+        accept="image/*, video/*, audio/*, .3gpp, .flv, .pdf, .doc, .docx, .xls, .xlt, .xla, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam, .csv, .tsv, .pptx, .ppt, .potx, .pot, .ppsx, .pps, .pptm, .potm, .ppsm, .ppam"
+        data-ngf-pattern="'image/*,video/*,audio/*,.3gpp,.flv,.pdf,.doc,.docx,.xls,.xlt,.xla,.xlsx,.xlsm,.xltx,.xltm,.xlsb,.xlam,.csv,.tsv,.pptx,.ppt,.potx,.pot,.ppsx,.pps,.pptm,.potm,.ppsm,.ppam'">
+          
+        Browse</span>
       <div class="max-file-size">Each file is limited to 100MB.</div>
     </div>
 
