@@ -1,65 +1,63 @@
-    <div class="metadata-spacer"></div>
-    <div class="record-display-left">
-      <div data-ng-if="data.record.description" 
-           class="record-display-label"
-           data-ng-cloak>Description
-      </div>
-      <div data-ng-if="data.record.description" 
-           class="record-display-text"
-           data-ng-cloak>{{ data.record.description }}
-      </div>
-      <div data-ng-if="data.record.cas_user_name" 
-           class="record-display-label"
-           data-ng-cloak>Contributor
-      </div>
-      <div data-ng-if="data.record.cas_user_name" 
-           class="record-display-text"
-           data-ng-cloak>{{ data.record.cas_user_name }}
-      </div>
-    </div>
-
-    <div class="record-display-right">
-      <div data-ng-if="data.record.date" 
-           class="record-display-label"
-           data-ng-cloak>Date
-      </div>
-      <div data-ng-if="data.record.date" 
-           class="record-display-text"
-           data-ng-cloak>{{ data.record.date }}
-      </div>
-
-      <div data-ng-if="data.record.location" 
-           class="record-display-label"
-           data-ng-cloak>Location
-      </div>
-      <div data-ng-if="data.record.location" 
-           class="record-display-text"
-           data-ng-cloak>{{ data.record.location }}
-      </div>
-
-      <div data-ng-if="data.record.source_url" 
-           class="record-display-label"
-           data-ng-cloak>Source URL
-      </div>
-      
-      <div data-ng-if="data.record.source_url" 
-           class="record-display-text"
-           data-ng-cloak>
-        <a data-ng-href="{{data.record.source_url}}"
-           data-ng-cloak>
-          {{ data.record.source_url }}
-        </a>
-      </div>
-
-      <div data-ng-if="data.record.hashtag" 
-           class="record-display-label"
-           data-ng-cloak>Hashtags
-      </div>
-      <div data-ng-if="data.record.hashtag" 
-           class="record-display-text"
-           data-ng-cloak>{{ data.record.hashtag }}
-      </div>
-
-    </div>
+<div class="metadata-spacer"></div>
+<div class="record-display-left">
+  <div data-ng-if="data.record.description" 
+       class="record-display-label"
+       data-ng-cloak>Description
   </div>
+  <div data-ng-if="data.record.description" 
+       class="record-display-text"
+       data-ng-cloak>{{ data.record.description }}
+  </div>
+  <div data-ng-if="data.record.cas_user_name" 
+       class="record-display-label"
+       data-ng-cloak>Contributor
+  </div>
+  <div data-ng-if="data.record.cas_user_name" 
+       class="record-display-text"
+       data-ng-cloak>{{ data.record.cas_user_name }}
+  </div>
+</div>
+
+<div class="record-display-right">
+  <div data-ng-if="data.record.date" 
+       class="record-display-label"
+       data-ng-cloak>Date
+  </div>
+  <div data-ng-if="data.record.date" 
+       class="record-display-text"
+       data-ng-cloak>{{ data.record.date }}
+  </div>
+
+  <div data-ng-if="data.record.location" 
+       class="record-display-label"
+       data-ng-cloak>Location
+  </div>
+  <div data-ng-if="data.record.location" 
+       class="record-display-text"
+       data-ng-cloak>{{ data.record.location }}
+  </div>
+
+  <div data-ng-if="data.record.source_url" 
+       class="record-display-label"
+       data-ng-cloak>Source URL
+  </div>
+  
+  <div data-ng-if="data.record.source_url" 
+       class="record-display-text"
+       data-ng-cloak>
+    <a data-ng-href="{{data.record.source_url}}"
+       data-ng-cloak>
+      {{ data.record.source_url }}
+    </a>
+  </div>
+
+  <div data-ng-if="data.record.hashtag" 
+       class="record-display-label"
+       data-ng-cloak>Hashtags
+  </div>
+  <div data-ng-if="data.record.hashtag" 
+       class="record-display-text"
+       data-ng-cloak>{{ data.record.hashtag }}
+  </div>
+
 </div>
