@@ -36,7 +36,7 @@ gem 'paperclip', '4.2.4'
 # Add aws-sdk for S3 storage of user-uploaded content
 gem 'aws-sdk', '~> 1.55.0'
 
-# add video preprocessor to create video still image
+# add ffmpeg wrapper for video transcoding and thumbnail generation
 gem 'paperclip-ffmpeg', '~> 1.0.1'
 
 # allow file uploads to happen as background processes
