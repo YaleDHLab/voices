@@ -6,7 +6,8 @@
   <div data-ng-class="{ 'one-column-masonry' : attachmentsPerPage == 1, 
                         'two-column-masonry' : attachmentsPerPage == 4,
                         'five-column-masonry' : attachmentsPerPage == 20}">
-    <div data-ng-class="{ 'single-masonry-item' : !multipleRecordView,
+    <div data-ng-class="{ 'single-masonry-item' : !multipleRecordView && attachment.media_type != 'video',
+                          'single-masonry-video' : !multipleRecordView && attachment.media_type == 'video',
                           'masonry-item' : multipleRecordView }"
          data-ng-hide="hiddenAttachments.indexOf(attachment.id) > -1"
          data-ng-repeat="attachment in attachmentsOnCurrentPage" 
