@@ -193,12 +193,15 @@ VoicesApp.controller("FormController", [
 
 
     // function for adding record attachment attributes to the form
-    $scope.buildRecordAttachments = function(file, size, url) {
+    // this function is called once per file, when size == original
+    $scope.addRecordAttachmentToForm = function(file, size, url) {
       var fileAttributes = {
         "filename": file.name,
         "mimetype": file.type,
         "file_upload_url": $scope.aws.rooturl + size + "/" + encodeURIComponent(url),
-        "image_upload_url": $scope.aws.rooturl + size + "/" + encodeURIComponent(url)
+        "medium_image_url": $scope.aws.rooturl + "medium" + "/" + encodeURIComponent(url),
+        "annotation_thumb_url": $scope.aws.rooturl + "annotation_thumb" + "/" + encodeURIComponent(url),
+        "square_thumb_url": $scope.aws.rooturl + "square_thumb" + "/" + encodeURIComponent(url)
       };
 
       for (var k in fileAttributes) {
@@ -209,7 +212,7 @@ VoicesApp.controller("FormController", [
           }
         );
       };
-    } // closes buildRecordAttachments
+    } // closes function
 
 
     // specify aws file upload params
@@ -222,8 +225,8 @@ VoicesApp.controller("FormController", [
     };
 
     // function called by button click and drag and drop behavior to
-    // upload files to server
-    var requestFileUpload = function(file, filesize, timestamp) {
+    // upload files to aws
+    var sendFileToAWS = function(file, filesize, timestamp) {
       $scope.filesToSend += 1;
 
       file.upload = Upload.upload({
@@ -246,8 +249,9 @@ VoicesApp.controller("FormController", [
             console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
 
             // add the original upload file information to the record attachments hash
+            // and then submit the record attachment information with the form
             if (filesize === "original") {
-              $scope.buildRecordAttachments(file, filesize, file.name + timestamp);
+              $scope.addRecordAttachmentToForm(file, filesize, file.name + timestamp);
             };
 
             // store the fact we received a response for this file
@@ -270,7 +274,7 @@ VoicesApp.controller("FormController", [
         file.upload.abort();
       };
 
-    }; // closes requestFileUpload();
+    }; // closes sendFileToAWS();
 
 
     // expose function that cancels all pending user uploads
@@ -279,6 +283,93 @@ VoicesApp.controller("FormController", [
         $scope.abort($scope.filesInTransit[f].file);
       }
     };
+
+
+
+
+
+
+
+
+    // store the csrf token to make server calls
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+    // function called by button click and drag and drop behavior to
+    // upload files to rails server
+    var sendFileToServer = function(file, filesize, timestamp) {
+
+      $scope.filesToSend += 1;
+
+      // include record Id so server knows to attribute this record with the current user
+      if ($scope.recordId) {
+          var formData = {
+            "file_upload": file, 
+            "file_upload[record_id]": $scope.recordId, 
+            "file": "in file_upload"
+          };
+        } else {
+          var formData = {
+            "file_upload": file, 
+            "file": "in file_upload"
+          };
+        }
+
+      file.upload = Upload.upload({
+        url: "/record_attachments",
+        method: 'POST',
+        // pass in a hash that provides the requisite hash key (file_upload) and dummy file key
+        data: formData,
+        headers: {'X-CSRF-Token': csrfToken},
+        // specify below the model and database column in which we'll store uploads
+        fileFormDataName: 'record_attachment[file_upload]', 
+        formDataAppender: function(fda, key, val) {
+          if (angular.isArray(val)) {
+                angular.forEach(val, function(v) {
+                  fda.append('record_attachment['+key+']', v);
+              });
+          } else {
+              fda.append('record_attachment['+key+']', val);
+          }
+        }
+      });
+
+      file.upload.then(function (resp) {
+            // log the success then store the fact we received a response for this file
+            console.log('Success ' + resp.config.data.file_upload.name + 'uploaded. Response: ' + resp.data);
+            $scope.filesSent += 1;
+
+        }, function (resp) {
+            // log the error then store the fact that we received a response for this file
+            console.log('Error status: ' + resp.status);
+            $scope.filesSent += 1;
+
+        }, function (evt) {
+            // tie a progress value to this file; Math.min fixes an IE bug (otherwise progress can go to 200%)
+            $scope.filesInTransit[file.name + timestamp]["progress"][filesize] = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+      });
+
+    
+      // expose function that allows user to cancel the upload of a file
+      $scope.abort = function(file) {
+        console.log("abort requested", file);
+        file.upload.abort();
+      };
+
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     
     // function to ensure that an uploaded file
@@ -317,7 +408,7 @@ VoicesApp.controller("FormController", [
           var timestamp = String(Date.now());
 
           // upload the original file regardless of file type
-          requestFileUpload(files[i], "original", timestamp);
+          sendFileToServer(files[i], "original", timestamp);
 
           // use the uploaded file's name and current timestamp as a unique
           // key in the filesInTransit object (in case user uploads multiple files
@@ -355,7 +446,7 @@ VoicesApp.controller("FormController", [
       )
       .then(
         function(resizedImage) {
-          requestFileUpload(resizedImage, sizeParams.filesize, timestamp);
+          sendFileToServer(resizedImage, sizeParams.filesize, timestamp);
         }
       );
     };
@@ -456,7 +547,7 @@ VoicesApp.controller('ModalController', [
         return placeholderPath;
       } else {
         
-        var assetPath = attachment.image_upload_url.replace("/original/","/annotation_thumb/");
+        var assetPath = attachment.medium_image_url.replace("/medium/","/annotation_thumb/");
         
         // if the upload is a video file, return the image asset, not the video file
         if (attachment.media_type == "video") {
@@ -599,13 +690,13 @@ VoicesApp.controller("GalleryController", [
       } else {
         var assetPath = '';
         if ($scope.attachmentsPerPage == 1) {
-          var assetPath = attachment.image_upload_url;
+          var assetPath = attachment.medium_image_url;
         }
         if ($scope.attachmentsPerPage == 4) {
-          var assetPath = attachment.image_upload_url.replace("/original/","/annotation_thumb/");
+          var assetPath = attachment.annotation_thumb_url;
         }
         if ($scope.attachmentsPerPage == 20) {
-          var assetPath = attachment.image_upload_url.replace("/original/","/square_thumb/");
+          var assetPath = attachment.square_thumb_url;
         }
         
         return assetPath;
@@ -809,7 +900,7 @@ VoicesApp.controller("userController", [
       if (placeholderPath) {
         return placeholderPath;
       } else {
-        return attachment.image_upload_url;
+        return attachment.medium_image_url;
       }; // closes else
     }; // closes function
 
