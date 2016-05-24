@@ -1,7 +1,6 @@
 <div class="record-attachment-container"
      data-ng-class="{pointerCursor: currentPageClass == 'edit',
-                     placeholderImageContainer: attachment.placeholder_image_path !== null ||
-                     attachment.media_type == 'video'}"
+                     placeholderImageContainer: attachment.placeholder_image_path !== null}"
      data-ng-mouseenter="currentPageClass == 'edit' && addHoveredAttachment(attachment)"
      data-ng-mouseleave="currentPageClass == 'edit' && removeHoveredAttachment(attachment)"
      data-ng-click="currentPageClass == 'edit' && showAttachmentModal(attachment)">
