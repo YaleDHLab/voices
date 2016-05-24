@@ -180,8 +180,10 @@ class RecordsController < ApplicationController
       params[:record][:flagged_for_removal] = false
 
       # set the cas username for each record attachment 
-      params[:record][:record_attachments_attributes].each do |p|
-        p[:cas_user_name] = session[:cas_user]
+      if params[:record][:record_attachments_attributes]
+        params[:record][:record_attachments_attributes].each do |p|
+          p[:cas_user_name] = session[:cas_user]
+        end
       end
 
       params.require(:record).permit(
@@ -190,8 +192,8 @@ class RecordsController < ApplicationController
         :hashtag, :release_checked, :flagged_for_removal,
 
         record_attachments_attributes: [
-          :record_id, :file_upload_url, :image_upload_url, 
-          :cas_user_name, :filename, :mimetype
+          :record_id, :file_upload_url, :cas_user_name,
+          :filename, :mimetype
         ]
       )
     end
