@@ -573,6 +573,7 @@ video {
 .two-column-masonry .placeholderImageContainer {
   height: 0px;
   padding-bottom: 66.666%;
+  overflow: hidden;
 }
 
 .two-column-masonry .placeholderImageContainer img {
@@ -585,6 +586,7 @@ video {
 .five-column-masonry .placeholderImageContainer {
   height: 0px;
   padding-bottom: 100%;
+  overflow: hidden;
 }
 
 .five-column-masonry .placeholderImageContainer img {
@@ -605,6 +607,14 @@ video {
   background: #f8f8f8;
   border: 1px solid lightgray;
   margin-left: 20%;
+}
+
+.single-masonry-video {
+  display: inline-block;
+  margin: 0 0 14px 0;
+  width: 60%;
+  margin-left: 20%;
+  padding-bottom: 15px;
 }
 
 .masonry-item {
