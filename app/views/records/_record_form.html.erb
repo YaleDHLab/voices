@@ -56,7 +56,7 @@
                     <img 
                       src="/assets/x-cancel-blue.svg" 
                       alt="Cancel file upload"
-                      data-ng-click="abort(f.file)"
+                      data-ng-click="abort(f)"
                       class="cancel-upload">
                   </div>
 
@@ -207,18 +207,20 @@
     <button  
       type="submit" 
       class="btn btn-primary blue-button submit-button"
-      data-ng-disabled="filesSent == 0 || filesToSend != filesSent"
+      data-ng-disabled="filesSent.length == 0 || filesToSend.length != filesSent.length"
       data-ng-if="currentPageClass == 'new'">SUBMIT
     </button>
 
     <button  
       type="submit" 
       class="btn btn-primary blue-button submit-button"
-      data-ng-disabled="filesToSend != filesSent"
+      data-ng-disabled="filesToSend.length != filesSent.length"
       data-ng-if="currentPageClass == 'edit'">SUBMIT
     </button>
 
   </div>
 <% end %>
+
+<div>{{filesSent}}{{filesToSend}}</div>
 
 <%= render 'i_cant_even_modal' %>
