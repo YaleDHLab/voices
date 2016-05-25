@@ -41,6 +41,10 @@ VoicesRails::Application.routes.draw do
   # expose a method for deleting record attachments
   delete "record_attachments/:id" => "record_attachments#destroy"
 
+  # delete record all record attachments that have no record id 
+  # when users click 'cancel all' on form page
+  delete "destroy_unsaved_attachments" => "record_attachments#destroy_unsaved_attachments"
+
   # provie route that will send a request for a record to be removed
   get "report_record" => "report_record#create"
 
