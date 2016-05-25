@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523231801) do
+ActiveRecord::Schema.define(version: 20160524214511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20160523231801) do
     t.text     "medium_image_url"
     t.text     "annotation_thumb_url"
     t.text     "square_thumb_url"
+    t.string   "client_side_timestamp"
   end
 
   create_table "records", force: :cascade do |t|
