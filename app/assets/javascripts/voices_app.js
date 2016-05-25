@@ -80,9 +80,6 @@ VoicesApp.service('postRecordForm', [
         fd.append('record[' + k + ']', form[k]);
       };
 
-      console.log(fd);
-      
-
       var req = {
         method: 'POST',
         url: myRecordUrl,
@@ -129,8 +126,8 @@ VoicesApp.controller("FormController", [
         "$scope", "$http", "$location", "Upload", "postRecordForm", "pageClassService",
   function($scope, $http, $location, Upload, postRecordForm, pageClassService ) {
 
-    $scope.filesToSend = 0; // number of files to send for the current session
-    $scope.filesSent = 0; // number of files sent in the current session
+    $scope.filesToSend = []; // array of timestamped filenames to upload 
+    $scope.filesSent = []; // array of timestamped filenames uploaded 
     $scope.filesInTransit = {}; // object to store progress of files in transmission
     $scope.recordAttachments = []; // array of objects to populate record attachments in form
     $scope.form = $scope.form ? $scope.form : {}; // record form
@@ -192,26 +189,61 @@ VoicesApp.controller("FormController", [
 
 
 
-    // function for adding record attachment attributes to the form
-    // this function is called once per file, when size == original
-    $scope.addRecordAttachmentToForm = function(file, size, url) {
+    // function for adding or removing image record attachment attributes to/from the form
+    $scope.updateAttachmentsInForm = function(method, fileInTransit, size) {
+      var file = fileInTransit.file;
+      var timestamp = fileInTransit.timestamp;
+      var timestampedFilename = file.name + "?" + timestamp;
       var fileAttributes = {
         "filename": file.name,
         "mimetype": file.type,
-        "file_upload_url": $scope.aws.rooturl + size + "/" + encodeURIComponent(url),
-        "medium_image_url": $scope.aws.rooturl + "medium" + "/" + encodeURIComponent(url),
-        "annotation_thumb_url": $scope.aws.rooturl + "annotation_thumb" + "/" + encodeURIComponent(url),
-        "square_thumb_url": $scope.aws.rooturl + "square_thumb" + "/" + encodeURIComponent(url)
+        "file_upload_url": $scope.aws.rooturl + size + "/" + encodeURIComponent(timestampedFilename),
+        "medium_image_url": $scope.aws.rooturl + "medium" + "/" + encodeURIComponent(timestampedFilename),
+        "annotation_thumb_url": $scope.aws.rooturl + "annotation_thumb" + "/" + encodeURIComponent(timestampedFilename),
+        "square_thumb_url": $scope.aws.rooturl + "square_thumb" + "/" + encodeURIComponent(timestampedFilename)
       };
 
-      for (var k in fileAttributes) {
-        $scope.recordAttachments.push(
-          {
-            "name": "record[record_attachments_attributes][][" + k + "]",
-            "value": fileAttributes[k]
-          }
-        );
-      };
+      if (method == "add") {
+        for (var k in fileAttributes) {
+          $scope.recordAttachments.push(
+            {
+              "name": "record[record_attachments_attributes][][" + k + "]",
+              "value": fileAttributes[k]
+            }
+          );
+        } 
+      } 
+      else if (method == "remove" && file.type.indexOf("video") == -1) {
+        for (var k in fileAttributes) {
+          $scope.recordAttachments.pop(
+            {
+              "name": "record[record_attachments_attributes][][" + k + "]",
+              "value": fileAttributes[k]
+            }
+          );
+        }
+      }
+      else if (method == "remove" && file.type.indexOf("video") > -1) {
+        var req = {
+          method: 'DELETE',
+          url: "/destroy_unsaved_attachments?filename=" + file.name + 
+               "&client_side_timestamp=" + timestamp,
+          headers: {
+              "Content-Type": undefined,
+              "X-CSRF-Token": $('meta[name="csrf-token"]').attr('content')
+              },
+          data: {}
+        };
+
+        $http(req)
+          .success( function( response ){
+            console.log("deleted attachments", response.status);
+          })
+          .error( function( response ){
+            console.log("a problem occurred while deleting record attachments", 
+            response.status);
+          });
+      }; // closes conditional that sends delete request to server
     } // closes function
 
 
@@ -224,95 +256,122 @@ VoicesApp.controller("FormController", [
       "rooturl": 'https://voices-user-uploads.s3.amazonaws.com/'
     };
 
-    // function called by button click and drag and drop behavior to
-    // upload files to aws
+
+    // upload files directly to S3
     var sendFileToAWS = function(file, filesize, timestamp) {
-      $scope.filesToSend += 1;
+      var timestampedFilename = file.name + "?" + timestamp;
+      var contentType = file.type != '' ? file.type : 'application/octet-stream';
+      
+      // only store this as a file to send if we haven't done so already
+      $scope.filesToSend.push(timestampedFilename + filesize);
 
       file.upload = Upload.upload({
         url: $scope.aws.rooturl, //S3 upload url including bucket name
         method: 'POST',
         data: {
-            key: filesize + "/" + file.name + timestamp, // the key used for the current upload file
-            AWSAccessKeyId: $scope.aws.AWSAccessKeyId, // AWS Access Key
-            acl: $scope.aws.acl, // sets the access to the uploaded file in the bucket: private, public-read, ...
-            policy: $scope.aws.policy, // the base64 policy generated from the python utility in this repo
-            signature: $scope.aws.signature, // base64-encoded signature based on policy string 
-            "Content-Type": file.type != '' ? file.type : 'application/octet-stream', // mimetype of the file (NotEmpty)
-            filename: file.name, // needed for Flash polyfill IE8-9
-            file: file // the file to be uploaded
+          key: filesize + "/" + timestampedFilename, // Path to file in S3
+          AWSAccessKeyId: $scope.aws.AWSAccessKeyId, // AWS Access Key
+          acl: $scope.aws.acl, // ACL for file: private, public-read, ...
+          policy: $scope.aws.policy, // Base64 policy document
+          signature: $scope.aws.signature, // Base64 string based on policy
+          "Content-Type": contentType, // mimetype of the file (if non-empty)
+          filename: file.name, // needed for Flash polyfill IE8-9
+          file: file // the file to be uploaded
         }
       });
 
-      file.upload.then(function (resp) {
-            // log the successful response
-            console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+      file.upload.then( function (resp) {
+          // store the sent file if the user didn't cancel this request
+          if ($scope.filesToSend.indexOf(timestampedFilename + filesize) > -1) {
+            $scope.filesSent.push(timestampedFilename + filesize);
+          };
 
-            // add the original upload file information to the record attachments hash
-            // and then submit the record attachment information with the form
-            if (filesize === "original") {
-              $scope.addRecordAttachmentToForm(file, filesize, file.name + timestamp);
-            };
+          // add the original upload file data to the record attachments hash
+          // and then submit the record attachment information with the form
+          if (filesize === "original") {
+            var fileInTransit = $scope.filesInTransit[timestampedFilename];
+            $scope.updateAttachmentsInForm("add", fileInTransit, filesize);
+          };
 
-            // store the fact we received a response for this file
-            $scope.filesSent += 1;
+      }, function (resp) {
+          // log the error callback if the user didn't cancel this request
+          if ($scope.filesToSend.indexOf(timestampedFilename + filesize) > -1) {
+            $scope.filesSent.push(timestampedFilename + filesize);
+          };
+          
+          // if the user cancelled their upload, response will == -1; 
+          // don't log those responses
+          if (resp.status != -1) {
+            console.log(
+              "Error uploading: " + resp.config.data.filename + "; " +
+              "Response status: " + resp.status + "; " +
+              "Status text: " + resp.statusText
+            );
+          }
+          
+          
+      }, function (evt) {
+          // Tie a progress value to this size of this file.
+          // Use Math.min to fix an IE bug that lets progress to go 200%
+          // Check if the key exists in the dict before pushing a progress event 
+          // update to it, as users can remove k/v pairs from this object 
+          // with the cancel all button
+          if ($scope.filesInTransit[timestampedFilename]) {
+            $scope.filesInTransit[timestampedFilename]["progress"][filesize] = 
+            Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+          };
+      }); // closes serverside file upload callback
 
-        }, function (resp) {
-            // log the error then store the fact that we received a response for this file
-            console.log('Error status: ' + resp.status);
-            $scope.filesSent += 1;
-
-        }, function (evt) {
-            // tie a progress value to this size of this file; 
-            // Math.min fixes an IE bug (otherwise progress can go to 200%)
-            $scope.filesInTransit[file.name + timestamp]["progress"][filesize] = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-      });
 
       // expose function that allows user to cancel the upload of a file
-      $scope.abort = function(file) {
-        console.log("abort requested", file);
-        file.upload.abort();
-      };
+      $scope.abort = function(fileInTransit) {        
+        var timestampedFilename = fileInTransit.name + "?" + 
+          fileInTransit.timestamp;
+        
+        $scope.filesInTransit[timestampedFilename].file.upload.abort();
+        $scope.updateAttachmentsInForm("remove", fileInTransit, filesize);
+        
+        delete $scope.filesInTransit[timestampedFilename];
+
+        for (i = 0; i < $scope.imageSizes.length; i++) {
+          var filesize = $scope.imageSizes[i].filesize;
+
+          var index = $scope.filesToSend.indexOf(
+              timestampedFilename + filesize);
+          if (index > -1) {
+            $scope.filesToSend.splice(index, 1);
+          };
+
+          var sentIndex = $scope.filesSent.indexOf(
+              timestampedFilename + filesize);
+          if (sentIndex > -1) {
+            $scope.filesSent.splice(sentIndex, 1);
+          };
+        }; // closes loop over filesizes
+      }; // closes abort()
 
     }; // closes sendFileToAWS();
 
 
-    // expose function that cancels all pending user uploads
-    $scope.cancelAll = function() {
-      for (var f in $scope.filesInTransit) {
-        $scope.abort($scope.filesInTransit[f].file);
-      }
-    };
-
-
-
-
-
-
-
-
-    // store the csrf token to make server calls
-    var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
     // function called by button click and drag and drop behavior to
     // upload files to rails server
     var sendFileToServer = function(file, filesize, timestamp) {
+      var timestampedFilename = file.name + "?" + timestamp;
+      $scope.filesToSend.push(timestampedFilename);
 
-      $scope.filesToSend += 1;
+      var csrfToken = $('meta[name="csrf-token"]').attr('content');
+      var formData = {
+        "file_upload": file, 
+        "file": "in file_upload",
+        "filename": file.name,
+        "client_side_timestamp": timestamp
+      };
 
       // include record Id so server knows to attribute this record with the current user
       if ($scope.recordId) {
-          var formData = {
-            "file_upload": file, 
-            "file_upload[record_id]": $scope.recordId, 
-            "file": "in file_upload"
-          };
-        } else {
-          var formData = {
-            "file_upload": file, 
-            "file": "in file_upload"
-          };
-        }
+        formData["file_upload[record_id]"] = $scope.recordId;
+      };
 
       file.upload = Upload.upload({
         url: "/record_attachments",
@@ -333,44 +392,81 @@ VoicesApp.controller("FormController", [
         }
       });
 
-      file.upload.then(function (resp) {
-            // log the success then store the fact we received a response for this file
-            console.log('Success ' + resp.config.data.file_upload.name + 'uploaded. Response: ' + resp.data);
-            $scope.filesSent += 1;
+      file.upload.then( function (resp) {
+        // store the sent file, unless the user canceled the upload
+        if ($scope.filesToSend.indexOf(timestampedFilename) > -1) {
+          $scope.filesSent.push(timestampedFilename);
+        }   
 
-        }, function (resp) {
-            // log the error then store the fact that we received a response for this file
-            console.log('Error status: ' + resp.status);
-            $scope.filesSent += 1;
+      }, function (resp) {
+        // store the sent file, unless the user canceled the upload
+        if ($scope.filesToSend.indexOf(timestampedFilename) > -1) {
+          $scope.filesSent.push(timestampedFilename);
+        } 
+        
+        // if the user cancelled an upload, we'll get response == -1; 
+        // don't log those responses 
+        if (resp.status != -1) {
+          console.log(
+            "Error uploading: " + resp.config.data.file_upload.name + "; " +
+            "Response status: " + resp.status + "; " +
+            "Status text: " + resp.statusText
+          );
+        }
+        
+          
+      }, function (evt) {
+          // Tie a progress value to this size of this file.
+          // Use Math.min to fix an IE bug that lets progress to go 200%
+          // Check if the key exists in the dict before pushing a progress event 
+          // update to it, as users can remove k/v pairs from this object 
+          // with the cancel all button
+          if ($scope.filesInTransit[timestampedFilename]) {
+            $scope.filesInTransit[timestampedFilename]["progress"][filesize] = 
+            Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+          };
+      }); // closes serverside file upload callback
 
-        }, function (evt) {
-            // tie a progress value to this file; Math.min fixes an IE bug (otherwise progress can go to 200%)
-            $scope.filesInTransit[file.name + timestamp]["progress"][filesize] = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-      });
 
-    
       // expose function that allows user to cancel the upload of a file
-      $scope.abort = function(file) {
-        console.log("abort requested", file);
-        file.upload.abort();
-      };
+      $scope.abort = function(fileInTransit) {        
+        var timestampedFilename = fileInTransit.name + "?" + 
+          fileInTransit.timestamp;
+        
+        $scope.filesInTransit[timestampedFilename].file.upload.abort();
+        delete $scope.filesInTransit[timestampedFilename];
+        
+        $scope.updateAttachmentsInForm("remove", fileInTransit, "original");
 
+        // remove the file from the list of files to send and sent files
+        var index = $scope.filesToSend.indexOf(timestampedFilename);
+        if (index > -1) {
+          $scope.filesToSend.splice(index, 1);
+        };
+
+        var sentIndex = $scope.filesSent.indexOf(timestampedFilename);
+        if (sentIndex > -1) {
+          $scope.filesSent.splice(sentIndex, 1);
+        };
+      }; // closes abort()
+
+    }; // closes sendFileToServer()
+
+
+    // expose function that cancels all pending user uploads
+    $scope.cancelAll = function() {
+      for (var f in $scope.filesInTransit) {
+        $scope.abort($scope.filesInTransit[f]);
+        
+        // delete the k/v pair from the filesInTransit object
+        delete $scope.filesInTransit[f];
+
+        // remove all objects from the filesToSend and filesSent arrays
+        $scope.filesToSend = [];
+        $scope.filesSent = [];
+      }
     };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     
     // function to ensure that an uploaded file
     // is below the max file size
@@ -388,9 +484,10 @@ VoicesApp.controller("FormController", [
 
     // define the array of desired image sizes 
     $scope.imageSizes = [
+      {"filesize": "original"},
       {"width": 500, "filesize": "medium"}, 
       {"width": 300, "height": 200, "centerCrop": true, "filesize": "annotation_thumb"},
-      {"width": 100, "height": 100, "centerCrop": true, "filesize": "square_thumb"} 
+      {"width": 200, "height": 200, "centerCrop": true, "filesize": "square_thumb"} 
     ];
 
     // function called by both dragged files and browsed files for uploading files
@@ -399,33 +496,44 @@ VoicesApp.controller("FormController", [
       // iterate over files, upload and set progress bar for each
       for (i=0; i < files.length; i++)  {
         
-        // for each file, if it's too large, show the client a modal
-        // else upload the file
+        // if the file's too large, show the client a modal; else upload the file
         if ( $scope.fileTooLarge(files[i]) ) {
         } else {
 
           // generate a timestamp to associate with the current file
           var timestamp = String(Date.now());
 
-          // upload the original file regardless of file type
-          sendFileToServer(files[i], "original", timestamp);
-
           // use the uploaded file's name and current timestamp as a unique
           // key in the filesInTransit object (in case user uploads multiple files
           // with the same name), and create a progress object that will store
           // the upload progress of each size format for the current file
-          $scope.filesInTransit[files[i].name + timestamp] = {
+          $scope.filesInTransit[files[i].name + "?" + timestamp] = {
             "name": files[i].name, 
             "progress": {},
             "file": files[i],
+            "timestamp": timestamp,
+            "tries": 1
           };
 
-          // if the file is an image, upload the image in each of the desired sizes
-          if (files[i].type.indexOf("image") > -1) {
-            for (j = 0; j < $scope.imageSizes.length; j++) {
+          // if the file is a video file, send it to the Rails backend for processing
+          if (files[i].type.indexOf("video") > -1) {
+            sendFileToServer(files[i], "original", timestamp);
 
-              // resize the image using the current resize specs            
-              $scope.uploadResizedImage(files[i], $scope.imageSizes[j], timestamp);
+          // else, send the original directly to AWS
+          } else {sendFileToAWS(files[i], "original", timestamp);};
+
+          // if the file is an image, upload the image in each of the desired sizes
+          // direct to AWS
+          if (files[i].type.indexOf("image") > -1) {
+            
+            for (j = 0; j < $scope.imageSizes.length; j++) {
+              var imageSize = $scope.imageSizes[j];
+
+              // we just uploaded the original, so upload all other sizes
+              if (imageSize.filesize != "original") {                
+                $scope.uploadResizedImage(files[i], imageSize, timestamp);
+              }
+
             }; // closes file sizes loop
           }; // closes image conditional
         }; // closes file too large conditional
@@ -446,7 +554,7 @@ VoicesApp.controller("FormController", [
       )
       .then(
         function(resizedImage) {
-          sendFileToServer(resizedImage, sizeParams.filesize, timestamp);
+          sendFileToAWS(resizedImage, sizeParams.filesize, timestamp);
         }
       );
     };
@@ -461,10 +569,15 @@ VoicesApp.controller("FormController", [
       // if the file is an image, sum the progress of other file sizes
       if (f.file.type.indexOf("image") > -1) {
         for (i=0; i<$scope.imageSizes.length; i++) {
-          var sizeProgress = f.progress[$scope.imageSizes[i].filesize];
-          if (sizeProgress) {
-            progress += sizeProgress;
-          };
+          
+          // add the additional file sizes to the progress measure 
+          var filesize = $scope.imageSizes[i].filesize;
+          if (filesize != "original") {
+            var sizeProgress = f.progress[filesize];
+            if (sizeProgress) {
+              progress += sizeProgress;
+            };
+          }
         };
         return (progress/4);
       } else { 
@@ -531,7 +644,6 @@ VoicesApp.controller('ModalController', [
 
     // function that informs client whether a file has a placeholder image
     var hasPlaceholderImage = function(attachment) {
-      console.log("calling function");
       if (attachment.placeholder_image_path !== null) {
         return attachment.placeholder_image_path;
       } else { 
@@ -564,6 +676,8 @@ VoicesApp.controller('ModalController', [
     }; // closes getImageUrl
   } // closes controller function
 ]);
+
+
 
 
 
@@ -633,8 +747,6 @@ VoicesApp.controller("GalleryController", [
       
       // store the initial attachmentsPerPage for restoring attachmentsPerPage on view toggle
       $scope.initialAttachmentsPerPage = $scope.attachmentsPerPage;
-
-      console.log("maximum attachments per page is", $scope.attachmentsPerPage);
     };
 
 
@@ -728,8 +840,6 @@ VoicesApp.controller("GalleryController", [
     // of a record, and updates the current page in scope to the retrieved
     // page
     $scope.getPageOfAttachments = function(pageNumber) {
-      console.log("requested page", pageNumber);
-
       // from the full array of attachments, select the range between
       // attachmentsPerPage * currentPage and attachmentsPerPage * (currentPage + 1)
       var startingAttachmentIndex = $scope.attachmentsPerPage * pageNumber;
@@ -741,8 +851,6 @@ VoicesApp.controller("GalleryController", [
 
       // update the current page in the scope
       $scope.currentPage = pageNumber;
-
-      console.log("current attachments:", $scope.attachmentsOnCurrentPage, "current page:", $scope.currentPage);
     };
 
 
@@ -806,8 +914,6 @@ VoicesApp.controller("GalleryController", [
 
     // on record#edit, allow users to delete an attachment on click of button
     $scope.deleteAttachment = function(attachmentId) {
-      console.log("called delete attachment", attachmentId);
-
       // add the attachmentId to the array in the hidden attachment service 
       $scope.hiddenAttachments.push(attachmentId);
 
@@ -872,6 +978,8 @@ VoicesApp.controller("GalleryController", [
 
   }
 ]);
+
+
 
 
 
