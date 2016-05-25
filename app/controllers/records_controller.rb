@@ -92,7 +92,10 @@ class RecordsController < ApplicationController
         # RecordAttachment objects, then find the subset that have nil for a 
         # record_id, and set the record_id of each to the id of the current
         # record
-        @attachment_count = RecordAttachment.where(cas_user_name: session[:cas_user]).where("record_id IS?", nil).update_all(:record_id => @record.id)
+        @save_records = RecordAttachment.where(cas_user_name: session[:cas_user]).where("record_id IS?", nil).update_all(:record_id => @record.id)
+
+        # then determine the number of attachments for the record just saved
+        @attachment_count = RecordAttachment.where(record_id: @record.id).length
 
         # if user saves more than one record, send them to the annotate page, else to the show page
         if @attachment_count > 1
@@ -192,8 +195,9 @@ class RecordsController < ApplicationController
         :hashtag, :release_checked, :flagged_for_removal,
 
         record_attachments_attributes: [
-          :record_id, :file_upload_url, :cas_user_name,
-          :filename, :mimetype
+          :record_id, :cas_user_name, :filename, :mimetype,
+          :file_upload_url, :medium_image_url, :annotation_thumb_url,
+          :square_thumb_url
         ]
       )
     end
