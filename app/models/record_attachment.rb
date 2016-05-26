@@ -41,8 +41,10 @@ class RecordAttachment < ActiveRecord::Base
   def apply_post_processing?
     if self.is_video?
       return true
-    elsif self.is_seed && self.is_image?
-      return true  
+    elsif self.is_image?
+      if self.is_seed
+        return true
+      end 
     else 
       return false 
     end
@@ -85,6 +87,12 @@ class RecordAttachment < ActiveRecord::Base
         :audio => {
           :format => "mp3"
         }
+      }
+    elsif self.is_image?
+      {
+        :square_thumb => "200x200#", 
+        :annotation_thumb => "300x200#",
+        :medium => "500x500>"
       }
     else
       {}
@@ -214,7 +222,6 @@ class RecordAttachment < ActiveRecord::Base
         )
       end
 
-
     # video
     elsif self.is_video?
 
@@ -225,14 +232,21 @@ class RecordAttachment < ActiveRecord::Base
       #   annotation_thumb_url
       #   square_thumb_url
 
-      ###################
-      # file upload url #
-      ###################
-
       if self.file_upload_url != self.file_upload.url(:original)
         self.update_attributes(
           :file_upload_url => self.file_upload.url(:original),
           :transcoded_video_url => self.file_upload.url(:transcoded_video),
+          :medium_image_url => self.file_upload.url(:medium),
+          :annotation_thumb_url => self.file_upload.url(:annotation_thumb),
+          :square_thumb_url => self.file_upload.url(:square_thumb)
+        )
+      end
+
+    # seed images
+    elsif self.is_image? and self.is_seed 
+      if self.file_upload_url != self.file_upload.url(:original)
+        self.update_attributes(
+          :file_upload_url => self.file_upload.url(:original),
           :medium_image_url => self.file_upload.url(:medium),
           :annotation_thumb_url => self.file_upload.url(:annotation_thumb),
           :square_thumb_url => self.file_upload.url(:square_thumb)
