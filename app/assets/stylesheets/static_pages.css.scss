@@ -643,10 +643,17 @@ hr {
   width: 100%;
   position: absolute;
   z-index: 1;
+  text-align: center;
+}
+
+.flash-message {
+  display: inline;
+  padding-right: 30px;
 }
 
 .alert {
   margin-top: 40px;
+  display: inline-block;
 }
 
 .alert li {
@@ -662,6 +669,14 @@ hr {
 .alert-info {
   color: #3399cc;
   background-color: #f0feff; 
+}
+
+button.close {
+  margin-left: 15px;
+}
+
+button.close:focus {
+  outline: none;
 }
 
 /*********
