@@ -413,6 +413,7 @@ video {
   border: 1px solid lightgray;
 }
 
+
 /**********************************
 * multiple attachments per record *
 **********************************/
@@ -937,6 +938,14 @@ hr.clear-floats {
   /* multirecord uploads */
   .page-toggles {
     display: none;
+  }
+
+  /***************
+  * records#show *
+  ***************/
+
+  .record-display-container .placeholderImage {
+    padding: 5% 21%;
   }
 
   #next-page-button.mobile-gray,
