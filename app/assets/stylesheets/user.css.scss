@@ -148,6 +148,23 @@ li#sortOrderSelect select {
   li#sortOrderLabel, li#sortOrderSelect {
     display: none;
   }
+
+  input#search-box {
+    width: 90%;
+    left: 5%;
+    margin-left: 0px;
+  };
+
+  span.glyphicon.glyphicon-search {
+    left: 0%;
+    margin-left: -85%;
+  }
+}
+
+@media (max-width: 243px) {
+  .placeholder-image {
+    padding: 10px 10%;
+  }
 }
 
 
