@@ -41,8 +41,10 @@ class RecordAttachment < ActiveRecord::Base
   def apply_post_processing?
     if self.is_video?
       return true
-    else
-      return false
+    elsif self.is_seed && self.is_image?
+      return true  
+    else 
+      return false 
     end
   end
 
@@ -90,17 +92,17 @@ class RecordAttachment < ActiveRecord::Base
   end
 
 
-
-
-
-
-
-
   # Helper method that uses the =~ regex method to see if 
   # the current file_upload has a content_type 
   # attribute that contains the string "image" / "video", or "audio"
+  # Attachments sent from the client will have mimetype; those from the
+  # server will have file_upload_content_type
   def is_image?
-    self.mimetype =~ %r(image)
+    if self.mimetype
+      self.mimetype =~ %r(image)
+    elsif self.file_upload_content_type
+      self.file_upload_content_type =~ %r(image)
+    end
   end
 
   def is_video?
