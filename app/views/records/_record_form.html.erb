@@ -75,7 +75,8 @@
     <span class="btn btn-small btn-default btn-inverse" 
           id="cancel-all-uploads"
           data-ng-click="cancelAll()"
-          data-ng-if="filesToSend.length > 0">Cancel All</span>
+          data-ng-if="filesToSend.length > 0"
+          data-ng-cloak>Cancel All</span>
 
     <div class="field">
       <%= f.label :title, "Title of Material<sup>*</sup>".html_safe %>
