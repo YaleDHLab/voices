@@ -202,7 +202,8 @@
       type="submit" 
       class="btn btn-primary blue-button submit-button"
       data-ng-disabled="filesSent.length == 0 || filesToSend.length != filesSent.length"
-      data-ng-if="currentPageClass == 'new'">SUBMIT
+      data-ng-if="currentPageClass == 'new'"
+      data-ng-cloak>SUBMIT
     </button>
 
     <button 
@@ -210,7 +211,8 @@
       type="submit" 
       class="btn btn-primary blue-button submit-button"
       data-ng-disabled="filesToSend.length != filesSent.length"
-      data-ng-if="currentPageClass == 'edit'">SUBMIT
+      data-ng-if="currentPageClass == 'edit'"
+      data-ng-cloak>SUBMIT
     </button>
 
   </div>
