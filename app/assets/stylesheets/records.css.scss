@@ -562,13 +562,11 @@ video {
 .single-masonry-item .placeholderImage {
   padding-top: 10%;
   padding-bottom: 10%;
-  border: 1px solid lightgray;
 }
 
 .two-column-masonry .placeholderImageContainer {
   height: 0px;
   padding-bottom: 66.666%;
-  border: 1px solid lightgray;
 }
 
 .single-masonry-item .placeholderImageContainer img {
@@ -623,6 +621,7 @@ video {
   margin: 0 0 14px 0;
   width:  100%; 
   background:  #f8f8f8;
+  border: 1px solid lightgray;
 }
 
 .masonry-item img, .single-masonry-item img {
@@ -637,6 +636,7 @@ video {
   width: 100%;
   border: none;
   border-top: 1px solid lightgray;
+  border-radius: 0px;
 }
 
 .pagination-controls {
