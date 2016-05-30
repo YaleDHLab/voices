@@ -3,12 +3,13 @@ class RecordAttachment < ActiveRecord::Base
 
   belongs_to :record, touch: true
 
-  validates :file_upload, presence: true
-
   # Before saving the record to the database, manually add a new
   # field to the record that exposes the url where the file is uploaded
   after_save :set_remote_urls, :set_media_type
 
+  # Angular will handle client side file uploads of image assets, but
+  # we need a server side upload option for multimedia assets to standardize
+  # encodings of video and audio files; use paperclip for this purpose
   # Use the has_attached_file method to add a file_upload property to the Record
   # class. 
   has_attached_file :file_upload,
@@ -22,132 +23,37 @@ class RecordAttachment < ActiveRecord::Base
     },
 
     # upload files to https
-    :s3_protocol => :https
+    :s3_protocol => :https,
 
-  # Validate that we accept the type of file the user is uploading
-  # by explicitly listing the mimetypes we are willing to accept
-  validates_attachment_content_type :file_upload,
-    :content_type => [
-      "video/mp4", 
-      "video/quicktime",
-      
-      "image/jpg", 
-      "image/jpeg", 
-      "image/png", 
-      "image/gif",
-      "image/svg+xml",
-      "application/pdf",
+    # Skip Paperclip's validations, as Angular will validate all uploads before upload
+    validate_media_type: false
 
-      "audio/mpeg", 
-      "audio/x-mpeg", 
-      "audio/mp3", 
-      "audio/x-mp3", 
-      "audio/mpeg3", 
-      "audio/x-mpeg3", 
-      "audio/mpg", 
-      "audio/x-mpg", 
-      "audio/x-mpegaudio",
-      "audio/3gpp",
-      
-      "file/txt",
-      "text/plain",
-
-      "application/doc",
-      "application/msword", 
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.template",
-      "application/vnd.ms-word.document.macroEnabled.12",
-      "application/vnd.ms-word.template.macroEnabled.12",
-      
-
-      "application/vnd.ms-excel",     
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-
-      "application/vnd.ms-powerpoint",
-      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-      "application/vnd.openxmlformats-officedocument.presentationml.template",
-      "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
-      "application/vnd.ms-powerpoint.addin.macroEnabled.12",
-      "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
-      "application/vnd.ms-powerpoint.template.macroEnabled.12",
-      "application/vnd.ms-powerpoint.slideshow.macroEnabled.12"
-      ],
-    :message => "Sorry! We only accept the following filetypes: mp4, quicktime, jpg, png, gif, mp3, and txt"
+  # Indicate we don't want to run validations server side (as client handles this)
+  do_not_validate_attachment_file_type :file_upload
 
   # Before applying the Imagemagick post processing to this record
   # check to see if we indeed wish to process the file. In the case
   # of audio files, we don't want to apply post processing
   before_post_process :apply_post_processing?
 
-  # Helper method that uses the =~ regex method to see if 
-  # the current file_upload has a content_type 
-  # attribute that contains the string "image" / "video", or "audio"
-  def is_image?
-    self.file_upload.content_type =~ %r(image)
-  end
-
-  def is_video?
-    self.file_upload.content_type =~ %r(video)
-  end
-
-  def is_audio?
-    self.file_upload.content_type =~ /\Aaudio\/.*\Z/
-  end
-
-  def is_plain_text?
-    self.file_upload_file_name =~ %r{\.(txt)$}i
-  end
-
-  def is_excel?
-    self.file_upload_file_name =~ %r{\.(xls|xlt|xla|xlsx|xlsm|xltx|xltm|xlsb|xlam|csv|tsv)$}i
-  end
-
-  def is_word_document?
-    self.file_upload_file_name =~ %r{\.(docx|doc|dotx|docm|dotm)$}i
-  end
-
-  def is_powerpoint?
-    self.file_upload_file_name =~ %r{\.(pptx|ppt|potx|pot|ppsx|pps|pptm|potm|ppsm|ppam)$}i
-  end
-
-  def is_pdf?
-    self.file_upload_file_name =~ %r{\.(pdf)$}i
-  end
-
-  def is_svg?
-    self.file_upload_file_name =~ %r{\.(svg)$}i
-  end
-
-  def has_default_image?
-    is_audio?
-    is_plain_text?
-    is_excel?
-    is_word_document?
-    is_powerpoint?
-    is_svg?
-  end
-  
-
-  # If the uploaded content type is an audio file,
-  # return false so that we'll skip audio post processing
+  # Method to determine whether we need to apply post processing on the file
+  # Audio files should not be sent through post processing
   def apply_post_processing?
-    if self.is_audio?
-      return false
-    else
+    if self.is_video?
       return true
+    elsif self.is_image?
+      if self.is_seed
+        return true
+      end 
+    else 
+      return false 
     end
   end
 
   # Method to be called in order to determine what styles we should
   # save of a file.
   def check_file_type
-    if self.is_image?
-      {
-        :square_thumb => "200x200#", 
-        :annotation_thumb => "300x200#",
-        :medium => "500x500>"
-      }
-    elsif self.is_pdf?
+    if self.is_pdf?
       {
         :square_thumb => ["200x200#", :png], 
         :annotation_thumb => ["300x200#", :png],
@@ -157,7 +63,7 @@ class RecordAttachment < ActiveRecord::Base
     elsif self.is_video?
       {
         :square_thumb => { 
-          :geometry => "200x200#", 
+          :geometry => "200x200!", 
           :format => 'jpg', 
           :time => 1
         }, 
@@ -170,6 +76,10 @@ class RecordAttachment < ActiveRecord::Base
           :geometry => "500x500>", 
           :format => 'jpg', 
           :time => 1
+        },
+        :transcoded_video => {
+          :geometry => "300x200!", 
+          :format => 'mp4'
         }
       }
     elsif self.is_audio?
@@ -178,25 +88,83 @@ class RecordAttachment < ActiveRecord::Base
           :format => "mp3"
         }
       }
+    elsif self.is_image?
+      {
+        :square_thumb => "200x200#", 
+        :annotation_thumb => "300x200#",
+        :medium => "500x500>"
+      }
     else
       {}
     end
+  end
+
+
+  # Helper method that uses the =~ regex method to see if 
+  # the current file_upload has a content_type 
+  # attribute that contains the string "image" / "video", or "audio"
+  # Attachments sent from the client will have mimetype; those from the
+  # server will have file_upload_content_type
+  def is_image?
+    if self.mimetype
+      self.mimetype =~ %r(image)
+    elsif self.file_upload_content_type
+      self.file_upload_content_type =~ %r(image)
+    end
+  end
+
+  def is_video?
+    if self.mimetype
+      self.mimetype =~ %r(video)
+    elsif self.file_upload_content_type
+      self.file_upload_content_type =~ %r(video)
+    end
+  end
+
+  def is_audio?
+    self.mimetype =~ /\Aaudio\/.*\Z/
+  end
+
+  def is_plain_text?
+    self.filename =~ %r{\.(txt)$}i
+  end
+
+  def is_excel?
+    self.filename =~ %r{\.(xls|xlt|xla|xlsx|xlsm|xltx|xltm|xlsb|xlam|csv|tsv)$}i
+  end
+
+  def is_word_document?
+    self.filename =~ %r{\.(docx|doc|dotx|docm|dotm)$}i
+  end
+
+  def is_powerpoint?
+    self.filename =~ %r{\.(pptx|ppt|potx|pot|ppsx|pps|pptm|potm|ppsm|ppam)$}i
+  end
+
+  def is_pdf?
+    self.filename =~ %r{\.(pdf)$}i
+  end
+
+  def is_svg?
+    self.filename =~ %r{\.(svg)$}i
+  end
+
+  def has_default_image?
+    is_audio?
+    is_plain_text?
+    is_excel?
+    is_word_document?
+    is_powerpoint?
+    is_svg?
+    is_pdf?
   end
   
 
   def set_remote_urls
     # save the path to the original file upload, then store the paths to
     # the images we'll use to represent the file
-    
-    # set the url to the original asset
-    if self.file_upload_url != self.file_upload.url(:original)
-      self.update_attributes(
-        :file_upload_url => self.file_upload.url(:original)
-      )
-    end
 
-
-    # then, for each asset type, store a link to the appropriate placeholder image path
+    # store a link to the appropriate placeholder image path (if relevant)
 
     # audio
     if self.is_audio?
@@ -206,7 +174,6 @@ class RecordAttachment < ActiveRecord::Base
         )
       end
 
-
     # plain text
     elsif self.is_plain_text?
       if self.placeholder_image_path != ActionController::Base.helpers.asset_path("txt.png")
@@ -214,7 +181,6 @@ class RecordAttachment < ActiveRecord::Base
           :placeholder_image_path => ActionController::Base.helpers.asset_path("txt.png")
         )
       end
-
 
     # word doc
     elsif self.is_word_document?
@@ -224,15 +190,13 @@ class RecordAttachment < ActiveRecord::Base
         )
       end
 
-
     # powerpoint 
     elsif self.is_powerpoint?
-      if self.placeholder_image_path!= ActionController::Base.helpers.asset_path("ppt.png")
+      if self.placeholder_image_path != ActionController::Base.helpers.asset_path("ppt.png")
         self.update_attributes(
           :placeholder_image_path => ActionController::Base.helpers.asset_path("ppt.png")
         )
       end
-
 
     # excel
     elsif self.is_excel?
@@ -242,33 +206,52 @@ class RecordAttachment < ActiveRecord::Base
         )
       end
 
-
     # svg
     elsif self.is_svg?
-      if self.placeholder_image_path!= ActionController::Base.helpers.asset_path("svg.png")
+      if self.placeholder_image_path != ActionController::Base.helpers.asset_path("svg.png")
         self.update_attributes(
           :placeholder_image_path => ActionController::Base.helpers.asset_path("svg.png")
         )
       end
 
-    else
-      record_id_string = self.id.to_s
-
-      # preface the id number with '0' until it's 9 digits long
-      while record_id_string.length < 9
-        record_id_string = "0" + record_id_string
-      end
-
-      # partition the 9 character string into 3 3digit strings joined by "/"
-      id_path = record_id_string.chars.each_slice(3).map(&:join).join("/")
-
-      # use that sequence to identify the full path to the asset
-      if self.image_upload_url != self.file_upload.url(:medium).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/")
+    # pdf
+    elsif self.is_pdf?
+      if self.placeholder_image_path != ActionController::Base.helpers.asset_path("pdf.png")
         self.update_attributes(
-          :image_upload_url => self.file_upload.url(:medium).gsub(/file_uploads\/\//, 'file_uploads/' + id_path + "/")
+          :placeholder_image_path => ActionController::Base.helpers.asset_path("pdf.png")
         )
       end
 
+    # video
+    elsif self.is_video?
+
+      # Update the following paths for video files: 
+      #   file_upload_url
+      #   transcoded_video_url
+      #   medium_image_url
+      #   annotation_thumb_url
+      #   square_thumb_url
+
+      if self.file_upload_url != self.file_upload.url(:original)
+        self.update_attributes(
+          :file_upload_url => self.file_upload.url(:original),
+          :transcoded_video_url => self.file_upload.url(:transcoded_video),
+          :medium_image_url => self.file_upload.url(:medium),
+          :annotation_thumb_url => self.file_upload.url(:annotation_thumb),
+          :square_thumb_url => self.file_upload.url(:square_thumb)
+        )
+      end
+
+    # seed images
+    elsif self.is_image? and self.is_seed 
+      if self.file_upload_url != self.file_upload.url(:original)
+        self.update_attributes(
+          :file_upload_url => self.file_upload.url(:original),
+          :medium_image_url => self.file_upload.url(:medium),
+          :annotation_thumb_url => self.file_upload.url(:annotation_thumb),
+          :square_thumb_url => self.file_upload.url(:square_thumb)
+        )
+      end
     end
   end
 
@@ -282,12 +265,14 @@ class RecordAttachment < ActiveRecord::Base
           :media_type => "audio"
         )
       end
+
     elsif self.is_video?
       if self.media_type != "video"
         self.update_attributes(
           :media_type => "video"
         )
       end
+
     else
       if self.media_type != "image"
         self.update_attributes(

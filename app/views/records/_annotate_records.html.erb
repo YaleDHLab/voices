@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="padding-sides padding-bottom"> 
+  <div class="padding-sides"> 
     <div class="over-image-row">
       <h3 class="record-title"><%= @record.title %></h3>  
       <div class="edit-delete-button-container">
@@ -16,3 +16,5 @@
     <!-- provide special spacing when annotating records with < 4 attachments -->
     <hr class="clear-floats" data-ng-show="data.attachments.length > 4">
     <hr class="clear-floats single-page-annotation" && data-ng-show="data.attachments.length <= 4">
+  </div>
+</div>

@@ -31,9 +31,25 @@ class RecordAttachmentsController < ApplicationController
     render :nothing => true
   end
 
+  # DELETE record attachments with no record id
+  def destroy_unsaved_attachments
+    @client_side_timestamp = params[:client_side_timestamp]
+    @filename = params[:filename]
+    @cas_user = session[:cas_user]
+
+    RecordAttachment.where(:client_side_timestamp => @client_side_timestamp, 
+      :filename => @filename, :cas_user_name => @cas_user).destroy_all
+    render :nothing => true
+  end
+
+
+
   private
     def record_attachment_params
-      params.require(:record_attachment).permit(:file_upload, :cas_user_name, :annotation)
+      params.require(:record_attachment).permit(
+        :file_upload, :cas_user_name, :annotation, 
+        :filename, :client_side_timestamp
+      )
     end
 
 end

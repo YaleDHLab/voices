@@ -38,7 +38,8 @@ ENV["VOICES_ADMINS"].split("#").each do |username|
                 :record_id => new_record.id,
                 :annotation => Faker::Lorem.sentence,
                 :file_upload => File.new( Dir.glob("#{Rails.root}/app/assets/images/seed-images/*.jpg")[rand(0..249)] ),
-                :cas_user_name => username
+                :cas_user_name => username,
+                :is_seed => true
             })
 
             new_record_attachment.save!
