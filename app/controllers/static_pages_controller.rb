@@ -43,7 +43,7 @@ class StaticPagesController < ApplicationController
     rake = RakeText.new
     #query public archives within time_range, return descriptions.
     text = Record.where(date: time_range, make_private: false).pluck(:description)
-    text=text.join(". ")
+    text = text.join("///")
 
     #apply RAKE with SMART stoplist. (other option is FOX)
     output = rake.analyse text, RakeText.SMART
@@ -65,7 +65,8 @@ class StaticPagesController < ApplicationController
 		cloud_local = cloud_local.uniq
 
 		#check profanity
-		f = File.open("~/lib/assets", "r")
+		root = File.join(File.dirname(__FILE__), '../../../')
+		f = File.open(File.join(root, "lib/assets"), "r")
 		bad_words = f.split("\n")
 		cloud_local -= bad_words
 		f.close
