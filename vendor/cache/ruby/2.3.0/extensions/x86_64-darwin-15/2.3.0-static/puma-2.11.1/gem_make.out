@@ -1,0 +1,48 @@
+current directory: /Users/dhlabadministrator/PX/projects/voices/vendor/cache/ruby/2.3.0/gems/puma-2.11.1/ext/puma_http11
+/Users/dhlabadministrator/.rbenv/versions/2.3.0/bin/ruby -r ./siteconf20160606-73596-2dn9x9.rb extconf.rb --with-opt-include=/usr/local/opt/openssl/include
+checking for BIO_read() in -lcrypto... yes
+checking for SSL_CTX_new() in -lssl... yes
+creating Makefile
+
+To see why this extension failed to compile, please check the mkmf.log which can be found here:
+
+  /Users/dhlabadministrator/PX/projects/voices/vendor/cache/ruby/2.3.0/extensions/x86_64-darwin-15/2.3.0-static/puma-2.11.1/mkmf.log
+
+current directory: /Users/dhlabadministrator/PX/projects/voices/vendor/cache/ruby/2.3.0/gems/puma-2.11.1/ext/puma_http11
+make "DESTDIR=" clean
+
+current directory: /Users/dhlabadministrator/PX/projects/voices/vendor/cache/ruby/2.3.0/gems/puma-2.11.1/ext/puma_http11
+make "DESTDIR="
+compiling http11_parser.c
+compiling io_buffer.c
+io_buffer.c:119:10: warning: passing 'uint8_t *' (aka 'unsigned char *') to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  return rb_str_new(b->top, b->cur - b->top);
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/dhlabadministrator/.rbenv/versions/2.3.0/include/ruby-2.3.0/ruby/intern.h:800:20: note: expanded from macro 'rb_str_new'
+        rb_str_new_static((str), (len)) : \
+                          ^~~~~
+/Users/dhlabadministrator/.rbenv/versions/2.3.0/include/ruby-2.3.0/ruby/intern.h:729:37: note: passing argument to parameter here
+VALUE rb_str_new_static(const char *, long);
+                                    ^
+io_buffer.c:119:10: warning: passing 'uint8_t *' (aka 'unsigned char *') to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+  return rb_str_new(b->top, b->cur - b->top);
+         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/dhlabadministrator/.rbenv/versions/2.3.0/include/ruby-2.3.0/ruby/intern.h:801:13: note: expanded from macro 'rb_str_new'
+        rb_str_new((str), (len));         \
+                   ^~~~~
+/Users/dhlabadministrator/.rbenv/versions/2.3.0/include/ruby-2.3.0/ruby/intern.h:708:29: note: passing argument to parameter here
+VALUE rb_str_new(const char*, long);
+                            ^
+2 warnings generated.
+compiling mini_ssl.c
+In file included from mini_ssl.c:3:
+/Users/dhlabadministrator/.rbenv/versions/2.3.0/include/ruby-2.3.0/ruby/backward/rubyio.h:2:2: warning: use "ruby/io.h" instead of "rubyio.h" [-W#warnings]
+#warning use "ruby/io.h" instead of "rubyio.h"
+ ^
+1 warning generated.
+compiling puma_http11.c
+linking shared-object puma/puma_http11.bundle
+
+current directory: /Users/dhlabadministrator/PX/projects/voices/vendor/cache/ruby/2.3.0/gems/puma-2.11.1/ext/puma_http11
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 puma_http11.bundle ./.gem.20160606-73596-154utqj/puma
