@@ -96,9 +96,6 @@ end
 # add the version of ruby used locally
 ruby '2.3.0'
 
-#add rake (rapid automatic keyword extraction) for ruby
-gem 'rake_text'
-
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
