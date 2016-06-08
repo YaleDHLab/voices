@@ -13,12 +13,9 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
   def record_exists(record_id)
-    begin
-      found_record = Record.find(record_id)
-      return true
-    rescue
+    found_record = Record.where(id: record_id).first
+    found_record.blank?
       return false
-    end
-  end
-  
+    return true
+  end  
 end

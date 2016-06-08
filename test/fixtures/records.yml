@@ -3,9 +3,13 @@
 one:
   cas_user_name: MyString
   title: MyString
-  metadata: MyString
+  description: MyString
+  hashtag: MyString
+  release_checked: true
 
 two:
   cas_user_name: MyString
   title: MyString
-  metadata: MyString
+  description: MyString
+  hashtag: MyString
+  release_checked: true

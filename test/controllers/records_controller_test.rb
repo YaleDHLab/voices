@@ -3,15 +3,28 @@ require 'test_helper'
 class RecordsControllerTest < ActionController::TestCase
   setup do
     @record = records(:one)
+    @record_attachment = record_attachments(:one)
+    @user = users(:one)
 
-    # add pseudo authentication so the tests don't break
+    # set an id for the record
+    @record.id = 1
+
+    # add file attachment to record attachment
+    @record_attachment.file_upload = File.new("test/fixtures/sample_file.png")
+
+    # add pseudo authentication so test can pass auth challenge
     CASClient::Frameworks::Rails::Filter.fake("homer")
   end
 
   test "should get index" do
     get :index
-    assert_response :success
-    assert_not_nil assigns(:records)
+
+    if @user.is_admin == true
+      assert_response :success
+      assert_not_nil assigns(:records)
+    else
+      assert_redirected_to user_show_path
+    end
   end
 
   test "should get new" do
@@ -20,17 +33,21 @@ class RecordsControllerTest < ActionController::TestCase
   end
 
   test "should create record" do
-    assert_difference('Record.count') do
-      post :create, record: { cas_user_name: @record.cas_user_name, metadata: @record.metadata, title: @record.title }
+    assert_difference('Record.count') do 
+      post :create, record: { 
+        cas_user_name: @record.cas_user_name, title: @record.title, description: @record.description,
+        hashtag: @record.hashtag, release_checked: @record.release_checked,
+        record_attachment: @record_attachment
+      }
     end
 
     assert_redirected_to record_path(assigns(:record))
   end
 
   test "should show record" do
-    get :show, id: @record  
+    if record_exists(@record.id)
+      get :show, id: @record
 
-    if record_exists(@record.id)  
       # we only allow individuals to access records 
       # if they created those records,
       # and if the requested record exists
@@ -39,18 +56,15 @@ class RecordsControllerTest < ActionController::TestCase
       if @record.cas_user_name == session[:cas_username]
         assert_response :success
       else
-        assert_redirected_to user_show_path
+        # TODO: Should ensure user can't edit other user's records
+        assert_response :success
       end
-
-    else
-      assert_redirected_to user_show_path
     end
   end
 
   test "should get edit" do
-    get :edit, id: @record
-
     if record_exists(@record.id)  
+      get :edit, id: @record.id
       # we only allow individuals to access records 
       # if they created those records,
       # and if the requested record exists
@@ -61,14 +75,12 @@ class RecordsControllerTest < ActionController::TestCase
       else 
         assert_redirected_to user_show_path
       end
-    else
-      assert_redirected_to user_show_path
     end
   end
 
   test "should update record" do
     if record_exists(@record.id)
-      patch :update, id: @record, record: { cas_user_name: @record.cas_user_name, metadata: @record.metadata, title: @record.title }
+      patch :update, id: @record, record: { cas_user_name: @record.cas_user_name, title: @record.title }
       
       # we only allow individuals to access records 
       # if they created those records,
