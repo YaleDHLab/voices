@@ -63,13 +63,14 @@ class CloudWord < ActiveRecord::Base
 		bad_words = f.split("\n")
 		cloud_local -= bad_words
 		
-		##if only few records, append with stateic word_pool
+		##if only few records, append with static word_pool
 		#if (cloud_local.length < cloud_total)
 		#	cloud_local += word_pool.split()
 		#	cloud_local = cloud_local.uniq
 		#	cloud_local = cloud_local[0..cloud_total]
 		#end
-		
+	
+		cloud_local.shuffle	
 		return cloud_local
   end 
 end

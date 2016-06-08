@@ -6,8 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-tmp = File.read(Rails.root.join('lib/assets/DOWN.txt')).split()[0..100].join(" ")
-puts tmp 
+tmp = File.read(Rails.root.join('lib/assets/DOWN.txt')).scan(/.{2500}/)
+
 
 img = File.new( Dir.glob("#{Rails.root}/app/assets/images/seed-images/*.jpg")[rand(0..249)] )
 puts img
@@ -21,13 +21,13 @@ ENV["VOICES_ADMINS"].split("#").each do |username|
     end
     '''
 
-    7.times do |r|
+    tmp.each do |desc|
 
         new_record = Record.new({
             :title => Faker::Book.title,
             :cas_user_name => username,
             :make_private => false,
-            :description => tmp,
+            :description => desc,
 						:location => Faker::Address.street_name + ", " + Faker::Address.city,
             :source_url => Faker::Internet.url,
             :release_checked => true,
@@ -51,3 +51,11 @@ ENV["VOICES_ADMINS"].split("#").each do |username|
         end 
     end
 end
+
+
+#initiate database for Cloud on homepage.
+CloudWord.delete_all
+
+cloud = CloudWord.new()
+cloud.words = CloudWord.generate
+cloud.save
