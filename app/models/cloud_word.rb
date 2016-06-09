@@ -33,26 +33,52 @@ class CloudWord < ActiveRecord::Base
 		frequency.delete_if {|k, v| v < 2}
     tags_local = Hash[frequency].keys #array of keys
 
-		#CHOOSE WORDS
-    rake = RakeText.new
-    #query public archives within time_range, return descriptions.
+		#CHOOSE WORDS by ruby gem EngTagger, a POS tagger.
+
+    #query public archives about events in the time_range, return descriptions.
     text = Record.where(date: time_range, make_private: false).pluck(:description)
-    text = text.join(".~~~")
 
-    #apply RAKE with SMART stoplist. (other option is FOX)
-    output = rake.analyse text, RakeText.SMART
+    #remove special characters
+    text=text.join(" ").parameterize(sep=" ").split
 
-    #keep only keyphrases with single word and RAKE value > 0
-    output.delete_if {|k, v| k.split.length > 1}
-    output.delete_if {|k, v| v == 0}
+    #count words
+    frequency = Hash.new(0)
+    text.each {|w| frequency[w] += 1}
 
-    #sort by score. Keep top word_total keywords
-    output = output.sort_by {|k,v| -v}[0..word_total]
-    output = Hash[output]
-    words_local = output.keys
+    #remove words with only 2 or fewer mentions. Sort.
+    frequency = frequency.delete_if {|k, v| v <= 2}
+    frequency = frequency.sort_by {|k, v| v}
+    frequency = Hash[frequency]
 
-		#choose at most 5% of all words or word_total words
-		word_total = [word_total, words_local.length * 0.05]
+    #join sorted words into string
+    words_by_freq = frequency.keys.join(" ")
+
+    #tag words
+    tgr = EngTagger.new
+    tagged = tgr.add_tags(words_by_freq)
+    percent = 0.1
+
+    def top_percent_keys (hash, percent)
+			len = hash.length
+			hash.keys[(1-percent)*len..len]
+    end
+
+    #take top percent (0.1 or 0.2?) of nouns, adj, and verbs. Take twice as many nouns as verbs/adj.
+    nouns = top_percent_keys(tgr.get_nouns(tagged), percent * 2)
+    adj = top_percent_keys(tgr.get_adjectives(tagged), percent)
+
+		#take all kinds of verbs
+    vbs = top_percent_keys(tgr.get_infinitive_verbs(tagged), percent) + top_percent_keys(tgr.get_past_tense_verbs(tagged), percent) + top_percent_keys(tgr.get_gerund_verbs(tagged), percent) + top_percent_keys(tgr.get_passive_verbs(tagged), percent) + top_percent_keys(tgr.get_base_present_verbs(tagged), percent) + top_percent_keys(tgr.get_present_verbs(tagged), percent)
+
+
+   #possible words to remove, chosen by eyeballing the test corpus from DOWN magazine
+    rmv = ["do", "are", "looks", "needs", "seems", "makes", "goes", "comes", "means", "does", "says", "has", "is", "did", "said", "had", "were", "was", "get", "make", "don", "be", "become", "made", "been", "did", "said", "had", "were", "was", "have", "ll", "re", "cc"]
+    rmv += ["such", "same", "similar"]
+   rmv += ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
+    #
+    words_local = nouns + adj + vbs - rmv
+    words_local = words_local.shuffle
 
 	  #cloud words:
     cloud_local = words_local + tags_local
@@ -74,3 +100,6 @@ class CloudWord < ActiveRecord::Base
 		return cloud_local
   end 
 end
+
+
+
