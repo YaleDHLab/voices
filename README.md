@@ -25,7 +25,7 @@ rake db:drop db:create db:migrate db:seed {RAILS_ENV="production"}
 ### Deploy to Heroku
 
 <pre><code># create heroku instance  
-heroku create voices-dev  
+heroku create {your_app_name}
   
 # add support for multiple buildpacks  
 heroku buildpacks:set https://github.com/duhaime/heroku-buildpack-multi.git --app {your_app_name} 
