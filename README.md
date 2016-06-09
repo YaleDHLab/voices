@@ -6,21 +6,18 @@ brew install imagemagick
 brew install ffmpeg
 brew install ghostscript</code></pre>
 
-### Local development  
-  
-<pre><code># start postgres db  
-postgres -D /usr/local/var/postgres  
-  
-# run the rails server   
-rails s {-e production} # to serve in production environment  
-  
-# run the rails console  
-rails c {production} # to run console in production context
+### Local development
 
-# drop the database and repopulate afresh
-rake db:drop db:create db:migrate db:seed {RAILS_ENV="production"}  
+```
+$ git clone https://github.com/YaleDHLab/voices.git
+$ cd voices
+$ gem install bundler
+$ bundle install
+$ rake db:create db:migrate db:seed
+$ rails s
+```
 
-# the application will now be available at localhost:3000</code></pre>
+The application will now be available at localhost:3000.
 
 ### Deploy to Heroku
 
