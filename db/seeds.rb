@@ -16,8 +16,8 @@ txt = File.new( Dir.glob("#{Rails.root}/app/assets/texts/sample.txt")[0])
 
 # seed each admin's database
 ENV["VOICES_ADMINS"].split("#").each do |username|
-
-    '''
+	
+'''
     if username == "ded34"
         next
     end
