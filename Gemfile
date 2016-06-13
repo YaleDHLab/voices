@@ -18,6 +18,9 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+#add engtagger for POS tagging to create word_cloud
+gem 'engtagger'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
@@ -94,7 +97,7 @@ group :production do
 end
 
 # add the version of ruby used locally
-ruby '2.0.0'
+ruby '2.3.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
