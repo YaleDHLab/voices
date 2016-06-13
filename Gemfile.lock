@@ -69,6 +69,7 @@ GEM
     debug_inspector (0.0.2)
     delayed_paperclip (2.10.0)
       paperclip (>= 3.3)
+    engtagger (0.2.0)
     erubis (2.7.0)
     execjs (2.6.0)
     faker (1.6.3)
@@ -197,6 +198,7 @@ DEPENDENCIES
   bower-rails
   coffee-rails (~> 4.0.0)
   delayed_paperclip
+  engtagger
   faker
   heroku-deflater
   jbuilder (~> 2.2)
@@ -221,5 +223,8 @@ DEPENDENCIES
   web-console (~> 2.0)
   will_paginate (~> 3.0.5)
 
+RUBY VERSION
+   ruby 2.3.0p0
+
 BUNDLED WITH
-   1.11.2
+   1.12.4

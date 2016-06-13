@@ -6,6 +6,11 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+tmp = File.read(Rails.root.join('lib/assets/DOWN.txt')).scan(/.{2500}/)
+
+
+img = File.new( Dir.glob("#{Rails.root}/app/assets/images/seed-images/*.jpg")[rand(0..249)] )
+puts img
 
 # seed each admin's database
 ENV["VOICES_ADMINS"].split("#").each do |username|
@@ -16,17 +21,17 @@ ENV["VOICES_ADMINS"].split("#").each do |username|
     end
     '''
 
-    7.times do |r|
+    tmp.each do |desc|
 
         new_record = Record.new({
             :title => Faker::Book.title,
             :cas_user_name => username,
             :make_private => false,
-            :description => Faker::Lorem.paragraph,
-            :location => Faker::Address.street_name + ", " + Faker::Address.city,
+            :description => desc,
+						:location => Faker::Address.street_name + ", " + Faker::Address.city,
             :source_url => Faker::Internet.url,
             :release_checked => true,
-            :date => Faker::Time.between(DateTime.now - 1, DateTime.now).to_s.split()[0].gsub(/-/, '/'),
+            :date => DateTime.now-rand(0.1..1),
             :hashtag => "#" + Faker::Hipster.words(4).join(" #")
         })
 
@@ -37,7 +42,7 @@ ENV["VOICES_ADMINS"].split("#").each do |username|
             new_record_attachment = RecordAttachment.new({
                 :record_id => new_record.id,
                 :annotation => Faker::Lorem.sentence,
-                :file_upload => File.new( Dir.glob("#{Rails.root}/app/assets/images/seed-images/*.jpg")[rand(0..249)] ),
+                :file_upload => img,
                 :cas_user_name => username,
                 :is_seed => true
             })
@@ -46,3 +51,11 @@ ENV["VOICES_ADMINS"].split("#").each do |username|
         end 
     end
 end
+
+
+#initiate database for Cloud on homepage.
+CloudWord.delete_all
+
+cloud = CloudWord.new()
+cloud.words = CloudWord.generate
+cloud.save

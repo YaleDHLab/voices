@@ -1,0 +1,31 @@
+language: ruby
+cache: bundler
+sudo: false
+
+rvm:
+  - 2.3.1
+  - 2.2.5
+  - 2.1.10
+  - 2.0
+
+gemfile:
+  - gemfiles/3.2.gemfile
+  - gemfiles/4.0.gemfile
+  - gemfiles/4.1.gemfile
+  - gemfiles/4.2.gemfile
+  - gemfiles/5.0.gemfile
+
+# Rails 5.0 requires Ruby >= 2.2
+matrix:
+  exclude:
+    - rvm: 2.1.10
+      gemfile: gemfiles/5.0.gemfile
+    - rvm: 2.0
+      gemfile: gemfiles/5.0.gemfile
+
+script: "bundle exec rake clean spec"
+
+notifications:
+  email:
+    - james@jamesrgifford.com
+    - scott@artsicle.com

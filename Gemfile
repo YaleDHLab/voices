@@ -94,7 +94,10 @@ group :production do
 end
 
 # add the version of ruby used locally
-ruby '2.0.0'
+ruby '2.3.0'
+
+# add engtagger for POS tagging
+gem 'engtagger'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
