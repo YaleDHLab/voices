@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526133116) do
+ActiveRecord::Schema.define(version: 20160613145450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cloud_words", force: :cascade do |t|
+    t.string   "words",                   array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "contact_forms", force: :cascade do |t|
     t.text     "message"
