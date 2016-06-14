@@ -41,9 +41,6 @@ module VoicesRails
       config.assets.paths << path
     end
 
-
-
-
     # use rack cors to provide cors headers
     config.middleware.insert_before 0, "Rack::Cors" do
       allow do
@@ -51,9 +48,6 @@ module VoicesRails
         resource '*', :headers => :any, :methods => [:get, :post, :options]
       end
     end
-
-
-
 
   end
 end
