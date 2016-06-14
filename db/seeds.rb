@@ -7,14 +7,17 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-# seed each admin's database
-ENV["VOICES_ADMINS"].split("#").each do |username|
+# seed each admin's database if admins are defined, else seed
+# random usernames and warn at the console
+stored_admin_usernames = ENV["VOICES_ADMINS"]
 
-    '''
-    if username == "ded34"
-        next
-    end
-    '''
+if stored_admin_usernames.nil?
+    user_name_array = ["sample_user_1", "sample_user_2", "sample_user_3"]
+else
+    user_name_array = stored_admin_usernames.split("#")
+end
+
+user_name_array.each do |username|
 
     7.times do |r|
 
