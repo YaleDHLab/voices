@@ -193,8 +193,6 @@ span.btn.btn-small.btn-default.btn-inverse {
   margin-right: 6px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  max-height: 297px;
-  overflow: scroll;
 }
 
 #progress-bar-table-container .panel, 
@@ -216,8 +214,16 @@ span.btn.btn-small.btn-default.btn-inverse {
   background-color: #fff;
 }
 
+.progress-bar-table-wrapper {
+  max-height: 297px;
+  overflow: hidden;
+}
+
 #round-table-edges {
-  margin-bottom: 0px;
+  overflow: auto;
+  max-height: 297px;
+  padding-right: 20px;
+  margin-right: -35px;
 }
 
 #progress-bar-table .file-name-container {
@@ -758,6 +764,7 @@ hr.clear-floats {
 
 #delete-record-button {
   width: 90px;
+  background-color: #d22323;
 }
 
 #report-record-button {
@@ -815,10 +822,14 @@ hr.clear-floats {
   background-color: #fff;
   width: 27px;
   height: 28px;
-  padding: 3px;
-  border: 2px solid darkgray;
+  padding: 4px 5px;
+  border: 1px solid darkgray;
   border-style: outset;
-  border-radius: 3px;
+  border-radius: 5px;
+}
+
+.delete-attachment-icon {
+  padding: 6px 5px;
 }
 
 .delete-icon-container {
