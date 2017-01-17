@@ -43,7 +43,6 @@ class RecordAttachmentsController < ApplicationController
   end
 
 
-
   private
     def record_attachment_params
       params.require(:record_attachment).permit(

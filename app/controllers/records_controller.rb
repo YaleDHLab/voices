@@ -1,5 +1,7 @@
 class RecordsController < ApplicationController
-  
+
+  respond_to :html, :json, :csv
+
   # before any method in the records controller is called,
   # ensure the user is authenticated
   before_filter CASClient::Frameworks::Rails::Filter
@@ -10,6 +12,10 @@ class RecordsController < ApplicationController
   before_action only: [:show] do
     requested_record = Record.find_by(id: params[:id])
     check_user_privileges(requested_record)
+  end
+
+  before_action only: [:csv] do
+    check_admin_privileges()
   end
 
   # only allow those who created records to edit, update, or destroy the records
@@ -26,6 +32,11 @@ class RecordsController < ApplicationController
   # GET /records.json
   def index
     @records = Record.all
+  end
+
+  def csv
+    @all_records = RecordAttachment.joins(:record)
+    respond_with(@all_records)
   end
 
   # GET /records/1

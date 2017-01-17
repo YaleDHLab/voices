@@ -282,4 +282,8 @@ class RecordAttachment < ActiveRecord::Base
     end
   end
 
+  def as_csv
+    attributes
+  end
+
 end
