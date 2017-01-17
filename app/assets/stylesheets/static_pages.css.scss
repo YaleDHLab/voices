@@ -94,6 +94,7 @@ html, body {
   #profile-dropdown .dropdown-menu-row-text {
     position: relative;
     left: 50%;
+    width: 50%;
   }
 
   .dropdown.open .dropdown-menu {
@@ -534,7 +535,7 @@ h1 {
   text-transform: uppercase;
   color: #fff;
   letter-spacing: .065em;
-  padding: 8px 12px 6px 12px;
+  padding: 8px 12px;
 }
 
 .blue-button {

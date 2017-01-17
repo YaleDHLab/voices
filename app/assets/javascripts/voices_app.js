@@ -133,7 +133,7 @@ VoicesApp.controller("FormController", [
     $scope.form = $scope.form ? $scope.form : {}; // record form
 
     // initialize privacy settings to keep records private
-    $scope.form.make_private = $scope.form.make_private? $scope.form.make_private: false;
+    $scope.form.make_private = $scope.form.make_private? $scope.form.make_private: true;
 
     // transmit page class so we can distinguish between record#new and record#edit forms
     $scope.currentPageClass = pageClassService.getPageClass();
