@@ -45,9 +45,11 @@ VoicesRails::Application.routes.draw do
   # when users click 'cancel all' on form page
   delete "destroy_unsaved_attachments" => "record_attachments#destroy_unsaved_attachments"
 
-  # provie route that will send a request for a record to be removed
+  # provide route that will send a request for a record to be removed
   get "report_record" => "report_record#create"
 
+  # data download endpoint
+  get "csv" => "records#csv", :defaults => { :format => 'csv' }
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
