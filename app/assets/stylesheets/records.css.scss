@@ -219,11 +219,16 @@ span.btn.btn-small.btn-default.btn-inverse {
   overflow: hidden;
 }
 
-#round-table-edges {
-  overflow: auto;
-  max-height: 297px;
+.progress-bar-table-inner {
+  overflow-y: scroll;
+  overflow-x: hidden;
   padding-right: 20px;
   margin-right: -35px;
+  max-height: 297px;
+}
+
+.progress-bar-table-wrapper .panel.panel-default {
+  margin-bottom: 0;
 }
 
 #progress-bar-table .file-name-container {
@@ -909,7 +914,7 @@ hr.clear-floats {
   }
 
   .long-label {
-    width: 330px;
+    width: 360px;
   }
 
   input, #placeholder-box {
