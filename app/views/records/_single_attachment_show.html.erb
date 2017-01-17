@@ -4,7 +4,8 @@
      data-ng-repeat="attachment in data.attachments"
      data-ng-class="{placeholderImageContainer: attachment.placeholder_image_path !== null}">
   <a data-ng-if="currentPageClass == 'show'"
-     data-ng-href="{{attachment.file_upload_url}}">
+     data-ng-href="{{attachment.file_upload_url}}"
+     target="_">
      <%= render 'asset_view' %>
   </a>
 
