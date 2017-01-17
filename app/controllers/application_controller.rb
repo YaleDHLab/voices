@@ -19,7 +19,11 @@ class ApplicationController < ActionController::Base
 
     # if the requested record does not belong to the current user
     # and is private, prevent the user from accessing the record
-    elsif (requested_record.cas_user_name != session[:cas_user]) && (requested_record.make_private == true)
+    elsif (requested_record.cas_user_name != session[:cas_user]) &&
+        (requested_record.make_private == true) or
+          (requested_record.cas_user_name != session[:cas_user] &&
+        # check if record published 25 years or more ago
+        Time.now - requested_record.created_at < (60 * 60 * 24 * 365 * 25))
       flash[:info] = "<strong>ACCESS RESTRICTED</strong>".html_safe + ": You do not have access to this page. Please contact your administrator about your permissions."
       redirect_to user_show_path
     end

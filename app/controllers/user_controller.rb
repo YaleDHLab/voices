@@ -10,7 +10,7 @@ class UserController < ApplicationController
     if params[:viewAll] == "0"
       @user_records = Record.includes(:record_attachments).where(cas_user_name: session[:cas_user])
     else
-      @user_records = Record.includes(:record_attachments).where("make_private = ? OR cas_user_name = ?", false, session[:cas_user])
+      @user_records = Record.includes(:record_attachments).where("make_private = ? AND created_at < ? OR cas_user_name = ?", false, 25.years.ago, session[:cas_user])
     end
 
 
