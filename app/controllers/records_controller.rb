@@ -202,8 +202,8 @@ class RecordsController < ApplicationController
 
       params.require(:record).permit(
         :cas_user_name, :make_private, :title,
-        :description, :date, :location, :source_url, 
-        :hashtag, :release_checked, :flagged_for_removal,
+        :description, :date, :location, :hashtag,
+        :release_checked, :flagged_for_removal,
 
         record_attachments_attributes: [
           :record_id, :cas_user_name, :filename, :mimetype,

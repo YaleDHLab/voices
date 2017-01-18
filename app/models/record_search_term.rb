@@ -17,9 +17,6 @@ class RecordSearchTerm
     @where_clause << " OR #{case_insensitive_search(:location)}"
     @where_args[:location] = starts_or_ends_with(search_term)
 
-    @where_clause << " OR #{case_insensitive_search(:source_url)}"
-    @where_args[:source_url] = starts_or_ends_with(search_term)
-
     @where_clause << " OR #{case_insensitive_search(:date)}"
     @where_args[:date] = starts_or_ends_with(search_term)
 
