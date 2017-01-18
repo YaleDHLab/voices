@@ -1094,7 +1094,6 @@ VoicesApp.controller("userController", [
       {"label": "Date of Event", "val": "date"},
       {"label": "Date submitted", "val": "created_at"},
       {"label": "Contributor", "val": "cas_user_name"},
-      {"label": "Source Url", "val": "source_url"},
       {"label": "Location", "val": "location"}
     ];
 

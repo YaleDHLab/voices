@@ -19,7 +19,9 @@ end
 
 user_name_array.each do |username|
 
-    7.times do |r|
+    3.times do |r|
+
+        puts "saving record", r, "for", username
 
         new_record = Record.new({
             :title => Faker::Book.title,
@@ -27,7 +29,6 @@ user_name_array.each do |username|
             :make_private => false,
             :description => Faker::Lorem.paragraph,
             :location => Faker::Address.street_name + ", " + Faker::Address.city,
-            :source_url => Faker::Internet.url,
             :release_checked => true,
             :date => Faker::Time.between(DateTime.now - 1, DateTime.now).to_s.split()[0].gsub(/-/, '/'),
             :hashtag => "#" + Faker::Hipster.words(4).join(" #")
