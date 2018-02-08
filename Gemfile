@@ -1,7 +1,10 @@
 source 'https://rubygems.org'
 
+# add the version of ruby used locally
+ruby '2.4.1'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.0'
+gem 'rails', '~> 4.2.10'
 
 # Use postgres as the database for Active Record
 gem 'pg'
@@ -31,10 +34,10 @@ gem 'jbuilder', '~> 2.2'
 gem 'rubycas-client', :git => 'git://github.com/rubycas/rubycas-client.git'
 
 # Add paperclip to allow users to upload content 
-gem 'paperclip', '4.2.4'
+gem 'paperclip', '~> 5.2.1'
 
 # Add aws-sdk for S3 storage of user-uploaded content
-gem 'aws-sdk', '~> 1.55.0'
+gem 'aws-sdk', '~> 3'
 
 # add ffmpeg wrapper for video transcoding and thumbnail generation
 gem 'paperclip-ffmpeg', '~> 1.0.1'
@@ -43,7 +46,7 @@ gem 'paperclip-ffmpeg', '~> 1.0.1'
 gem 'delayed_paperclip'
 
 # use puma server in production
-gem 'puma', '2.11.1'
+gem 'puma', '2.14.0'
 
 # add rmagick gem to call the imagemagick assets on heroku
 gem 'rmagick'
@@ -75,6 +78,9 @@ gem 'mime-types'
 # add support for cors headers
 gem 'rack-cors', :require => 'rack/cors'
 
+# html and xml support
+gem 'nokogiri', '~> 1.8.1'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -92,9 +98,6 @@ group :production do
   # add heroku requirement
   gem 'rails_12factor'
 end
-
-# add the version of ruby used locally
-ruby '2.0.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

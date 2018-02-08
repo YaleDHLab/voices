@@ -1,1 +1,26 @@
-{"expiration":"2020-01-01T00:00:00Z","conditions":[{"bucket":"voices-user-uploads"},["starts-with","$key",""],["starts-with","$filename",""],["starts-with","$Content-Type",""],{"acl":"public-read"}]}
+{
+  "expiration": "2020-01-01T00:00:00Z",
+  "conditions": [
+    {
+      "bucket": "lab-file-uploads"
+    },
+    [
+      "starts-with",
+      "$key",
+      ""
+    ],
+    [
+      "starts-with",
+      "$filename",
+      ""
+    ],
+    [
+      "starts-with",
+      "$Content-Type",
+      ""
+    ],
+    {
+      "acl": "public-read"
+    }
+  ]
+}

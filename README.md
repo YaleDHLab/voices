@@ -11,19 +11,23 @@ The installation and configuration notes below are meant to help team members wo
 #### Install OS Dependencies
 
 This application depends on PostgreSQL for its db, ImageMagick for image processing, FFMPEG for video processing, and Ghostscript for PDF processing. On OSX, you can install these dependencies with homebrew:
-<pre><code>brew install postgresql  
-brew install imagemagick  
-brew install ffmpeg
-brew install ghostscript</code></pre>
+
+```
+brew install postgresql ffmpeg ghostscript
+brew unlink imagemagick
+brew install imagemagick@6
+brew link imagemagick@6 --force
+```
 
 #### Clone source code
 
 To clone the source code to your local machine and install required modules, you can run the following lines:
 ```
-$ git clone https://github.com/YaleDHLab/voices.git
-$ cd voices
-$ gem install bundler
-$ bundle install
+git clone https://github.com/YaleDHLab/voices.git
+cd voices
+gem install bundler
+gem install puma -v 2.13.4 -- --with-opt-dir=/usr/local/opt/openssl
+bundle install
 ```
 
 #### Configure administrators
@@ -120,13 +124,16 @@ You can grant the server-side components of the app access to the bucket by sett
 
 ```
 # The name of your bucket in AWS
-AWS_S3_BUCKET_NAME="YOUR_BUCKET_NAME"
+AWS_S3_BUCKET_NAME='YOUR_BUCKET_NAME'
 
 # Your AWS Access Key Id
-AWS_ACCESS_KEY_ID="YOUR_AWS_ACCESS_KEY_ID"
+AWS_ACCESS_KEY_ID='YOUR_AWS_ACCESS_KEY_ID'
 
 # Your AWS Secret Access Key
-AWS_SECRET_ACCESS_KEY="YOUR_AWS_SECRET_ACCCESS_KEY"
+AWS_SECRET_ACCESS_KEY='YOUR_AWS_SECRET_ACCCESS_KEY'
+
+# Your AWS Region
+AWS_REGION='us-west-2'
 ```
 
 You can grant client-side components of the application access to the bucket by first updating the bucket name identified in `voices/lib/tasks/aws_bucket_policy.json` (and optionally setting additional [options](http://aws.amazon.com/articles/1434/)):
@@ -164,7 +171,7 @@ $scope.aws = {
 After setting the configuration values above, you can create the application database as follows:
 
 ```
-$ rake db:create db:migrate db:seed
+$ rake db:create db:migrate
 $ rails s
 ```
 
@@ -203,9 +210,6 @@ heroku pg:reset DATABASE
   
 # run migrations  
 heroku run rake db:migrate  
-
-# seed database
-heroku run rake db:seed
   
 # restart the dyno  
 heroku restart  
