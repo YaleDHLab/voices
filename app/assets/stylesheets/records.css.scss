@@ -30,7 +30,7 @@ input, select, textarea {
   border-radius: 4px;
 }
 
-input[type="radio"], input[type="checkbox"] {
+input[type='radio'], input[type='checkbox'] {
   height: 14px;
   width: 14px;
 }
@@ -146,7 +146,7 @@ span.btn.btn-small.btn-default.btn-inverse {
   float: left;
   color: #333;
   margin-top: -4px;
-  font-family: "acumin-pro", "helvetica", "sans-serif";
+  font-family: 'acumin-pro', 'helvetica', 'sans-serif';
 }
 
 #file-upload-button .btn {
@@ -223,7 +223,7 @@ span.btn.btn-small.btn-default.btn-inverse {
   overflow-y: scroll;
   overflow-x: hidden;
   padding-right: 20px;
-  margin-right: -35px;
+  margin-right: -20px;
   max-height: 297px;
 }
 

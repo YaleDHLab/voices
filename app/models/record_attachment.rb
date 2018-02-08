@@ -1,5 +1,5 @@
 class RecordAttachment < ActiveRecord::Base
-  print "record attachment", self
+  print 'record attachment', self
 
   belongs_to :record, touch: true
 
@@ -55,44 +55,44 @@ class RecordAttachment < ActiveRecord::Base
   def check_file_type
     if self.is_pdf?
       {
-        :square_thumb => ["200x200#", :png], 
-        :annotation_thumb => ["300x200#", :png],
-        :medium => ["500x500>", :png]
+        :square_thumb => ['200x200#', :png],
+        :annotation_thumb => ['300x200#', :png],
+        :medium => ['500x500>', :png]
       }
 
     elsif self.is_video?
       {
         :square_thumb => { 
-          :geometry => "200x200!", 
-          :format => 'jpg', 
+          :geometry => '200x200!',
+          :format => 'jpg',
           :time => 1
         }, 
         :annotation_thumb => {
-          :geometry => "300x200!",
+          :geometry => '300x200!',
           :format => 'jpg',
           :time => 1
         },
         :medium => { 
-          :geometry => "500x500>", 
-          :format => 'jpg', 
+          :geometry => '500x500>',
+          :format => 'jpg',
           :time => 1
         },
         :transcoded_video => {
-          :geometry => "300x200!", 
+          :geometry => '300x200!',
           :format => 'mp4'
         }
       }
     elsif self.is_audio?
       {
         :audio => {
-          :format => "mp3"
+          :format => 'mp3'
         }
       }
     elsif self.is_image?
       {
-        :square_thumb => "200x200#", 
-        :annotation_thumb => "300x200#",
-        :medium => "500x500>"
+        :square_thumb => '200x200#', 
+        :annotation_thumb => '300x200#',
+        :medium => '500x500>'
       }
     else
       {}
@@ -102,7 +102,7 @@ class RecordAttachment < ActiveRecord::Base
 
   # Helper method that uses the =~ regex method to see if 
   # the current file_upload has a content_type 
-  # attribute that contains the string "image" / "video", or "audio"
+  # attribute that contains the string 'image' / 'video', or 'audio'
   # Attachments sent from the client will have mimetype; those from the
   # server will have file_upload_content_type
   def is_image?
@@ -158,7 +158,6 @@ class RecordAttachment < ActiveRecord::Base
     is_svg?
     is_pdf?
   end
-  
 
   def set_remote_urls
     # save the path to the original file upload, then store the paths to
@@ -168,57 +167,57 @@ class RecordAttachment < ActiveRecord::Base
 
     # audio
     if self.is_audio?
-      if self.placeholder_image_path != ActionController::Base.helpers.asset_path("mp3.png")
+      if self.placeholder_image_path != placeholders['mp3']
         self.update_attributes(
-          :placeholder_image_path => ActionController::Base.helpers.asset_path("mp3.png")
+          :placeholder_image_path => placeholders['mp3']
         )
       end
 
     # plain text
     elsif self.is_plain_text?
-      if self.placeholder_image_path != ActionController::Base.helpers.asset_path("txt.png")
+      if self.placeholder_image_path != placeholders['txt']
         self.update_attributes(
-          :placeholder_image_path => ActionController::Base.helpers.asset_path("txt.png")
+          :placeholder_image_path => placeholders['txt']
         )
       end
 
     # word doc
     elsif self.is_word_document?
-      if self.placeholder_image_path != ActionController::Base.helpers.asset_path("doc.png")
+      if self.placeholder_image_path != placeholders['doc']
         self.update_attributes(
-          :placeholder_image_path => ActionController::Base.helpers.asset_path("doc.png")
+          :placeholder_image_path => placeholders['doc']
         )
       end
 
     # powerpoint 
     elsif self.is_powerpoint?
-      if self.placeholder_image_path != ActionController::Base.helpers.asset_path("ppt.png")
+      if self.placeholder_image_path != placeholders['ppt']
         self.update_attributes(
-          :placeholder_image_path => ActionController::Base.helpers.asset_path("ppt.png")
+          :placeholder_image_path => placeholders['ppt']
         )
       end
 
     # excel
     elsif self.is_excel?
-      if self.placeholder_image_path != ActionController::Base.helpers.asset_path("xls.png")
+      if self.placeholder_image_path != placeholders['xls']
         self.update_attributes(
-          :placeholder_image_path => ActionController::Base.helpers.asset_path("xls.png")
+          :placeholder_image_path => placeholders['xls']
         )
       end
 
     # svg
     elsif self.is_svg?
-      if self.placeholder_image_path != ActionController::Base.helpers.asset_path("svg.png")
+      if self.placeholder_image_path != placeholders['svg']
         self.update_attributes(
-          :placeholder_image_path => ActionController::Base.helpers.asset_path("svg.png")
+          :placeholder_image_path => placeholders['svg']
         )
       end
 
     # pdf
     elsif self.is_pdf?
-      if self.placeholder_image_path != ActionController::Base.helpers.asset_path("pdf.png")
+      if self.placeholder_image_path != placeholders['pdf']
         self.update_attributes(
-          :placeholder_image_path => ActionController::Base.helpers.asset_path("pdf.png")
+          :placeholder_image_path => placeholders['pdf']
         )
       end
 
@@ -241,17 +240,6 @@ class RecordAttachment < ActiveRecord::Base
           :square_thumb_url => self.file_upload.url(:square_thumb)
         )
       end
-
-    # seed images
-    elsif self.is_image? and self.is_seed 
-      if self.file_upload_url != self.file_upload.url(:original)
-        self.update_attributes(
-          :file_upload_url => self.file_upload.url(:original),
-          :medium_image_url => self.file_upload.url(:medium),
-          :annotation_thumb_url => self.file_upload.url(:annotation_thumb),
-          :square_thumb_url => self.file_upload.url(:square_thumb)
-        )
-      end
     end
   end
 
@@ -260,23 +248,23 @@ class RecordAttachment < ActiveRecord::Base
     # set a simple field {img, audio, video} that tells the ui
     # what kind of div should contain this attachment
     if self.is_audio?
-      if self.media_type != "audio"
+      if self.media_type != 'audio'
         self.update_attributes(
-          :media_type => "audio"
+          :media_type => 'audio'
         )
       end
 
     elsif self.is_video?
-      if self.media_type != "video"
+      if self.media_type != 'video'
         self.update_attributes(
-          :media_type => "video"
+          :media_type => 'video'
         )
       end
 
     else
-      if self.media_type != "image"
+      if self.media_type != 'image'
         self.update_attributes(
-          :media_type => "image"
+          :media_type => 'image'
         )
       end
     end
@@ -284,6 +272,18 @@ class RecordAttachment < ActiveRecord::Base
 
   def as_csv
     attributes
+  end
+
+  def placeholders
+    {
+      'mp3' => ActionController::Base.helpers.asset_path('mp3.png'),
+      'txt' => ActionController::Base.helpers.asset_path('txt.png'),
+      'doc' => ActionController::Base.helpers.asset_path('doc.png'),
+      'ppt' => ActionController::Base.helpers.asset_path('ppt.png'),
+      'xls' => ActionController::Base.helpers.asset_path('xls.png'),
+      'svg' => ActionController::Base.helpers.asset_path('svg.png'),
+      'pdf' => ActionController::Base.helpers.asset_path('pdf.png')
+    }
   end
 
 end

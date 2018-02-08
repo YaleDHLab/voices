@@ -37,11 +37,11 @@ VoicesRails::Application.configure do
   config.action_mailer.delivery_method = :smtp
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
+    :address              => 'smtp.gmail.com',
     :port                 => 587,
     :user_name            => ENV['GMAIL_USERNAME'],
     :password             => ENV['GMAIL_PASSWORD'],
-    :authentication       => "plain",
+    :authentication       => 'plain',
     :enable_starttls_auto => true
   }
 
@@ -49,10 +49,12 @@ VoicesRails::Application.configure do
   # Paperclip Config #
   ####################
 
-  Paperclip.options[:command_path] = "/usr/local/bin/"
+  Paperclip.options[:command_path] = '/usr/local/bin/'
 
   config.paperclip_defaults = {
     :storage => :s3,
+    :path => '/voices/:class/:attachment/:id_partition/:style/:filename',
+    :s3_region => ENV['AWS_REGION'],
     :s3_credentials => {
       :bucket => ENV['AWS_S3_BUCKET_NAME'],
       :access_key_id => ENV['AWS_ACCESS_KEY_ID'],

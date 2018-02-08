@@ -20,7 +20,7 @@ class RecordAttachmentsController < ApplicationController
     @record_attachment.update_attributes(annotation: params[:annotation])
     @record_attachment.save
 
-    print "saved", @record_attachment.to_json
+    print 'saved', @record_attachment.to_json
     render :nothing => true
   end
 

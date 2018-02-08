@@ -36,7 +36,7 @@ VoicesRails::Application.configure do
   config.assets.version = '1.0'
 
   # Specifies the header that your server uses for sending files.
-  # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
+  # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
@@ -55,7 +55,7 @@ VoicesRails::Application.configure do
   # config.cache_store = :mem_cache_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  # config.action_controller.asset_host = "http://assets.example.com"
+  # config.action_controller.asset_host = 'http://assets.example.com'
 
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
@@ -88,11 +88,11 @@ VoicesRails::Application.configure do
   config.action_mailer.delivery_method = :smtp
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
+    :address              => 'smtp.gmail.com',
     :port                 => 587,
     :user_name            => ENV['GMAIL_USERNAME'],
     :password             => ENV['GMAIL_PASSWORD'],
-    :authentication       => "plain",
+    :authentication       => 'plain',
     :enable_starttls_auto => true
   }
 
@@ -100,10 +100,12 @@ VoicesRails::Application.configure do
   # Paperclip Config #
   ####################
 
-  Paperclip.options[:command_path] = "/usr/local/bin/"
+  Paperclip.options[:command_path] = '/usr/local/bin/'
 
   config.paperclip_defaults = {
     :storage => :s3,
+    :path => '/voices/:class/:attachment/:id_partition/:style/:filename',
+    :s3_region => ENV['AWS_REGION'],
     :s3_credentials => {
       :bucket => ENV['AWS_S3_BUCKET_NAME'],
       :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
