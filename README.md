@@ -1,3 +1,6 @@
+# Note: This repository has been archived
+This project was developed under a previous phase of the Yale Digital Humanities Lab. Now a part of Yale Library’s Computational Methods and Data department, the Lab no longer includes this project in its scope of work. As such, it will receive no further updates.
+
 ## Introduction
 
 [Voices](http://voices.library.yale.edu/) is an application designed to help collect materials related to student activism on the Yale campus. Site visitors from the Yale community can use the site to contribute images, videos, and other documents with which an archive of activism materials can be assembled. 
